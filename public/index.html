@@ -1,5 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>Audaz</title><link rel="icon" type="image/png" href="img/logo.png"><link rel="apple-touch-icon" href="img/logo_reduzida.png">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>CultivAI</title><link rel="icon" type="image/png" href="img/logo.png"><link rel="apple-touch-icon" href="img/logo_reduzida.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -1104,7 +1104,7 @@ window.fetch=(input,init={})=>{
  return originalFetch(input,init);
 };
 
-const APP='Audaz';
+const APP='CultivAI';
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const IC={user:'<circle cx="12" cy="8" r="4.5"/><path d="M3.5 21a8.5 8.5 0 0 1 17 0z"/>',clover:'<circle cx="8" cy="8" r="4.5"/><circle cx="16" cy="8" r="4.5"/><circle cx="8" cy="16" r="4.5"/><circle cx="16" cy="16" r="4.5"/>',
@@ -1118,7 +1118,7 @@ help:'<circle cx="12" cy="12" r="10"/><text x="12" y="17" text-anchor="middle" f
 const ico=(k,s=26)=>`<svg viewBox="0 0 24 24" width="${s}" height="${s}" fill="currentColor" fill-rule="evenodd" aria-hidden="true">${IC[k]}</svg>`;
 
 const L={
-en:{wT:'Welcome to '+APP+'!',wX:'Your chat app to manage your production and crop rotation.',start:'Get started',back:'← Back',cont:'Continue',done:'Finish',nameT:'What is your name?',name:'Your name:',namePh:'Type your name here...',needName:'⚠ Please enter your name.',hi:'Hello, ',locT:'Your location',city:'Your city:',cityPh:'Type your city here...',or:'or',gps:'Use my location',mapPh:'The map appears here after you search your city',soilT:'What is your soil like?',soilPick:'Choose the soil type:',cropT:'What do you grow?',crop:'Current crop:',other:'Other crops:',irr:'Irrigation type:',goal:'Current goal:',cropPh:'Corn, soy, coffee, grapes...',irrPh:'Drip, Sprinkler,...',goalPh:'Recover the soil, save...',
+en:{wT:'Welcome to CultivAI!',wX:'Your chat app to manage your production and crop rotation.',start:'Get started',back:'← Back',cont:'Continue',done:'Finish',nameT:'What is your name?',name:'Your name:',namePh:'Type your name here...',needName:'⚠ Please enter your name.',hi:'Hello, ',locT:'Your location',city:'Your city:',cityPh:'Type your city here...',or:'or',gps:'Use my location',mapPh:'The map appears here after you search your city',soilT:'What is your soil like?',soilPick:'Choose the soil type:',cropT:'What do you grow?',crop:'Current crop:',other:'Other crops:',irr:'Irrigation type:',goal:'Current goal:',cropPh:'Corn, soy, coffee, grapes...',irrPh:'Drip, Sprinkler,...',goalPh:'Recover the soil, save...',
 goals:['Increase productivity','Recover the soil','Save inputs and water'],waters:['Drip irrigation','Sprinkler','Rain only','Little water'],crops:['Corn','Soybean','Coffee','Grapes','Mango','Beans','Cassava','Sugarcane','Banana','Tomato','Rice','Cotton'],
 soilLoading:'Looking up the most common soils in your region…',soilRegion:'Common soils in your region: ',soilSrc:'SoilGrids (ISRIC) model estimate for the chosen point. Check by looking at your own soil.',soilFail:'I could not identify the soils in your region now. Choose by appearance.',soilCommon:'In your region',soilMore:'See all soil types',soilLess:'Show only my region',soilPre:'Soil: ',
 needLoc:'⚠ Search your city (or use your location) to continue.',searching:'Searching…',notfound:'⚠ City not found.',nogeo:'⚠ Location is not available.',nasaWait:'Fetching NASA data…',
@@ -1163,6 +1163,14 @@ function applyLang(){document.documentElement.lang=LOC[lang];$('lang').value=lan
  $('mic').setAttribute('aria-label',t('listen'));$('send').setAttribute('aria-label','→');
  renderSoils();showStep();if(S.profile&&!editing){renderHome();renderMsgs();renderRecs();renderCal();renderFaq()}}
 function setLang(v){lang=v;localStorage.setItem('lang',v);applyLang()}
+function begin(){
+  started=true;
+  step=0;
+  editing=false;
+  $('welcome').classList.remove('on');
+  $('onb').classList.add('on');
+  showStep();
+}
 function go(id){cur=id;document.querySelectorAll('#app section').forEach(s=>s.classList.toggle('on',s.id==id));scrollTo(0,0);
  if(id=='chat')setTimeout(()=>$('msgs').lastElementChild?.scrollIntoView(),0)}
 const topbar=()=>`<div style="margin:-2px 0 8px"><button class="link" onclick="go('home')" style="color:var(--ink);text-decoration:none">${t('back')}</button></div>`;
