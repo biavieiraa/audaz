@@ -1082,12 +1082,22 @@ section.on > * {
 </div>
 
 <script>
-const AUD_USER_ID=localStorage.getItem("CultivAI_user_id")||(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2));
-localStorage.setItem("CultivAI_user_id",AUD_USER_ID);
+const AUD_USER_ID=localStorage.getItem("audaz_user_id")||(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2));
+localStorage.setItem("audaz_user_id",AUD_USER_ID);
+
 const originalFetch=window.fetch.bind(window);
-window.fetch=(input,init={})=>{const url=typeof input==="string"?input:input.url;
- if(url.startsWith("/api/")){const h=new Headers(init.headers||(input instanceof Request?input.headers:undefined));h.set("x-CultivAI-user",AUD_USER_ID);return originalFetch(input,{...init,headers:h})}
- return originalFetch(input,init)};
+
+window.fetch=(input,init={})=>{
+ const url=typeof input==="string"?input:input.url;
+
+ if(url.startsWith("/api/")){
+  const h=new Headers(init.headers||(input instanceof Request?input.headers:undefined));
+  h.set("x-audaz-user",AUD_USER_ID);
+  return originalFetch(input,{...init,headers:h});
+ }
+
+ return originalFetch(input,init);
+};
 
 const APP='Audaz';
 const $=id=>document.getElementById(id);
@@ -1289,16 +1299,9 @@ function renderCal(){const now=new Date(),y0=now.getFullYear(),m0=now.getMonth()
   h+=`<div class="mo"><h3>${MN(y,m)}${y!=y0?' '+y:''}</h3><div class="g">${WD.map(d=>`<span class="h">${d}</span>`).join('')}${'<span class="e"></span>'.repeat(off)}`;
   for(let d=1;d<=nd;d++){const dd=new Date(y,m,d);let c='';if(rg.some(x=>+x.start==+dd))c='cs';else if(rg.some(x=>dd>=x.start&&dd<x.end))c='cp';if(+dd==+today)c+=' today';h+=`<span class="${c}">${d}</span>`}
   h+='</div></div>'}
-<<<<<<< HEAD
- h+=`</div><h3 style="margin-top:16px">${t('appr')}</h3>`;
- h+=ap.length?ap.map(r=>`<div class="card aprovada"><b>${esc(r.titulo)}</b><br>📅 ${t('startm')}: ${(+r.mes_inicio>=1&&+r.mes_inicio<=12)?MN(y0,+r.mes_inicio-1):'–'} · ${esc(r.duracao_meses)} ${t('months')}${(r.etapas||[]).length?`<ol>${r.etapas.map(e=>`<li>${esc(e)}</li>`).join('')}</ol>`:''}</div>`).join(''):`<p>${t('noAppr')}</p>`;
- $('cal').innerHTML=h}
-function renderFaq(){$('faq').innerHTML=`<h2>${t('faqT')}</h2>`+t('faq').map(f=>`<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join('')}
-=======
  h+=`</div><h3 style="margin-top:18px">${t('appr')}</h3>`+(ap.length?ap.map(({r,start})=>`<div class="card aprovada"><b>${esc(r.titulo)}</b><br>📅 ${t('startm')}: ${start?start.toLocaleDateString(lc,{month:'long',year:'numeric'}):'–'} · ${esc(r.duracao_meses)} ${t('months')}${(r.etapas||[]).length?`<ol>${r.etapas.map(e=>`<li>${esc(e)}</li>`).join('')}</ol>`:''}</div>`).join(''):`<p>${t('noAppr')}</p>`);
  $('cal').innerHTML=h}
 function renderFaq(){$('faq').innerHTML=topbar()+`<h2>${t('faqT')}</h2>`+t('faq').map(f=>`<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join('')}
->>>>>>> 4e5367f (ajustando identidade visual)
 
 applyLang();refresh();
 </script></body></html>
