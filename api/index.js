@@ -31,7 +31,7 @@ const initialState = {
 // ---------- IDENTIFICAÇÃO DO USUÁRIO ----------
 
 function getUserId(req) {
-  const id = req.headers["x-audaz-user"];
+  const id = req.headers["x-CultivAI-user"];
 
   if (
     typeof id !== "string" ||
@@ -51,7 +51,7 @@ async function load(userId) {
   }
 
   const { data, error } = await supabase
-    .from("audaz_state")
+    .from("CultivAI_state")
     .select("state")
     .eq("user_id", userId)
     .maybeSingle();
@@ -66,7 +66,7 @@ async function load(userId) {
 
 async function save(userId, db) {
   const { error } = await supabase
-    .from("audaz_state")
+    .from("CultivAI_state")
     .upsert(
       {
         user_id: userId,

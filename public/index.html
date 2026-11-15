@@ -1,5 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>Audaz</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>CultivAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -48,7 +48,7 @@ iframe{width:100%;height:230px;border:1px solid var(--line);border-radius:12px;m
 details{background:#fff;border:1px solid var(--line);border-radius:12px;margin:8px 0}summary{padding:14px 16px;font-weight:600;cursor:pointer;min-height:48px}details p{margin:0;padding:0 16px 14px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
-<header><span>🌱 Audaz</span><select id="lang" aria-label="Language" onchange="setLang(this.value)"><option value="en">English</option><option value="pt">Português</option><option value="es">Español</option></select></header>
+<header><span>🌱 CultivAI</span><select id="lang" aria-label="Language" onchange="setLang(this.value)"><option value="en">English</option><option value="pt">Português</option><option value="es">Español</option></select></header>
 
 <!-- BOAS-VINDAS -->
 <div id="welcome" class="view"><div class="photo"></div><div class="sheet"><div class="avatar" aria-hidden="true">🌱</div>
@@ -93,9 +93,9 @@ details{background:#fff;border:1px solid var(--line);border-radius:12px;margin:8
 
 <script>
     const AUD_USER_ID =
-  localStorage.getItem("audaz_user_id") || crypto.randomUUID();
+  localStorage.getItem("CultivAI_user_id") || crypto.randomUUID();
 
-localStorage.setItem("audaz_user_id", AUD_USER_ID);
+localStorage.setItem("CultivAI_user_id", AUD_USER_ID);
 
 const originalFetch = window.fetch.bind(window);
 
@@ -107,7 +107,7 @@ window.fetch = (input, init = {}) => {
       init.headers || (input instanceof Request ? input.headers : undefined)
     );
 
-    headers.set("x-audaz-user", AUD_USER_ID);
+    headers.set("x-CultivAI-user", AUD_USER_ID);
 
     return originalFetch(input, { ...init, headers });
   }
@@ -117,29 +117,29 @@ window.fetch = (input, init = {}) => {
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const L={
-en:{wT:'Welcome to Audaz',wX:'Tell us about your farm and get help with crop rotation and soil care.',start:'Get started',back:'Back',next:'Next',save:'Save and fetch NASA data',name:'Your name',city:'City',search:'Search',gps:'📍 Use my location',s2:'What do you grow?',crop:'Current crop',wish:'Crops you would like to plant',goal:'Your goal',s3:'Soil and water',soil:'What is your soil like?',water:'Water and irrigation',diff:'Main difficulties',
+en:{wT:'Welcome to CultivAI',wX:'Tell us about your farm and get help with crop rotation and soil care.',start:'Get started',back:'Back',next:'Next',save:'Save and fetch NASA data',name:'Your name',city:'City',search:'Search',gps:'📍 Use my location',s2:'What do you grow?',crop:'Current crop',wish:'Crops you would like to plant',goal:'Your goal',s3:'Soil and water',soil:'What is your soil like?',water:'Water and irrigation',diff:'Main difficulties',
 goals:['Increase productivity','Recover the soil','Save inputs and water'],soils:['Sandy (loose sand)','Clay (heavy mud)','Mixed',"I don't know"],waters:['Drip irrigation','Sprinkler','Rain only','Little water'],
 needLoc:'⚠ Enter your name and search your city (or use your location).',searching:'Searching…',notfound:'⚠ City not found.',nogeo:'⚠ Location is not available.',nasaWait:'Fetching NASA data…',
 tabs:['Home','Chat','Tips','Calendar','FAQ'],hi:'Hello, ',cChat:'Talk to the AI',cRecs:'My suggestions',cCal:'Farm calendar',cFaq:'Questions & answers',climate:'Regional climate',warn:'<b>NASA POWER</b> data: an estimate for an area of about 50 km, not a measurement on your farm. Period: ',temp:'Average temperature',rain:'Rain in 60 days',rad:'Radiation kWh/m²/day',rainDay:'Rain per day',smap:'Soil moisture (SMAP) is not integrated yet.',nasaFail:'NASA data unavailable',retry:'Try again',edit:'Edit registration',
-ask:'Ask something…',thinking:'Thinking…',fail:'I could not answer now: ',intro:'Hi! I am Audaz. Ask about your soil, your crops or your local climate.',created:'✅ I created suggestion(s) for you. See the Tips tab.',listen:'Listen',novoice:'Your browser does not support voice. Use Chrome.',
+ask:'Ask something…',thinking:'Thinking…',fail:'I could not answer now: ',intro:'Hi! I am CultivAI. Ask about your soil, your crops or your local climate.',created:'✅ I created suggestion(s) for you. See the Tips tab.',listen:'Listen',novoice:'Your browser does not support voice. Use Chrome.',
 chips:['How can I improve my soil health?','What can I plant after the current crop?','How can I save water?','What is the climate like in my region?'],
 recsT:'Suggestions for you',noRecs:'Chat with the AI to get suggestions.',approve:'Approve',reject:'Reject',archive:'Archive',why:'Why this reason? (optional)',ben:'Benefits',per:'Period',cost:'Costs',conf:'Confidence',
 st:{pendente:'pending',aprovada:'approved',recusada:'rejected',arquivada:'archived'},calT:'Calendar ',appr:'Approved activities',noAppr:'Approve a suggestion and it will appear here. Light blue days mark the period; the 1st day, in dark blue, is the start.',startm:'Start',months:'month(s)',
 faqT:'Questions & answers',faq:[['Is the climate data from my farm?','No. It comes from NASA POWER and is an estimate for an area of about 50 km around the chosen point, not a measurement on your farm.'],['What is crop rotation?','Alternating what you plant in the same area over time. It helps break pest and disease cycles and takes better care of the soil.'],['What are cover crops?','Plants grown to cover and protect the soil, or to be worked into it later. In perennial crops, such as grapes, they can grow between the rows.'],['Does the app tell me which nutrients my soil lacks?','No. Weather and rain do not show fertility. For that you need a soil analysis in a laboratory.'],['How do I accept a suggestion?','In the Tips tab, tap Approve. Approved suggestions go to the Calendar. You can also Reject or Archive.'],['Are the recommendations guaranteed?','No. They are AI suggestions based on your data and NASA data. Confirm with an agricultural technician before important decisions.']]},
-pt:{wT:'Bem-vindo ao Audaz',wX:'Conte sobre sua propriedade e receba ajuda com rotação de culturas e cuidado com o solo.',start:'Começar',back:'Voltar',next:'Próximo',save:'Salvar e buscar dados da NASA',name:'Seu nome',city:'Cidade',search:'Buscar',gps:'📍 Usar minha localização',s2:'O que você planta?',crop:'Cultura atual',wish:'Culturas que gostaria de plantar',goal:'Seu objetivo',s3:'Solo e água',soil:'Como é o seu solo?',water:'Água e irrigação',diff:'Principais dificuldades',
+pt:{wT:'Bem-vindo ao CultivAI',wX:'Conte sobre sua propriedade e receba ajuda com rotação de culturas e cuidado com o solo.',start:'Começar',back:'Voltar',next:'Próximo',save:'Salvar e buscar dados da NASA',name:'Seu nome',city:'Cidade',search:'Buscar',gps:'📍 Usar minha localização',s2:'O que você planta?',crop:'Cultura atual',wish:'Culturas que gostaria de plantar',goal:'Seu objetivo',s3:'Solo e água',soil:'Como é o seu solo?',water:'Água e irrigação',diff:'Principais dificuldades',
 goals:['Aumentar a produtividade','Recuperar o solo','Economizar insumos e água'],soils:['Arenoso (areia solta)','Argiloso (barro pesado)','Misto','Não sei'],waters:['Gotejamento','Aspersão','Só chuva','Pouca água'],
 needLoc:'⚠ Informe seu nome e busque a cidade (ou use sua localização).',searching:'Buscando…',notfound:'⚠ Cidade não encontrada.',nogeo:'⚠ Localização indisponível.',nasaWait:'Buscando dados da NASA…',
 tabs:['Início','Chat','Dicas','Calendário','Dúvidas'],hi:'Olá, ',cChat:'Conversar com a IA',cRecs:'Minhas sugestões',cCal:'Calendário agrícola',cFaq:'Tira-dúvidas',climate:'Clima da região',warn:'Dados da <b>NASA POWER</b>: estimativa de uma área de ~50 km, não medição na sua propriedade. Período: ',temp:'Temperatura média',rain:'Chuva em 60 dias',rad:'Radiação kWh/m²/dia',rainDay:'Chuva por dia',smap:'Umidade do solo (SMAP) ainda não integrada.',nasaFail:'Dados da NASA indisponíveis',retry:'Tentar novamente',edit:'Editar cadastro',
-ask:'Pergunte algo…',thinking:'Pensando…',fail:'Não consegui responder agora: ',intro:'Olá! Sou o Audaz. Pergunte sobre seu solo, suas culturas ou o clima da sua região.',created:'✅ Criei sugestão(ões) para você. Veja na aba Dicas.',listen:'Ouvir',novoice:'Seu navegador não suporta voz. Use o Chrome.',
+ask:'Pergunte algo…',thinking:'Pensando…',fail:'Não consegui responder agora: ',intro:'Olá! Sou o CultivAI. Pergunte sobre seu solo, suas culturas ou o clima da sua região.',created:'✅ Criei sugestão(ões) para você. Veja na aba Dicas.',listen:'Ouvir',novoice:'Seu navegador não suporta voz. Use o Chrome.',
 chips:['Como posso melhorar a saúde do meu solo?','Qual cultura posso plantar depois da atual?','Como posso economizar água?','Quais são as condições climáticas da minha região?'],
 recsT:'Sugestões para você',noRecs:'Converse com a IA para receber sugestões.',approve:'Aprovar',reject:'Recusar',archive:'Arquivar',why:'Por que recusou? (opcional)',ben:'Benefícios',per:'Período',cost:'Custos',conf:'Confiança',
 st:{pendente:'pendente',aprovada:'aprovada',recusada:'recusada',arquivada:'arquivada'},calT:'Calendário ',appr:'Atividades aprovadas',noAppr:'Aprove uma sugestão para ela aparecer aqui. Dias em azul-claro indicam o período; o 1º dia, em azul-escuro, o início.',startm:'Início',months:'mês(es)',
 faqT:'Tira-dúvidas',faq:[['Os dados do clima são da minha propriedade?','Não. Vêm da NASA POWER e são uma estimativa para uma área de cerca de 50 km ao redor do ponto escolhido, não uma medição na sua propriedade.'],['O que é rotação de culturas?','É alternar o que se planta na mesma área ao longo do tempo. Ajuda a quebrar ciclos de pragas e doenças e a cuidar melhor do solo.'],['O que é cobertura vegetal?','São plantas cultivadas para cobrir e proteger o solo, ou para depois serem incorporadas a ele. Em culturas permanentes, como a uva, podem ficar nas entrelinhas.'],['O app diz quais nutrientes faltam no meu solo?','Não. Clima e chuva não mostram fertilidade. Para isso é preciso uma análise de solo em laboratório.'],['Como aceitar uma sugestão?','Na aba Dicas, toque em Aprovar. A sugestão aprovada vai para o Calendário. Você também pode Recusar ou Arquivar.'],['As recomendações são garantidas?','Não. São sugestões da IA com base nos seus dados e nos dados da NASA. Confirme com um técnico agrícola antes de decisões importantes.']]},
-es:{wT:'Bienvenido a Audaz',wX:'Cuéntanos sobre tu finca y recibe ayuda con la rotación de cultivos y el cuidado del suelo.',start:'Comenzar',back:'Atrás',next:'Siguiente',save:'Guardar y buscar datos de la NASA',name:'Tu nombre',city:'Ciudad',search:'Buscar',gps:'📍 Usar mi ubicación',s2:'¿Qué cultivas?',crop:'Cultivo actual',wish:'Cultivos que te gustaría plantar',goal:'Tu objetivo',s3:'Suelo y agua',soil:'¿Cómo es tu suelo?',water:'Agua y riego',diff:'Principales dificultades',
+es:{wT:'Bienvenido a CultivAI',wX:'Cuéntanos sobre tu finca y recibe ayuda con la rotación de cultivos y el cuidado del suelo.',start:'Comenzar',back:'Atrás',next:'Siguiente',save:'Guardar y buscar datos de la NASA',name:'Tu nombre',city:'Ciudad',search:'Buscar',gps:'📍 Usar mi ubicación',s2:'¿Qué cultivas?',crop:'Cultivo actual',wish:'Cultivos que te gustaría plantar',goal:'Tu objetivo',s3:'Suelo y agua',soil:'¿Cómo es tu suelo?',water:'Agua y riego',diff:'Principales dificultades',
 goals:['Aumentar la productividad','Recuperar el suelo','Ahorrar insumos y agua'],soils:['Arenoso (arena suelta)','Arcilloso (barro pesado)','Mixto','No sé'],waters:['Riego por goteo','Aspersión','Solo lluvia','Poca agua'],
 needLoc:'⚠ Escribe tu nombre y busca tu ciudad (o usa tu ubicación).',searching:'Buscando…',notfound:'⚠ Ciudad no encontrada.',nogeo:'⚠ Ubicación no disponible.',nasaWait:'Buscando datos de la NASA…',
 tabs:['Inicio','Chat','Consejos','Calendario','Dudas'],hi:'Hola, ',cChat:'Hablar con la IA',cRecs:'Mis sugerencias',cCal:'Calendario agrícola',cFaq:'Preguntas y respuestas',climate:'Clima de la región',warn:'Datos de <b>NASA POWER</b>: estimación de un área de ~50 km, no una medición en tu finca. Período: ',temp:'Temperatura media',rain:'Lluvia en 60 días',rad:'Radiación kWh/m²/día',rainDay:'Lluvia por día',smap:'La humedad del suelo (SMAP) aún no está integrada.',nasaFail:'Datos de la NASA no disponibles',retry:'Intentar de nuevo',edit:'Editar registro',
-ask:'Pregunta algo…',thinking:'Pensando…',fail:'No pude responder ahora: ',intro:'¡Hola! Soy Audaz. Pregunta sobre tu suelo, tus cultivos o el clima de tu región.',created:'✅ Creé sugerencia(s) para ti. Míralas en la pestaña Consejos.',listen:'Escuchar',novoice:'Tu navegador no admite voz. Usa Chrome.',
+ask:'Pregunta algo…',thinking:'Pensando…',fail:'No pude responder ahora: ',intro:'¡Hola! Soy CultivAI. Pregunta sobre tu suelo, tus cultivos o el clima de tu región.',created:'✅ Creé sugerencia(s) para ti. Míralas en la pestaña Consejos.',listen:'Escuchar',novoice:'Tu navegador no admite voz. Usa Chrome.',
 chips:['¿Cómo puedo mejorar la salud de mi suelo?','¿Qué puedo plantar después del cultivo actual?','¿Cómo puedo ahorrar agua?','¿Cómo es el clima de mi región?'],
 recsT:'Sugerencias para ti',noRecs:'Chatea con la IA para recibir sugerencias.',approve:'Aprobar',reject:'Rechazar',archive:'Archivar',why:'¿Por qué lo rechazaste? (opcional)',ben:'Beneficios',per:'Período',cost:'Costos',conf:'Confianza',
 st:{pendente:'pendiente',aprovada:'aprobada',recusada:'rechazada',arquivada:'archivada'},calT:'Calendario ',appr:'Actividades aprobadas',noAppr:'Aprueba una sugerencia y aparecerá aquí. Los días en azul claro marcan el período; el día 1, en azul oscuro, es el inicio.',startm:'Inicio',months:'mes(es)',

@@ -8,5 +8,5 @@ app.use(express.static(path.join(process.cwd(), "public")));
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Audaz rodando em http://localhost:${PORT}`);
+  console.log(`CultivAI rodando em http://localhost:${PORT}`);
 });
