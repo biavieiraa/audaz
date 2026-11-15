@@ -1,0 +1,232 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Audaz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--pist:#B9C255;--frost:#E6F1FA;--ice:#5798D7;--deep:#0F2A44;--d7:#2B6AAE;--soft:#566A80;--line:#CFE3F3;--err:#B3261E;--warnbg:#FFF1D6;--warn:#8A5300}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;font:16px/1.5 Inter,system-ui,sans-serif;background:var(--frost);color:var(--deep);padding-bottom:76px}
+h1,h2,h3{font-family:'Bricolage Grotesque',Inter,sans-serif;line-height:1.2;margin:0 0 8px}h1{font-size:24px}h2{font-size:20px}h3{font-size:18px}
+:focus-visible{outline:2px solid var(--deep);outline-offset:4px}
+header{background:var(--d7);color:#fff;padding:8px 16px;display:flex;justify-content:space-between;align-items:center;font:700 20px 'Bricolage Grotesque',sans-serif}
+header select{width:auto;min-height:44px;background:#fff;font-size:14px}
+.pad{padding:16px;max-width:640px;margin:auto}section,.view{display:none}.on{display:block}
+.photo{height:230px;background:url(hero.jpg) center/cover,linear-gradient(135deg,#2B6AAE,#5798D7 60%,#B9C255)}
+.sheet{background:#fff;border-radius:24px 24px 0 0;margin-top:-28px;padding:24px 20px 32px;text-align:center;position:relative;max-width:640px;margin-inline:auto;min-height:55vh}
+.avatar{width:84px;height:84px;border-radius:50%;background:var(--line);margin:-66px auto 12px;display:flex;align-items:center;justify-content:center;font:700 32px 'Bricolage Grotesque';color:var(--d7);border:4px solid #fff}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0;box-shadow:0 2px 4px rgba(15,42,68,.1)}
+.card.aprovada{border:2px solid var(--pist);background:#F8FAE8}.card.recusada,.card.arquivada{opacity:.75}
+label{display:block;margin:14px 0 4px;font-size:14px;color:var(--soft);font-weight:500;text-align:left}
+input,select,textarea{width:100%;min-height:48px;padding:10px 12px;font:16px Inter,sans-serif;color:var(--deep);background:#F7FAFD;border:1px solid #7C93AB;border-radius:8px}
+.btn{min-height:48px;min-width:44px;padding:10px 18px;border-radius:8px;font:600 16px Inter,sans-serif;cursor:pointer;border:2px solid var(--d7);margin:8px 8px 0 0}
+.p{background:var(--d7);color:#fff}.s{background:#fff;color:var(--d7)}.t{background:var(--frost);color:var(--d7);border-color:transparent}
+.a{background:var(--pist);color:var(--deep);border-color:var(--pist)}.big{width:100%;margin:20px 0 0}
+.btn:disabled{background:#EEF2F6;color:#5F7389;border-color:#EEF2F6}
+.row{display:flex;gap:8px;align-items:center}.row>input{flex:1}.row .btn{margin:0}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:#fff;border-top:1px solid var(--line);box-shadow:0 -2px 8px rgba(15,42,68,.1)}
+nav button{flex:1;min-height:60px;border:0;background:none;font:500 12px Inter,sans-serif;color:var(--soft);cursor:pointer;border-top:3px solid transparent}
+nav button[aria-current=page]{color:var(--d7);font-weight:600;border-top-color:var(--d7)}
+.dots{display:flex;gap:8px;justify-content:center;margin:20px 0 12px}.dots i{width:10px;height:10px;border-radius:50%;background:var(--line);border:1px solid #7C93AB}.dots i.on{background:var(--d7);border-color:var(--d7)}
+.nav2{display:flex;justify-content:space-between}.nav2 .btn{margin:0}
+iframe{width:100%;height:230px;border:1px solid var(--line);border-radius:12px;margin-top:12px}
+.err{color:var(--err);font-size:14px;text-align:left}.warn{background:var(--warnbg);color:var(--warn);padding:10px 12px;border-radius:8px;font-size:14px;margin:8px 0;text-align:left}
+.item{display:flex;align-items:center;gap:14px;width:100%;min-height:72px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin:10px 0;font:600 17px Inter;color:var(--deep);cursor:pointer;text-align:left}
+.item i{flex:none;width:48px;height:48px;border-radius:50%;background:var(--frost);display:flex;align-items:center;justify-content:center;font-style:normal;font-size:22px}
+.stat{display:flex;gap:8px}.stat>div{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}.stat b{display:block;font:700 20px 'Bricolage Grotesque';color:var(--d7)}.stat span{font-size:12px;color:var(--soft)}
+.bars{display:flex;align-items:flex-end;gap:1px;height:80px}.bars i{flex:1;background:var(--ice);min-height:2px;border-radius:2px 2px 0 0}
+#msgs{min-height:45vh;display:flex;flex-direction:column}
+.m{max-width:85%;padding:10px 12px;margin:5px 0;border-radius:12px;white-space:pre-wrap;word-wrap:break-word}
+.u{background:var(--d7);color:#fff;align-self:flex-end;border-bottom-right-radius:2px}.b{background:#fff;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:2px}
+.say{background:none;border:0;font-size:18px;cursor:pointer;min-width:44px;min-height:44px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.chips button{min-height:44px;padding:8px 12px;border-radius:22px;border:1px solid var(--d7);background:#fff;color:var(--d7);font:500 14px Inter;cursor:pointer}
+#bar{position:sticky;bottom:68px;display:flex;gap:6px;background:var(--frost);padding:8px 0}#bar input{flex:1}#bar .btn{margin:0;padding:10px 14px}
+.tag{font-size:12px;font-weight:600;padding:2px 8px;border-radius:10px;background:var(--frost);color:var(--d7)}
+.months{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mo{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px}
+.mo h3{font-size:14px;margin:0 0 4px;text-transform:capitalize}.g{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;font-size:11px;text-align:center}
+.g span{padding:2px 0;border-radius:3px;background:#F1F4D0}.g .h{background:none;color:var(--soft);font-weight:600}.g .e{background:none}
+.g .p{background:var(--ice);color:var(--deep)}.g .s{background:var(--deep);color:#fff;font-weight:700}
+details{background:#fff;border:1px solid var(--line);border-radius:12px;margin:8px 0}summary{padding:14px 16px;font-weight:600;cursor:pointer;min-height:48px}details p{margin:0;padding:0 16px 14px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<header><span>🌱 Audaz</span><select id="lang" aria-label="Language" onchange="setLang(this.value)"><option value="en">English</option><option value="pt">Português</option><option value="es">Español</option></select></header>
+
+<!-- BOAS-VINDAS -->
+<div id="welcome" class="view"><div class="photo"></div><div class="sheet"><div class="avatar" aria-hidden="true">🌱</div>
+ <h1 data-i="wT"></h1><p data-i="wX" style="color:var(--soft)"></p><button class="btn a big" onclick="begin()" data-i="start"></button></div></div>
+
+<!-- CADASTRO -->
+<div id="onb" class="view"><div class="photo" style="height:120px"></div><div class="sheet" style="min-height:0">
+ <div class="avatar" id="av">?</div>
+ <div class="step" data-s="0">
+  <label for="nome" data-i="name"></label><input id="nome" autocomplete="name" oninput="$('av').textContent=(this.value.trim()[0]||'?').toUpperCase()">
+  <label for="cidade" data-i="city"></label>
+  <div class="row"><input id="cidade"><button class="btn a" type="button" onclick="buscar()" data-i="search"></button></div>
+  <button class="btn t" type="button" onclick="gps()" data-i="gps"></button>
+  <p id="loc" role="status" style="margin:8px 0 0;text-align:left"></p>
+  <iframe id="map" title="Map" hidden></iframe>
+  <input id="uf" type="hidden"><input id="lat" type="hidden"><input id="lon" type="hidden">
+ </div>
+ <div class="step" data-s="1" hidden>
+  <h2 data-i="s2"></h2>
+  <label for="atual" data-i="crop"></label><input id="atual">
+  <label for="desejo" data-i="wish"></label><input id="desejo">
+  <label for="obj" data-i="goal"></label><select id="obj"></select>
+ </div>
+ <div class="step" data-s="2" hidden>
+  <h2 data-i="s3"></h2>
+  <label for="solo" data-i="soil"></label><select id="solo"></select>
+  <label for="agua" data-i="water"></label><select id="agua"></select>
+  <label for="dif" data-i="diff"></label><textarea id="dif" rows="3"></textarea>
+ </div>
+ <div class="dots" id="dots" role="img"><i class="on"></i><i></i><i></i></div>
+ <div class="nav2"><button class="btn s" id="bv" type="button" onclick="passo(-1)" data-i="back"></button><button class="btn p" id="bn" type="button" onclick="passo(1)"></button></div>
+ <p id="st" role="status"></p></div></div>
+
+<!-- APP -->
+<div id="app" class="view"><div class="pad">
+ <section id="home"></section>
+ <section id="chat"><div id="msgs" aria-live="polite"></div><div class="chips" id="chips"></div>
+  <div id="bar"><input id="q" data-ph="ask" onkeydown="if(event.key=='Enter')enviar()"><button class="btn s" id="mic" type="button" onclick="mic()">🎤</button><button class="btn p" id="send" type="button" onclick="enviar()">➤</button></div></section>
+ <section id="recs"></section><section id="cal"></section><section id="faq"></section>
+</div></div>
+<nav id="nav" hidden></nav>
+
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const L={
+en:{wT:'Welcome to Audaz',wX:'Tell us about your farm and get help with crop rotation and soil care.',start:'Get started',back:'Back',next:'Next',save:'Save and fetch NASA data',name:'Your name',city:'City',search:'Search',gps:'📍 Use my location',s2:'What do you grow?',crop:'Current crop',wish:'Crops you would like to plant',goal:'Your goal',s3:'Soil and water',soil:'What is your soil like?',water:'Water and irrigation',diff:'Main difficulties',
+goals:['Increase productivity','Recover the soil','Save inputs and water'],soils:['Sandy (loose sand)','Clay (heavy mud)','Mixed',"I don't know"],waters:['Drip irrigation','Sprinkler','Rain only','Little water'],
+needLoc:'⚠ Enter your name and search your city (or use your location).',searching:'Searching…',notfound:'⚠ City not found.',nogeo:'⚠ Location is not available.',nasaWait:'Fetching NASA data…',
+tabs:['Home','Chat','Tips','Calendar','FAQ'],hi:'Hello, ',cChat:'Talk to the AI',cRecs:'My suggestions',cCal:'Farm calendar',cFaq:'Questions & answers',climate:'Regional climate',warn:'<b>NASA POWER</b> data: an estimate for an area of about 50 km, not a measurement on your farm. Period: ',temp:'Average temperature',rain:'Rain in 60 days',rad:'Radiation kWh/m²/day',rainDay:'Rain per day',smap:'Soil moisture (SMAP) is not integrated yet.',nasaFail:'NASA data unavailable',retry:'Try again',edit:'Edit registration',
+ask:'Ask something…',thinking:'Thinking…',fail:'I could not answer now: ',intro:'Hi! I am Audaz. Ask about your soil, your crops or your local climate.',created:'✅ I created suggestion(s) for you. See the Tips tab.',listen:'Listen',novoice:'Your browser does not support voice. Use Chrome.',
+chips:['How can I improve my soil health?','What can I plant after the current crop?','How can I save water?','What is the climate like in my region?'],
+recsT:'Suggestions for you',noRecs:'Chat with the AI to get suggestions.',approve:'Approve',reject:'Reject',archive:'Archive',why:'Why this reason? (optional)',ben:'Benefits',per:'Period',cost:'Costs',conf:'Confidence',
+st:{pendente:'pending',aprovada:'approved',recusada:'rejected',arquivada:'archived'},calT:'Calendar ',appr:'Approved activities',noAppr:'Approve a suggestion and it will appear here. Light blue days mark the period; the 1st day, in dark blue, is the start.',startm:'Start',months:'month(s)',
+faqT:'Questions & answers',faq:[['Is the climate data from my farm?','No. It comes from NASA POWER and is an estimate for an area of about 50 km around the chosen point, not a measurement on your farm.'],['What is crop rotation?','Alternating what you plant in the same area over time. It helps break pest and disease cycles and takes better care of the soil.'],['What are cover crops?','Plants grown to cover and protect the soil, or to be worked into it later. In perennial crops, such as grapes, they can grow between the rows.'],['Does the app tell me which nutrients my soil lacks?','No. Weather and rain do not show fertility. For that you need a soil analysis in a laboratory.'],['How do I accept a suggestion?','In the Tips tab, tap Approve. Approved suggestions go to the Calendar. You can also Reject or Archive.'],['Are the recommendations guaranteed?','No. They are AI suggestions based on your data and NASA data. Confirm with an agricultural technician before important decisions.']]},
+pt:{wT:'Bem-vindo ao Audaz',wX:'Conte sobre sua propriedade e receba ajuda com rotação de culturas e cuidado com o solo.',start:'Começar',back:'Voltar',next:'Próximo',save:'Salvar e buscar dados da NASA',name:'Seu nome',city:'Cidade',search:'Buscar',gps:'📍 Usar minha localização',s2:'O que você planta?',crop:'Cultura atual',wish:'Culturas que gostaria de plantar',goal:'Seu objetivo',s3:'Solo e água',soil:'Como é o seu solo?',water:'Água e irrigação',diff:'Principais dificuldades',
+goals:['Aumentar a produtividade','Recuperar o solo','Economizar insumos e água'],soils:['Arenoso (areia solta)','Argiloso (barro pesado)','Misto','Não sei'],waters:['Gotejamento','Aspersão','Só chuva','Pouca água'],
+needLoc:'⚠ Informe seu nome e busque a cidade (ou use sua localização).',searching:'Buscando…',notfound:'⚠ Cidade não encontrada.',nogeo:'⚠ Localização indisponível.',nasaWait:'Buscando dados da NASA…',
+tabs:['Início','Chat','Dicas','Calendário','Dúvidas'],hi:'Olá, ',cChat:'Conversar com a IA',cRecs:'Minhas sugestões',cCal:'Calendário agrícola',cFaq:'Tira-dúvidas',climate:'Clima da região',warn:'Dados da <b>NASA POWER</b>: estimativa de uma área de ~50 km, não medição na sua propriedade. Período: ',temp:'Temperatura média',rain:'Chuva em 60 dias',rad:'Radiação kWh/m²/dia',rainDay:'Chuva por dia',smap:'Umidade do solo (SMAP) ainda não integrada.',nasaFail:'Dados da NASA indisponíveis',retry:'Tentar novamente',edit:'Editar cadastro',
+ask:'Pergunte algo…',thinking:'Pensando…',fail:'Não consegui responder agora: ',intro:'Olá! Sou o Audaz. Pergunte sobre seu solo, suas culturas ou o clima da sua região.',created:'✅ Criei sugestão(ões) para você. Veja na aba Dicas.',listen:'Ouvir',novoice:'Seu navegador não suporta voz. Use o Chrome.',
+chips:['Como posso melhorar a saúde do meu solo?','Qual cultura posso plantar depois da atual?','Como posso economizar água?','Quais são as condições climáticas da minha região?'],
+recsT:'Sugestões para você',noRecs:'Converse com a IA para receber sugestões.',approve:'Aprovar',reject:'Recusar',archive:'Arquivar',why:'Por que recusou? (opcional)',ben:'Benefícios',per:'Período',cost:'Custos',conf:'Confiança',
+st:{pendente:'pendente',aprovada:'aprovada',recusada:'recusada',arquivada:'arquivada'},calT:'Calendário ',appr:'Atividades aprovadas',noAppr:'Aprove uma sugestão para ela aparecer aqui. Dias em azul-claro indicam o período; o 1º dia, em azul-escuro, o início.',startm:'Início',months:'mês(es)',
+faqT:'Tira-dúvidas',faq:[['Os dados do clima são da minha propriedade?','Não. Vêm da NASA POWER e são uma estimativa para uma área de cerca de 50 km ao redor do ponto escolhido, não uma medição na sua propriedade.'],['O que é rotação de culturas?','É alternar o que se planta na mesma área ao longo do tempo. Ajuda a quebrar ciclos de pragas e doenças e a cuidar melhor do solo.'],['O que é cobertura vegetal?','São plantas cultivadas para cobrir e proteger o solo, ou para depois serem incorporadas a ele. Em culturas permanentes, como a uva, podem ficar nas entrelinhas.'],['O app diz quais nutrientes faltam no meu solo?','Não. Clima e chuva não mostram fertilidade. Para isso é preciso uma análise de solo em laboratório.'],['Como aceitar uma sugestão?','Na aba Dicas, toque em Aprovar. A sugestão aprovada vai para o Calendário. Você também pode Recusar ou Arquivar.'],['As recomendações são garantidas?','Não. São sugestões da IA com base nos seus dados e nos dados da NASA. Confirme com um técnico agrícola antes de decisões importantes.']]},
+es:{wT:'Bienvenido a Audaz',wX:'Cuéntanos sobre tu finca y recibe ayuda con la rotación de cultivos y el cuidado del suelo.',start:'Comenzar',back:'Atrás',next:'Siguiente',save:'Guardar y buscar datos de la NASA',name:'Tu nombre',city:'Ciudad',search:'Buscar',gps:'📍 Usar mi ubicación',s2:'¿Qué cultivas?',crop:'Cultivo actual',wish:'Cultivos que te gustaría plantar',goal:'Tu objetivo',s3:'Suelo y agua',soil:'¿Cómo es tu suelo?',water:'Agua y riego',diff:'Principales dificultades',
+goals:['Aumentar la productividad','Recuperar el suelo','Ahorrar insumos y agua'],soils:['Arenoso (arena suelta)','Arcilloso (barro pesado)','Mixto','No sé'],waters:['Riego por goteo','Aspersión','Solo lluvia','Poca agua'],
+needLoc:'⚠ Escribe tu nombre y busca tu ciudad (o usa tu ubicación).',searching:'Buscando…',notfound:'⚠ Ciudad no encontrada.',nogeo:'⚠ Ubicación no disponible.',nasaWait:'Buscando datos de la NASA…',
+tabs:['Inicio','Chat','Consejos','Calendario','Dudas'],hi:'Hola, ',cChat:'Hablar con la IA',cRecs:'Mis sugerencias',cCal:'Calendario agrícola',cFaq:'Preguntas y respuestas',climate:'Clima de la región',warn:'Datos de <b>NASA POWER</b>: estimación de un área de ~50 km, no una medición en tu finca. Período: ',temp:'Temperatura media',rain:'Lluvia en 60 días',rad:'Radiación kWh/m²/día',rainDay:'Lluvia por día',smap:'La humedad del suelo (SMAP) aún no está integrada.',nasaFail:'Datos de la NASA no disponibles',retry:'Intentar de nuevo',edit:'Editar registro',
+ask:'Pregunta algo…',thinking:'Pensando…',fail:'No pude responder ahora: ',intro:'¡Hola! Soy Audaz. Pregunta sobre tu suelo, tus cultivos o el clima de tu región.',created:'✅ Creé sugerencia(s) para ti. Míralas en la pestaña Consejos.',listen:'Escuchar',novoice:'Tu navegador no admite voz. Usa Chrome.',
+chips:['¿Cómo puedo mejorar la salud de mi suelo?','¿Qué puedo plantar después del cultivo actual?','¿Cómo puedo ahorrar agua?','¿Cómo es el clima de mi región?'],
+recsT:'Sugerencias para ti',noRecs:'Chatea con la IA para recibir sugerencias.',approve:'Aprobar',reject:'Rechazar',archive:'Archivar',why:'¿Por qué lo rechazaste? (opcional)',ben:'Beneficios',per:'Período',cost:'Costos',conf:'Confianza',
+st:{pendente:'pendiente',aprovada:'aprobada',recusada:'rechazada',arquivada:'archivada'},calT:'Calendario ',appr:'Actividades aprobadas',noAppr:'Aprueba una sugerencia y aparecerá aquí. Los días en azul claro marcan el período; el día 1, en azul oscuro, es el inicio.',startm:'Inicio',months:'mes(es)',
+faqT:'Preguntas y respuestas',faq:[['¿Los datos del clima son de mi finca?','No. Vienen de NASA POWER y son una estimación para un área de unos 50 km alrededor del punto elegido, no una medición en tu finca.'],['¿Qué es la rotación de cultivos?','Alternar lo que se planta en la misma área a lo largo del tiempo. Ayuda a cortar ciclos de plagas y enfermedades y a cuidar mejor el suelo.'],['¿Qué es la cobertura vegetal?','Son plantas cultivadas para cubrir y proteger el suelo, o para incorporarlas después. En cultivos permanentes, como la uva, pueden crecer entre las hileras.'],['¿La app dice qué nutrientes le faltan a mi suelo?','No. El clima y la lluvia no muestran la fertilidad. Para eso se necesita un análisis de suelo en laboratorio.'],['¿Cómo acepto una sugerencia?','En la pestaña Consejos, toca Aprobar. La sugerencia aprobada va al Calendario. También puedes Rechazar o Archivar.'],['¿Las recomendaciones están garantizadas?','No. Son sugerencias de la IA basadas en tus datos y en los de la NASA. Confirma con un técnico agrícola antes de decisiones importantes.']]}};
+const LOC={pt:'pt-BR',en:'en',es:'es'},ICONS=['🏠','💬','🌱','📅','❓'],TABS=['home','chat','recs','cal','faq'];
+let lang=localStorage.getItem('lang')||(['pt','es'].includes((navigator.language||'').slice(0,2))?navigator.language.slice(0,2):'en');
+const t=k=>L[lang][k]??L.en[k]??k;
+let S={profile:null,nasa:null,messages:[],recs:[]},step=0,editing=false,started=false,busy=false,cur='home';
+
+function fill(id,arr){const e=$(id),i=Math.max(0,e.selectedIndex);e.innerHTML=arr.map(x=>`<option>${esc(x)}</option>`).join('');e.selectedIndex=i}
+function applyLang(){document.documentElement.lang=LOC[lang];$('lang').value=lang;
+ document.querySelectorAll('[data-i]').forEach(e=>e.textContent=t(e.dataset.i));
+ document.querySelectorAll('[data-ph]').forEach(e=>e.placeholder=t(e.dataset.ph));
+ fill('obj',t('goals'));fill('solo',t('soils'));fill('agua',t('waters'));
+ $('nav').innerHTML=TABS.map((k,i)=>`<button id="b_${k}" onclick="go('${k}')"><span aria-hidden="true">${ICONS[i]}</span><br>${t('tabs')[i]}</button>`).join('');
+ $('chips').innerHTML=t('chips').map(s=>`<button type="button">${esc(s)}</button>`).join('');
+ $('mic').setAttribute('aria-label',t('listen'));$('send').setAttribute('aria-label','→');
+ showStep();if(S.profile&&!editing){renderHome();renderMsgs();renderRecs();renderCal();renderFaq();go(cur)}}
+function setLang(v){lang=v;localStorage.setItem('lang',v);applyLang()}
+
+function go(id){cur=id;document.querySelectorAll('#app section').forEach(s=>s.classList.toggle('on',s.id==id));
+ TABS.forEach(k=>{const b=$('b_'+k);k==id?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current')});scrollTo(0,0);
+ if(id=='chat')setTimeout(()=>$('msgs').lastElementChild?.scrollIntoView(),0)}
+
+async function refresh(){S=await (await fetch('/api/state')).json();
+ const onb=!S.profile||editing;
+ $('welcome').classList.toggle('on',!S.profile&&!started&&!editing);$('onb').classList.toggle('on',onb&&(started||editing||!!S.profile));
+ $('app').classList.toggle('on',!onb);$('nav').hidden=onb;
+ if(!onb){renderHome();renderMsgs();renderRecs();renderCal();renderFaq();go(cur)}}
+function begin(){started=true;refresh()}
+
+/* ---------- Cadastro ---------- */
+const F=['nome','cidade','uf','lat','lon','atual','desejo','solo','agua','dif','obj'];
+function mapa(){const a=+$('lat').value,o=+$('lon').value;if(!a&&!o)return;const f=$('map');f.hidden=false;
+ f.src=`https://www.openstreetmap.org/export/embed.html?bbox=${o-.2},${a-.15},${o+.2},${a+.15}&layer=mapnik&marker=${a},${o}`;
+ $('loc').className='';$('loc').textContent=`📍 ${$('cidade').value||''} (${a.toFixed(3)}, ${o.toFixed(3)})`}
+async function buscar(){const q=$('cidade').value.trim();if(!q)return;$('loc').className='';$('loc').textContent=t('searching');
+ const r=await fetch(`/api/geocode?q=${encodeURIComponent(q)}&lang=${lang}`),d=await r.json();
+ if(!r.ok){$('loc').className='err';$('loc').textContent=t('notfound');return}
+ $('cidade').value=d.cidade;$('uf').value=d.uf;$('lat').value=d.lat;$('lon').value=d.lon;mapa()}
+function gps(){if(!navigator.geolocation){$('loc').className='err';$('loc').textContent=t('nogeo');return}
+ navigator.geolocation.getCurrentPosition(p=>{$('lat').value=p.coords.latitude;$('lon').value=p.coords.longitude;mapa()},()=>{$('loc').className='err';$('loc').textContent=t('nogeo')})}
+function showStep(){document.querySelectorAll('.step').forEach(s=>s.hidden=+s.dataset.s!=step);
+ [...$('dots').children].forEach((d,i)=>d.classList.toggle('on',i==step));$('dots').setAttribute('aria-label',`${step+1}/3`);
+ $('bv').style.visibility=step?'visible':'hidden';$('bn').textContent=step==2?t('save'):t('next')}
+function passo(d){
+ if(d>0&&step==0&&(!$('nome').value.trim()||!$('lat').value)){$('loc').className='err';$('loc').textContent=t('needLoc');return}
+ if(d>0&&step==2)return salvar();
+ step=Math.max(0,Math.min(2,step+d));showStep()}
+async function salvar(){const p={};F.forEach(k=>p[k]=$(k).value);p.lat=+p.lat;p.lon=+p.lon;
+ $('bn').disabled=true;$('st').textContent=t('nasaWait');
+ try{await fetch('/api/profile',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)});editing=false;step=0;cur='home';$('st').textContent=''}
+ catch(e){$('st').className='err';$('st').textContent='⚠ '+e.message}
+ $('bn').disabled=false;showStep();refresh()}
+function editar(){editing=true;step=0;F.forEach(k=>{const v=S.profile?.[k];if(v!==undefined)$(k).value=v});
+ $('av').textContent=(($('nome').value.trim()[0])||'?').toUpperCase();showStep();mapa();refresh()}
+
+/* ---------- Início ---------- */
+function renderHome(){const p=S.profile,n=S.nasa;
+ $('home').innerHTML=`<div class="card"><h1>${t('hi')}${esc(p.nome)}!</h1><span style="color:var(--soft)">📍 ${esc(p.cidade)}${p.uf?', '+esc(p.uf):''}</span></div>
+ ${[['chat','💬','cChat'],['recs','🌱','cRecs'],['cal','📅','cCal'],['faq','❓','cFaq']].map(a=>`<button class="item" onclick="go('${a[0]}')"><i aria-hidden="true">${a[1]}</i>${t(a[2])}</button>`).join('')}
+ <h2 style="margin-top:20px">${t('climate')}</h2>`+(n?`
+ <div class="warn">${t('warn')}${esc(n.periodo)}.</div>
+ <div class="stat"><div><b>${n.tempMedia??'–'} °C</b><span>${t('temp')}</span></div><div><b>${n.chuvaTotalMm} mm</b><span>${t('rain')}</span></div><div><b>${n.radiacaoMedia??'–'}</b><span>${t('rad')}</span></div></div>
+ <div class="card"><b>${t('rainDay')}</b><div class="bars" role="img" aria-label="${t('rainDay')}">${(()=>{const mx=Math.max(...n.days.map(d=>d.p||0),1);return n.days.map(d=>`<i title="${d.d}: ${d.p??0} mm" style="height:${Math.max(2,(d.p||0)/mx*80)}px"></i>`).join('')})()}</div></div>
+ <p style="font-size:14px;color:var(--soft)">${t('smap')}</p>`
+ :`<div class="warn">${t('nasaFail')}${S.nasaErro?': '+esc(S.nasaErro):''}.</div>`)+`<button class="btn s" onclick="editar()">${t('edit')}</button>`}
+
+/* ---------- Chat ---------- */
+$('chips').onclick=e=>{if(e.target.tagName=='BUTTON'){$('q').value=e.target.textContent;enviar()}};
+function renderMsgs(){$('msgs').innerHTML=S.messages.length?S.messages.map((m,i)=>m.role=='user'?`<div class="m u">${esc(m.text)}</div>`:`<div class="m b">${esc(m.text)}<br><button class="say" data-i="${i}" aria-label="${t('listen')}">🔊</button></div>`).join(''):`<div class="m b">${t('intro')}</div>`}
+$('msgs').onclick=e=>{const b=e.target.closest('.say');if(b)falar(S.messages[+b.dataset.i].text)};
+function add(c,x){const d=document.createElement('div');d.className='m '+c;d.textContent=x;$('msgs').appendChild(d);d.scrollIntoView();return d}
+async function enviar(){const m=$('q').value.trim();if(!m||busy)return;busy=true;$('send').disabled=true;$('q').value='';
+ add('u',m);const l=add('b',t('thinking'));
+ try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:m,lang})}),d=await r.json();
+  if(!r.ok)throw new Error(d.error||'');
+  await refresh();if(d.recs?.length)add('b',t('created'));$('msgs').lastElementChild?.scrollIntoView()
+ }catch(e){l.textContent=t('fail')+e.message}
+ busy=false;$('send').disabled=false}
+function mic(){const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return alert(t('novoice'));
+ const r=new R(),b=$('mic');r.lang=LOC[lang];b.textContent='⏺';
+ r.onresult=e=>{$('q').value=e.results[0][0].transcript;enviar()};r.onend=r.onerror=()=>b.textContent='🎤';r.start()}
+function falar(x){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(x);u.lang=LOC[lang];speechSynthesis.speak(u)}
+
+/* ---------- Sugestões ---------- */
+const ord={pendente:0,aprovada:1,arquivada:2,recusada:3};
+function renderRecs(){const R=[...S.recs].sort((a,b)=>ord[a.status]-ord[b.status]);
+ $('recs').innerHTML=`<h2>${t('recsT')}</h2>`+(R.length?R.map(r=>`<div class="card ${r.status}"><h3>${esc(r.titulo)} <span class="tag">${t('st')[r.status]}</span></h3>
+ <p>${esc(r.motivo)}</p><p><b>🌿 ${t('ben')}:</b> ${esc(r.beneficios)}</p><p><b>🗓️ ${t('per')}:</b> ${esc(r.periodo)}</p>
+ ${(r.etapas||[]).length?`<ol>${r.etapas.map(e=>`<li>${esc(e)}</li>`).join('')}</ol>`:''}${r.custos?`<p><b>💰 ${t('cost')}:</b> ${esc(r.custos)}</p>`:''}
+ <div class="warn">${t('conf')}: ${esc(r.confianca)}. ${esc(r.limitacoes)}</div>
+ ${r.status=='pendente'?`<button class="btn p" onclick="decidir('${r.id}','aprovada')">${t('approve')}</button><button class="btn s" onclick="decidir('${r.id}','recusada')">${t('reject')}</button><button class="btn t" onclick="decidir('${r.id}','arquivada')">${t('archive')}</button>`:''}</div>`).join(''):`<p>${t('noRecs')}</p>`)}
+async function decidir(id,status){let motivo;if(status=='recusada')motivo=prompt(t('why'));
+ await fetch('/api/rec/'+id,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({status,motivo})});refresh()}
+
+/* ---------- Calendário anual ---------- */
+function renderCal(){const y=new Date().getFullYear(),lc=LOC[lang],MN=m=>new Date(y,m,1).toLocaleString(lc,{month:'long'});
+ const WD=[...Array(7)].map((_,i)=>new Date(2024,0,1+i).toLocaleString(lc,{weekday:'short'})[0].toUpperCase());
+ const ap=S.recs.filter(r=>r.status=='aprovada'),mk={};
+ ap.forEach(r=>{const s=(+r.mes_inicio||0)-1;if(s<0||s>11)return;for(let i=0;i<Math.max(1,+r.duracao_meses||1);i++){const m=(s+i)%12;(mk[m]=mk[m]||{}).p=1;if(!i)mk[m].s=1}});
+ let h=`<h2>${t('calT')}${y}</h2><div class="months">`;
+ for(let m=0;m<12;m++){const off=(new Date(y,m,1).getDay()+6)%7,nd=new Date(y,m+1,0).getDate();
+  h+=`<div class="mo"><h3>${MN(m)}</h3><div class="g">${WD.map(d=>`<span class="h">${d}</span>`).join('')}${'<span class="e"></span>'.repeat(off)}`;
+  for(let d=1;d<=nd;d++)h+=`<span class="${mk[m]?.s&&d==1?'s':mk[m]?.p?'p':''}">${d}</span>`;h+='</div></div>'}
+ h+=`</div><h3 style="margin-top:16px">${t('appr')}</h3>`;
+ h+=ap.length?ap.map(r=>`<div class="card aprovada"><b>${esc(r.titulo)}</b><br>📅 ${t('startm')}: ${(+r.mes_inicio>=1&&+r.mes_inicio<=12)?MN(+r.mes_inicio-1):'–'} · ${esc(r.duracao_meses)} ${t('months')}${(r.etapas||[]).length?`<ol>${r.etapas.map(e=>`<li>${esc(e)}</li>`).join('')}</ol>`:''}</div>`).join(''):`<p>${t('noAppr')}</p>`;
+ $('cal').innerHTML=h}
+function renderFaq(){$('faq').innerHTML=`<h2>${t('faqT')}</h2>`+t('faq').map(f=>`<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join('')}
+
+applyLang();refresh();
+</script></body></html>

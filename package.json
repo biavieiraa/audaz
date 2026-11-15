@@ -1,0 +1,1 @@
+{ "name": "terraciclo", "type": "module", "scripts": { "start": "node --env-file=.env server.js" }, "dependencies": { "express": "^4.19.2" } }
