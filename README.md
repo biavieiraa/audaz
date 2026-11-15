@@ -4,7 +4,7 @@ Project created for **NASA Space Apps Challenge**.
 
 An agricultural assistant for **smallholder farmers**, designed to help with decisions on what to plant, when to plant, and how to care for the soil—all through simple, WhatsApp-style conversations.
 
-🔗 **Access the project:** [https://audaz-rosy.vercel.app/]([https://your-link-here](https://audaz-rosy.vercel.app/))
+🔗 **Access the project:** ([https://audaz-rosy.vercel.app/](https://audaz-rosy.vercel.app/))
 
 > No installation required. Simply open the link on your mobile phone or computer.
 
