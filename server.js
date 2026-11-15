@@ -3,7 +3,11 @@ import fs from 'fs';
 
 const app = express();
 app.use(express.json());
-app.use(express.static('public'));
+
+// Página inicial
+app.get('/', (req, res) => {
+  res.redirect('/index.html');
+});
 
 // ---------- BANCO LOCAL (db.json) ----------
 const DB = 'db.json';
