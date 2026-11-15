@@ -964,6 +964,8 @@ button.mo:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(20,22
   .monthgrid .dayp { margin-top: 0; }
   .cd { min-height: 64px; }
 }
+#boot { min-height: 100vh; display: grid; place-items: center; }
+#boot img { width: 72px; animation: fi .8s ease-in-out infinite alternate; }
 /* CELULARES PEQUENOS */
 @media (max-width: 360px) {
   .scr {
@@ -1879,7 +1881,6 @@ $('cal').onclick=e=>{const b=e.target.closest('button');if(!b)return;const ds=b.
  if(ds.ics)return baixarICS(ds.ics);
  if(ds.go)go(ds.go)};
 
-/* ---------- Sugestões (com datas e categorias) ---------- */
 function renderRecs(){const R=[...S.recs].sort((a,b)=>ord[a.status]-ord[b.status]);
  $('recs').innerHTML=topbar()+`<h2>${t('recsT')}</h2>`+(R.length?R.map(r=>{const x=recDates(r);return `<div class="card ${r.status}"><h3>${esc(r.titulo)} <span class="tag">${t('st')[r.status]}</span></h3>
  ${r.cultura?`<p class="recdate"><b>${ct('cultura')}:</b> ${esc(r.cultura)}</p>`:''}<p>${esc(r.motivo)}</p><p><b>${t('ben')}:</b> ${esc(r.beneficios)}</p><p><b>${t('per')}:</b> ${esc(r.periodo)}</p>
@@ -1889,13 +1890,11 @@ function renderRecs(){const R=[...S.recs].sort((a,b)=>ord[a.status]-ord[b.status
  ${r.status=='aprovada'?`<button class="btn sec" onclick="verNoCal('${esc(r.id)}')">${ico('cal',18)} ${ct('verCal')}</button>`:''}
  ${r.status=='pendente'?`<button class="btn pri" onclick="decidir('${r.id}','aprovada')">${t('approve')}</button><button class="btn sec" onclick="decidir('${r.id}','recusada')">${t('reject')}</button><button class="btn ter" onclick="decidir('${r.id}','arquivada')">${t('archive')}</button>`:''}</div>`}).join(''):`<p>${t('noRecs')}</p>`)}
 
-/* ---------- Ajustes: ícones extras, sem emoji, "Hoje no campo" ---------- */
 Object.assign(IC,{dl:'<path d="M11 3h2v9.6l3.3-3.3 1.4 1.4L12 16.4l-5.7-5.7 1.4-1.4 3.3 3.3V3zM4 18h16v2H4z"/>',
  mic:'<path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zM5 10h2a5 5 0 0 0 10 0h2a7 7 0 0 1-6 6.9V21h-2v-4.1A7 7 0 0 1 5 10z"/>',
  send:'<path d="M3 11h13.2l-5.6-5.6L12 4l8 8-8 8-1.4-1.4 5.6-5.6H3z"/>',
  vol:'<path d="M3 9h4l5-4v14l-5-4H3zM15.5 8.5a5 5 0 0 1 0 7l-1.4-1.4a3 3 0 0 0 0-4.2zM18.3 5.7a9 9 0 0 1 0 12.6l-1.4-1.4a7 7 0 0 0 0-9.8z"/>',
  stop:'<rect x="6" y="6" width="12" height="12" rx="2"/>'});
-// tira os emojis do começo dos textos (avisos e mensagens)
 for(const k in L)for(const j in L[k])if(typeof L[k][j]=='string')L[k][j]=L[k][j].replace(/^(?:\u26A0|\u2705)\uFE0F?\s*/,'');
 function mapa(){const a=+$('lat').value,o=+$('lon').value;if(!a&&!o)return;const f=$('map');f.hidden=false;$('mapph').hidden=true;
  f.src=`https://www.openstreetmap.org/export/embed.html?bbox=${o-.2},${a-.15},${o+.2},${a+.15}&layer=mapnik&marker=${a},${o}`;
@@ -1909,13 +1908,8 @@ function mic(){const R=window.SpeechRecognition||window.webkitSpeechRecognition;
 {const f=renderHome;renderHome=function(){f();const c=document.querySelector('#home .hubgrid>div');if(c)c.insertAdjacentHTML('afterbegin',`<div id="hojeCampo">${homeHoje()}</div>`)}}
 {const f=atualizarDados;atualizarDados=async function(){await f();if(S.profile)renderHome()}}
 {const f=go;go=function(id){if(id=='cal')$('cal').classList.remove('still');return f(id)}}
-/* ---------- Datas exatas das sugestões ---------- */
-// Referência: o dia em que a sugestão foi aprovada (ou criada). Para sugestões pendentes, hoje.
 function refDate(r){if(r.status=='aprovada'){const a=Date.parse(r.aprovadaEm||'');if(a)return d0(new Date(a));const ts=+String(r.id||'').slice(0,13);if(ts>1e12&&ts<4e12)return d0(new Date(ts))}return d0(new Date())}
-// Soma meses sem "pular" mês curto (31/jan + 1 mês = 28/fev).
 function addM(d,n){const y=d.getFullYear(),m=d.getMonth()+n,last=new Date(y,m+1,0).getDate();return new Date(y,m,Math.min(d.getDate(),last))}
-// Início: no mesmo mês da referência começa naquele dia; mês seguinte começa no dia 1º; mês que já passou vai para o ano que vem.
-// Fim: exatamente "duracao_meses" depois do início (último dia incluído).
 function recDates(r){const dur=Math.min(24,Math.max(1,Math.round(+r.duracao_meses||1)));let ini;
  const di=/^(\d{4})-(\d{2})-(\d{2})/.exec(r.data_inicio||'');
  if(di)ini=new Date(+di[1],+di[2]-1,+di[3]);
@@ -1927,7 +1921,26 @@ function recDates(r){const dur=Math.min(24,Math.max(1,Math.round(+r.duracao_mese
  let steps=et.map((x,k)=>{const a=Math.floor(D*acc/tot);acc+=useW?x.w:1;const b=Math.max(a,Math.floor(D*acc/tot)-1);return {...x,k,dias:x.w,ini:addD(ini,a),fim:addD(ini,b)}});
  if(!n)steps=[{s:r.titulo,k:0,tipo:inferTipo(r.titulo),como:'',cada:0,ini,fim}];
  return {ini,fim,D,dur,steps,n}}
-function renderFaq(){$('faq').innerHTML=topbar()+`<h2>${t('faqT')}</h2>`+t('faq').map(f=>`<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join('')}
+function refDate(r){const ts=+String(r.id||'').slice(0,13);if(ts>1e12&&ts<4e12)return d0(new Date(ts));const a=Date.parse(r.aprovadaEm||'');if(a)return d0(new Date(a));return d0(new Date())}
+function calEvents(){const P=['#DCE8B5','#BBDCEB','#F4D4A5','#E7C9E8','#F0C8C3','#C5D8F0','#D5E8D1','#E8D6B9'],usadas=new Set();
+ return S.recs.filter(r=>r.status=='aprovada').map(r=>{let c=corRecomendacao(r.id||r.titulo);if(usadas.has(c))c=P.find(x=>!usadas.has(x))||c;usadas.add(c);const x=recDates(r);
+  return {r,id:String(r.id),t:r.titulo,cultura:String(r.cultura||'').trim(),c,...(x||{semData:true})}})}
+async function refresh(){
+ let boot=null;
+ if(!document.querySelector('.view.on')){boot=document.createElement('div');boot.id='boot';boot.innerHTML='<img src="img/logo_reduzida.png" alt="" onerror="this.remove()">';document.querySelector('.wrap').appendChild(boot)}
+ try{
+  const r=await fetch('/api/state');if(!r.ok)throw new Error(lang=='en'?'Could not load data from the server.':lang=='es'?'No se pudieron cargar los datos del servidor.':'Não foi possível carregar os dados do servidor.');
+  const d=await r.json();S={profile:d.profile||null,nasa:d.nasa||null,nasaErro:d.nasaErro||null,messages:d.messages||[],recs:d.recs||[]};
+  const onb=editing||(!S.profile&&started);
+  $('welcome').classList.toggle('on',!S.profile&&!started&&!editing);$('onb').classList.toggle('on',onb);$('app').classList.toggle('on',!onb&&!!S.profile);
+  if(!onb&&S.profile){renderHome();renderMsgs();renderRecs();renderCal();renderFaq();go(cur)}
+ }catch(e){
+  console.error('Erro ao carregar estado:',e);
+  $('welcome').classList.add('on');$('onb').classList.remove('on');$('app').classList.remove('on');
+  let er=$('loadError');if(!er){er=document.createElement('p');er.id='loadError';er.className='err';er.setAttribute('role','alert');$('welcome').querySelector('.sheet').appendChild(er)}
+  er.textContent=e.message;
+ }finally{if(boot)boot.remove()}}
+ function renderFaq(){$('faq').innerHTML=topbar()+`<h2>${t('faqT')}</h2>`+t('faq').map(f=>`<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join('')}
 
 applyLang();refresh();
 </script></body></html>

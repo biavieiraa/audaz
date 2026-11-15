@@ -325,10 +325,68 @@ FORMATO: responda SOMENTE em JSON válido:
 {"reply": "texto simples para o agricultor", "recommendations": []}
 
 Cada item de recommendations (só quando houver base suficiente):
-{"titulo":"","motivo":"","beneficios":"","periodo":"","mes_inicio":1,"duracao_meses":3,"etapas":["",""],"custos":"","confianca":"baixa|média|alta","limitacoes":""}
+{"titulo":"","cultura":"","motivo":"","beneficios":"","periodo":"","mes_inicio":12,"duracao_meses":3,"etapas":[{"texto":"","dias":7,"tipo":"preparo","como":"","a_cada_dias":null}],"custos":"","confianca":"baixa|média|alta","limitacoes":""}
+
+CALENDÁRIO (as recomendações aprovadas viram tarefas no calendário do agricultor):
+- Use a DATA DE HOJE informada no contexto. Você não sabe a data por conta própria.
+- "mes_inicio" (número de 1 a 12) é o mês em que a atividade começa. Escolha o mês atual ou um mês seguinte, de acordo com a estação do hemisfério e o clima informado. Nunca use janeiro (1) só por ser o começo do ano. Se for o mês atual, a atividade começa hoje.
+- "duracao_meses" (número inteiro de 1 a 24) é quanto tempo dura a atividade inteira, contando a partir do início.
+- "periodo" é um texto curto e coerente com mes_inicio e duracao_meses (ex.: "dezembro a fevereiro").
+- "cultura": a planta ou cultura envolvida (ex.: "feijão-de-porco", "uva", "alface"). Use o nome que o agricultor usa no cadastro quando for a cultura dele.
+- "etapas" em ordem. Cada etapa vira tarefas no calendário, então seja ESPECÍFICO:
+  - "texto": ação curta que diga O QUE fazer e EM QUAL planta ou local. Ex.: "Regar as mudas de alface", "Semear feijão-de-porco nas entrelinhas da uva". Nunca escreva só "regar a planta" ou "fazer o manejo".
+  - "dias": quantos dias a etapa dura (número inteiro). A soma dos dias deve ser igual ou próxima de duracao_meses × 30.
+  - "tipo": um destes: plantio, irrigacao, adubacao, cobertura, colheita, poda, pragas, preparo, observacao, outro.
+  - "como": 1 ou 2 frases práticas de como fazer (horário, onde, cuidado principal). Não invente quantidades exatas sem base.
+  - "a_cada_dias": se a tarefa se repete durante a etapa (ex.: regar a cada 2 dias, olhar pragas a cada 7 dias), o intervalo em dias; senão null.
 
 Sem base suficiente, deixe recommendations vazio. Não crie recomendações só para preencher a lista.
 `;
+
+// ---------- CALENDÁRIO: DATA DE HOJE E LIMPEZA DAS SUGESTÕES ----------
+
+// Data de hoje no horário do Brasil (o servidor pode estar em outro fuso).
+function hojeBR() {
+  const agora = new Date();
+  const parte = (op) => Number(agora.toLocaleString("en-US", { ...op, timeZone: "America/Sao_Paulo" }));
+  return {
+    texto: agora.toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" }),
+    mes: parte({ month: "numeric" }),
+    ano: parte({ year: "numeric" })
+  };
+}
+
+const inteiro = (valor, min, max) => {
+  const n = Math.round(Number(valor));
+  return Number.isFinite(n) && valor !== null && valor !== "" ? Math.min(max, Math.max(min, n)) : null;
+};
+
+const TIPOS = ["plantio", "irrigacao", "adubacao", "cobertura", "colheita", "poda", "pragas", "preparo", "observacao", "outro"];
+
+// Garante que mes_inicio, duracao_meses e etapas venham num formato que o calendário entende.
+function normalizarRec(item = {}) {
+  const etapas = (Array.isArray(item.etapas) ? item.etapas : [])
+    .map((e) =>
+      typeof e === "string"
+        ? { texto: e.trim(), dias: null, tipo: null, como: "", a_cada_dias: null }
+        : {
+            texto: String(e?.texto ?? e?.etapa ?? "").trim(),
+            dias: inteiro(e?.dias, 1, 730),
+            tipo: TIPOS.includes(e?.tipo) ? e.tipo : null,
+            como: String(e?.como ?? "").trim().slice(0, 400),
+            a_cada_dias: inteiro(e?.a_cada_dias, 1, 60)
+          }
+    )
+    .filter((e) => e.texto);
+
+  return {
+    ...item,
+    cultura: String(item.cultura ?? "").trim().slice(0, 80),
+    mes_inicio: inteiro(item.mes_inicio, 1, 12),
+    duracao_meses: inteiro(item.duracao_meses, 1, 24) || 1,
+    etapas
+  };
+}
 
 // ---------- CHAT COM GROQ ----------
 
@@ -376,8 +434,11 @@ app.post(
               : ""
           }`
       );
-
+    const hoje = hojeBR();
+    const lat = Number(db.profile?.lat);
     const ctx = `
+    DATA DE HOJE: ${hoje.texto} (mês atual: ${hoje.mes}; ano: ${hoje.ano}).
+HEMISFÉRIO: ${Number.isFinite(lat) ? (lat < 0 ? "sul (estações invertidas em relação ao norte)" : "norte") : "desconhecido"}.
 CADASTRO DO AGRICULTOR:
 ${JSON.stringify(db.profile)}
 
@@ -458,7 +519,7 @@ ${decisoes.join("; ") || "Nenhuma"}
         ? out.recommendations
         : []
     ).map((item) => ({
-      ...item,
+      ...normalizarRec(item),
       id:
         Date.now().toString() +
         Math.random().toString(36).slice(2, 7),
@@ -498,7 +559,18 @@ app.post(
       });
     }
 
+    const STATUS = ["pendente", "aprovada", "recusada", "arquivada"];
+
+    if (!STATUS.includes(req.body.status)) {
+      return res.status(400).json({
+        error: "Invalid status."
+      });
+    }
     rec.status = req.body.status;
+    
+    if (rec.status === "aprovada" && !rec.aprovadaEm) {
+      rec.aprovadaEm = new Date().toISOString();
+    }
 
     if (req.body.motivo) {
       rec.motivoRecusa = req.body.motivo;
@@ -510,6 +582,45 @@ app.post(
   })
 );
 
+// ---------- TAREFAS FEITAS (CALENDÁRIO) ----------
+
+app.post(
+  "/api/rec/:id/feito",
+  withUser(async (req, res, userId) => {
+    const db = await load(userId);
+
+    const rec = db.recs.find(
+      (r) => String(r.id) === String(req.params.id)
+    );
+
+    if (!rec) {
+      return res.status(404).json({
+        error: "Not found."
+      });
+    }
+
+    // chave = "AAAA-MM-DD|número da etapa"
+    const chave = String(req.body.chave || "");
+
+    if (!/^\d{4}-\d{2}-\d{2}\|\d{1,3}$/.test(chave)) {
+      return res.status(400).json({
+        error: "Invalid key."
+      });
+    }
+
+    rec.feitos = rec.feitos || {};
+
+    if (req.body.feito) {
+      rec.feitos[chave] = true;
+    } else {
+      delete rec.feitos[chave];
+    }
+
+    await save(userId, db);
+
+    res.json({ ok: true });
+  })
+);
 // ---------- EXPORTAÇÃO ----------
 
 export default app;
