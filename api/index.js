@@ -31,7 +31,7 @@ const initialState = {
 // ---------- IDENTIFICAÇÃO DO USUÁRIO ----------
 
 function getUserId(req) {
-  const id = req.headers["x-CultivAI-user"];
+  const id = req.headers["x-cultivai-user"];
 
   if (
     typeof id !== "string" ||
