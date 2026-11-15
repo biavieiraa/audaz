@@ -393,7 +393,8 @@ function renderCal(){const now=new Date(),y0=now.getFullYear(),m0=now.getMonth()
   h+='</div></div>'}
  h+=`</div><h3 style="margin-top:16px">${t('appr')}</h3>`;
  h+=ap.length?ap.map(r=>`<div class="card aprovada"><b>${esc(r.titulo)}</b><br>📅 ${t('startm')}: ${(+r.mes_inicio>=1&&+r.mes_inicio<=12)?MN(y0,+r.mes_inicio-1):'–'} · ${esc(r.duracao_meses)} ${t('months')}${(r.etapas||[]).length?`<ol>${r.etapas.map(e=>`<li>${esc(e)}</li>`).join('')}</ol>`:''}</div>`).join(''):`<p>${t('noAppr')}</p>`;
- $('cal').innerHTML=h}$('faq').innerHTML=`<h2>${t('faqT')}</h2>`+t('faq').map(f=>`<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join('')}
+ $('cal').innerHTML=h}
+function renderFaq(){$('faq').innerHTML=`<h2>${t('faqT')}</h2>`+t('faq').map(f=>`<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join('')}
 
 applyLang();refresh();
 </script></body></html>
