@@ -736,13 +736,16 @@ textarea:focus {
 }
 
 .g .cp {
-  background: var(--lime);
+  background: var(--event-color);
+  color: #242424;
+  font-weight: 600;
 }
 
 .g .cs {
-  background: var(--ol);
-  color: #fff;
+  background: var(--event-color);
+  color: #242424;
   font-weight: 700;
+  box-shadow: inset 0 0 0 2px rgba(20,22,26,.45);
 }
 
 .g .today {
@@ -1046,7 +1049,9 @@ section.on > * {
 <select id="lang" aria-label="Language" onchange="setLang(this.value)"><option value="en">English</option><option value="pt">Português</option><option value="es">Español</option></select>
 <div class="wrap">
 
-<div id="welcome" class="view"><div class="photo"></div><div class="sheet" style="min-height:60vh;text-align:center"><div class="badge up" data-ic="clover" data-s="34"></div>
+<div id="welcome" class="view"><div class="photo"></div><div class="sheet" style="min-height:60vh;text-align:center"><div class="badge up logo">
+  <img src="img/logo_reduzida.png" alt="Logo Audaz">
+</div>
  <h1 data-i="wT" style="margin-top:36px"></h1><p data-i="wX" style="font-size:14px;margin:0 0 36px"></p><button class="go" onclick="begin()" data-i="start"></button></div></div>
 
 <div id="onb" class="view"><div class="scr">
@@ -1162,11 +1167,87 @@ function go(id){cur=id;document.querySelectorAll('#app section').forEach(s=>s.cl
  if(id=='chat')setTimeout(()=>$('msgs').lastElementChild?.scrollIntoView(),0)}
 const topbar=()=>`<div style="margin:-2px 0 8px"><button class="link" onclick="go('home')" style="color:var(--ink);text-decoration:none">${t('back')}</button></div>`;
 
-async function refresh(){S=await (await fetch('/api/state')).json();
- const onb=editing||(!S.profile&&started);
- $('welcome').classList.toggle('on',!S.profile&&!started&&!editing);$('onb').classList.toggle('on',onb);$('app').classList.toggle('on',!onb&&!!S.profile);
- if(!onb&&S.profile){renderHome();renderMsgs();renderRecs();renderCal();renderFaq();go(cur)}}
-function begin(){started=true;step=0;showStep();refresh()}
+async function refresh(){
+  // Deixa a tela inicial disponível enquanto verifica o servidor.
+  $('welcome').classList.add('on');
+  $('onb').classList.remove('on');
+  $('app').classList.remove('on');
+
+  try {
+    const response = await fetch('/api/state');
+
+    if (!response.ok) {
+      throw new Error('Não foi possível carregar os dados do servidor.');
+    }
+
+    const data = await response.json();
+
+    S = {
+      profile: data.profile || null,
+      nasa: data.nasa || null,
+      nasaErro: data.nasaErro || null,
+      messages: data.messages || [],
+      recs: data.recs || []
+    };
+
+    const onb = editing || (!S.profile && started);
+
+    $('welcome').classList.toggle('on', !S.profile && !started && !editing);
+    $('onb').classList.toggle('on', onb);
+    $('app').classList.toggle('on', !onb && !!S.profile);
+
+    if (!onb && S.profile) {
+      renderHome();
+      renderMsgs();
+      renderRecs();
+      renderCal();
+      renderFaq();
+      go(cur);
+    }
+
+  } catch (e) {
+    console.error('Erro ao carregar estado:', e);
+
+    // Não deixa a página inteira em branco.
+    $('welcome').classList.add('on');
+    $('onb').classList.remove('on');
+    $('app').classList.remove('on');
+
+    let error = $('loadError');
+
+    if (!error) {
+      error = document.createElement('p');
+      error.id = 'loadError';
+      error.className = 'err';
+      error.setAttribute('role', 'alert');
+      $('welcome').querySelector('.sheet').appendChild(error);
+    }
+
+    error.textContent = '⚠ ' + e.message;
+  }
+}
+
+async function atualizarDados(){
+  const response = await fetch('/api/state');
+
+  if(!response.ok){
+    throw new Error('Não foi possível atualizar os dados.');
+  }
+
+  const data = await response.json();
+
+  S = {
+    profile: data.profile || null,
+    nasa: data.nasa || null,
+    nasaErro: data.nasaErro || null,
+    messages: data.messages || [],
+    recs: data.recs || []
+  };
+
+  renderMsgs();
+  renderRecs();
+  renderCal();
+}
 
 /* ---------- Cadastro ---------- */
 function mapa(){const a=+$('lat').value,o=+$('lon').value;if(!a&&!o)return;const f=$('map');f.hidden=false;$('mapph').hidden=true;
@@ -1190,18 +1271,100 @@ async function passo(d){
  if(d>0&&step==1&&!$('lat').value){clearTimeout(tm);await buscar();if(!$('lat').value){$('loc').className='err';$('loc').textContent=t('needLoc');return}}
  if(d>0&&step==3)return salvar();
  $('onb').dataset.dir=d<0?'back':'fwd';step+=d;showStep();scrollTo(0,0);if(step==2)loadSoils()}
-async function salvar(){if(!soilSel){soilSel='naosei';$('solo').value=soilName('naosei')}
- const p={nome:$('nome').value.trim(),cidade:$('cidade').value.trim(),uf:$('uf').value,lat:+$('lat').value,lon:+$('lon').value,solo:$('solo').value,atual:$('atual').value.trim(),desejo:$('desejo').value.trim(),agua:$('agua').value,obj:$('obj').value};
- if(soil.state=='ok')p.solosRegiao=soil.list.map(x=>`${x.w} ${x.p}%`).join(', ');
- $('bn').disabled=true;$('st').className='note';$('st').textContent=t('nasaWait');
- try{await fetch('/api/profile',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)});editing=false;started=false;step=0;cur='home';$('st').textContent=''}
- catch(e){$('st').className='err';$('st').textContent='⚠ '+e.message}
- $('bn').disabled=false;showStep();refresh()}
+async function salvar(){
+  if(busy) return;
+
+  if(!soilSel){
+    soilSel='naosei';
+    $('solo').value=soilName('naosei');
+  }
+
+  const p={
+    nome:$('nome').value.trim(),
+    cidade:$('cidade').value.trim(),
+    uf:$('uf').value,
+    lat:+$('lat').value,
+    lon:+$('lon').value,
+    solo:$('solo').value,
+    atual:$('atual').value.trim(),
+    desejo:$('desejo').value.trim(),
+    agua:$('agua').value,
+    obj:$('obj').value
+  };
+
+  if(soil.state=='ok'){
+    p.solosRegiao=soil.list.map(x=>`${x.w} ${x.p}%`).join(', ');
+  }
+
+  $('bn').disabled=true;
+  $('st').className='note';
+  $('st').textContent=t('nasaWait');
+
+  try{
+    const response=await fetch('/api/profile',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(p)
+    });
+
+    const data=await response.json().catch(()=>({}));
+
+    if(!response.ok){
+      throw new Error(data.error||'Não foi possível salvar seu cadastro.');
+    }
+
+    // Confirma se o perfil realmente foi salvo e pode ser recuperado.
+    const stateResponse=await fetch('/api/state');
+
+    if(!stateResponse.ok){
+      throw new Error('O cadastro foi enviado, mas não foi possível recuperar seus dados.');
+    }
+
+    const state=await stateResponse.json();
+
+    if(!state.profile){
+      throw new Error('O servidor não encontrou o perfil salvo. Seus dados continuam preenchidos.');
+    }
+
+    S=state;
+    editing=false;
+    started=false;
+    step=0;
+    cur='home';
+
+    $('st').textContent='';
+    $('welcome').classList.remove('on');
+    $('onb').classList.remove('on');
+    $('app').classList.add('on');
+
+    renderHome();
+    renderMsgs();
+    renderRecs();
+    renderCal();
+    renderFaq();
+    go('home');
+
+  }catch(e){
+    $('st').className='err';
+    $('st').textContent='⚠ '+e.message;
+
+    // Mantém a pessoa na última etapa para não perder o cadastro.
+  }finally{
+    $('bn').disabled=false;
+    showStep();
+  }
+}
 function editar(){editing=true;step=0;const p=S.profile||{};
  ['nome','cidade','uf','lat','lon','atual','desejo'].forEach(k=>$(k).value=p[k]??'');
  [['agua','waters'],['obj','goals']].forEach(([id,k])=>{const i=L[lang][k].indexOf(p[id]);$(id).selectedIndex=i<0?0:i+1});
  soilSel=soilFromText(p.solo);$('solo').value=p.solo||'';soilAll=false;$('onb').dataset.dir='fwd';$('map').hidden=true;$('mapph').hidden=false;
- showStep();renderSoils();mapa();refresh()}
+ showStep();
+renderSoils();
+mapa();
+
+$('welcome').classList.remove('on');
+$('app').classList.remove('on');
+$('onb').classList.add('on');}
 
 /* ---------- Tipos de solo ---------- */
 const SOILS=[
@@ -1263,13 +1426,45 @@ let seen=-1;
 function renderMsgs(){const nw=i=>seen>=0&&i>=seen?' new':'';$('msgs').innerHTML=S.messages.length?S.messages.map((m,i)=>m.role=='user'?`<div class="m u${nw(i)}">${esc(m.text)}</div>`:`<div class="m b${nw(i)}">${esc(m.text)}<br><button class="say" data-i="${i}" aria-label="${t('listen')}">🔊</button></div>`).join(''):`<div class="m b new">${t('intro')}</div>`;seen=S.messages.length}
 $('msgs').onclick=e=>{const b=e.target.closest('.say');if(b)falar(S.messages[+b.dataset.i].text)};
 function add(c,x){const d=document.createElement('div');d.className='m new '+c;d.textContent=x;$('msgs').appendChild(d);d.scrollIntoView();return d}
-async function enviar(){const m=$('q').value.trim();if(!m||busy)return;busy=true;$('send').disabled=true;$('q').value='';
- add('u',m);seen=S.messages.length+1;const l=add('b',t('thinking').replace(/…$/,''));l.classList.add('typing');
- try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:m,lang})}),d=await r.json();
-  if(!r.ok)throw new Error(d.error||'');
-  await refresh();if(d.recs?.length)add('b',t('created'));$('msgs').lastElementChild?.scrollIntoView()
- }catch(e){l.classList.remove('typing');l.textContent=t('fail')+e.message}
- busy=false;$('send').disabled=false}
+async function enviar(){
+  const m=$('q').value.trim();
+  if(!m||busy)return;
+
+  busy=true;
+  $('send').disabled=true;
+  $('q').value='';
+
+  add('u',m);
+  seen=S.messages.length+1;
+
+  const l=add('b',t('thinking').replace(/…$/,''));
+  l.classList.add('typing');
+
+  try{
+    const r=await fetch('/api/chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:m,lang})
+    });
+
+    const d=await r.json();
+
+    if(!r.ok)throw new Error(d.error||'');
+
+    await atualizarDados();
+
+    if(d.recs?.length)add('b',t('created'));
+
+    $('msgs').lastElementChild?.scrollIntoView();
+
+  }catch(e){
+    l.classList.remove('typing');
+    l.textContent=t('fail')+e.message;
+  }
+
+  busy=false;
+  $('send').disabled=false;
+}
 function mic(){const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return alert(t('novoice'));
  const r=new R(),b=$('mic');r.lang=LOC[lang];b.textContent='⏺';
  r.onresult=e=>{$('q').value=e.results[0][0].transcript;enviar()};r.onend=r.onerror=()=>b.textContent='🎤';r.start()}
@@ -1283,24 +1478,126 @@ function renderRecs(){const R=[...S.recs].sort((a,b)=>ord[a.status]-ord[b.status
  ${(r.etapas||[]).length?`<ol>${r.etapas.map(e=>`<li>${esc(e)}</li>`).join('')}</ol>`:''}${r.custos?`<p><b>💰 ${t('cost')}:</b> ${esc(r.custos)}</p>`:''}
  <div class="warn">${t('conf')}: ${esc(r.confianca)}. ${esc(r.limitacoes)}</div>
  ${r.status=='pendente'?`<button class="btn pri" onclick="decidir('${r.id}','aprovada')">${t('approve')}</button><button class="btn sec" onclick="decidir('${r.id}','recusada')">${t('reject')}</button><button class="btn ter" onclick="decidir('${r.id}','arquivada')">${t('archive')}</button>`:''}</div>`).join(''):`<p>${t('noRecs')}</p>`)}
-async function decidir(id,status){let motivo;if(status=='recusada')motivo=prompt(t('why'));
- await fetch('/api/rec/'+id,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({status,motivo})});refresh()}
+async function decidir(id,status){
+  let motivo;
+
+  if(status=='recusada'){
+    motivo=prompt(t('why'));
+  }
+
+  try{
+    const response=await fetch('/api/rec/'+id,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({status,motivo})
+    });
+
+    if(!response.ok)throw new Error('Não foi possível atualizar a sugestão.');
+
+    await atualizarDados();
+
+  }catch(e){
+    alert(e.message);
+  }
+}
+
+
+function corRecomendacao(id){
+  const cores=[
+    '#DCE8B5',
+    '#BBDCEB',
+    '#F4D4A5',
+    '#E7C9E8',
+    '#F0C8C3',
+    '#C5D8F0',
+    '#D5E8D1',
+    '#E8D6B9'
+  ];
+
+  const texto=String(id||'');
+  let hash=0;
+
+  for(let i=0;i<texto.length;i++){
+    hash=((hash<<5)-hash)+texto.charCodeAt(i);
+    hash|=0;
+  }
+
+  return cores[Math.abs(hash)%cores.length];
+}
 
 /* ---------- Calendário (12 meses a partir de hoje, com datas reais) ---------- */
-function renderCal(){const now=new Date(),y0=now.getFullYear(),m0=now.getMonth(),lc=LOC[lang],today=new Date(y0,m0,now.getDate());
+function renderCal(){
+ const now=new Date(),y0=now.getFullYear(),m0=now.getMonth(),lc=LOC[lang],today=new Date(y0,m0,now.getDate());
+
  const MN=(y,m)=>new Date(y,m,1).toLocaleString(lc,{month:'long'});
+
  const WD=[...Array(7)].map((_,i)=>new Date(2024,0,1+i).toLocaleString(lc,{weekday:'short'}).replace('.','').slice(0,3));
- const ap=S.recs.filter(r=>r.status=='aprovada').map(r=>{const mi=+r.mes_inicio;let start=null,end=null;
-  if(mi>=1&&mi<=12){const off=((mi-1)-m0+12)%12;start=off?new Date(y0,m0+off,1):today;const dur=Math.max(1,Math.round(+r.duracao_meses)||1);end=new Date(start.getFullYear(),start.getMonth()+dur,start.getDate())}
-  return{r,start,end}});
- const rg=ap.filter(x=>x.start),fim=new Date(y0,m0+11,1);
- let h=topbar()+`<h2>${t('calT')} ${MN(y0,m0)} ${y0} – ${MN(fim.getFullYear(),fim.getMonth())} ${fim.getFullYear()}</h2><p class="calhoje">📍 ${t('today')}: ${now.toLocaleDateString(lc,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p><div class="months">`;
- for(let k=0;k<12;k++){const dt=new Date(y0,m0+k,1),y=dt.getFullYear(),m=dt.getMonth(),off=(dt.getDay()+6)%7,nd=new Date(y,m+1,0).getDate();
-  h+=`<div class="mo"><h3>${MN(y,m)}${y!=y0?' '+y:''}</h3><div class="g">${WD.map(d=>`<span class="h">${d}</span>`).join('')}${'<span class="e"></span>'.repeat(off)}`;
-  for(let d=1;d<=nd;d++){const dd=new Date(y,m,d);let c='';if(rg.some(x=>+x.start==+dd))c='cs';else if(rg.some(x=>dd>=x.start&&dd<x.end))c='cp';if(+dd==+today)c+=' today';h+=`<span class="${c}">${d}</span>`}
-  h+='</div></div>'}
- h+=`</div><h3 style="margin-top:18px">${t('appr')}</h3>`+(ap.length?ap.map(({r,start})=>`<div class="card aprovada"><b>${esc(r.titulo)}</b><br>📅 ${t('startm')}: ${start?start.toLocaleDateString(lc,{month:'long',year:'numeric'}):'–'} · ${esc(r.duracao_meses)} ${t('months')}${(r.etapas||[]).length?`<ol>${r.etapas.map(e=>`<li>${esc(e)}</li>`).join('')}</ol>`:''}</div>`).join(''):`<p>${t('noAppr')}</p>`);
- $('cal').innerHTML=h}
+
+ const ap=S.recs.filter(r=>r.status=='aprovada').map(r=>{
+  const mi=+r.mes_inicio;
+  let start=null,end=null;
+
+  if(mi>=1&&mi<=12){
+   const off=((mi-1)-m0+12)%12;
+   start=off?new Date(y0,m0+off,1):today;
+   const dur=Math.max(1,Math.round(+r.duracao_meses)||1);
+   end=new Date(start.getFullYear(),start.getMonth()+dur,start.getDate());
+  }
+
+  return {
+   r,
+   start,
+   end,
+   cor:corRecomendacao(r.id||r.titulo)
+  };
+ });
+
+ const rg=ap.filter(x=>x.start);
+ const fim=new Date(y0,m0+11,1);
+
+ let h=topbar()+`<h2>${t('calT')} ${MN(y0,m0)} ${y0} – ${MN(fim.getFullYear(),fim.getMonth())} ${fim.getFullYear()}</h2>
+ <p class="calhoje">📍 ${t('today')}: ${now.toLocaleDateString(lc,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
+ <div class="months">`;
+
+ for(let k=0;k<12;k++){
+  const dt=new Date(y0,m0+k,1),y=dt.getFullYear(),m=dt.getMonth(),off=(dt.getDay()+6)%7,nd=new Date(y,m+1,0).getDate();
+
+  h+=`<div class="mo"><h3>${MN(y,m)}${y!=y0?' '+y:''}</h3><div class="g">
+  ${WD.map(d=>`<span class="h">${d}</span>`).join('')}
+  ${'<span class="e"></span>'.repeat(off)}`;
+
+  for(let d=1;d<=nd;d++){
+   const dd=new Date(y,m,d);
+
+   const evento=rg.find(x=>dd>=x.start&&dd<x.end);
+   let c='',style='';
+
+   if(evento){
+    c=+dd===+evento.start?'cs':'cp';
+    style=`style="--event-color:${evento.cor}"`;
+   }
+
+   if(+dd==+today)c+=' today';
+
+   h+=`<span class="${c}" ${style}>${d}</span>`;
+  }
+
+  h+='</div></div>';
+ }
+
+ h+='</div><h3 style="margin-top:18px">'+t('appr')+'</h3>';
+
+ h+=ap.length?ap.map(({r,start,cor})=>`
+  <div class="card aprovada" style="border-left-color:${cor};background:${cor}22">
+   <b>${esc(r.titulo)}</b>
+   <br>📅 ${t('startm')}: ${start?start.toLocaleDateString(lc,{month:'long',year:'numeric'}):'–'}
+   · ${esc(r.duracao_meses)} ${t('months')}
+   ${(r.etapas||[]).length?`<ol>${r.etapas.map(e=>`<li>${esc(e)}</li>`).join('')}</ol>`:''}
+  </div>
+ `).join(''):`<p>${t('noAppr')}</p>`;
+
+ $('cal').innerHTML=h;
+}
 function renderFaq(){$('faq').innerHTML=topbar()+`<h2>${t('faqT')}</h2>`+t('faq').map(f=>`<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join('')}
 
 applyLang();refresh();
