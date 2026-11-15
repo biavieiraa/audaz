@@ -46,19 +46,78 @@ iframe{width:100%;height:230px;border:1px solid var(--line);border-radius:12px;m
 .g span{padding:2px 0;border-radius:3px;background:#F1F4D0}.g .h{background:none;color:var(--soft);font-weight:600}.g .e{background:none}
 .g .p{background:var(--ice);color:var(--deep)}.g .s{background:var(--deep);color:#fff;font-weight:700}
 details{background:#fff;border:1px solid var(--line);border-radius:12px;margin:8px 0}summary{padding:14px 16px;font-weight:600;cursor:pointer;min-height:48px}details p{margin:0;padding:0 16px 14px}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.lbl{display:block;margin:14px 0 4px;font-size:14px;color:var(--soft);font-weight:500;text-align:left}
+.soilnote{font-size:14px;text-align:left;margin:6px 0 10px;color:var(--soft)}
+.soilnote b{color:var(--deep)}.soilnote small{display:block;margin-top:4px;font-size:12px}
+.soils{display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:left}
+.soil{position:relative;display:flex;flex-direction:column;gap:4px;padding:0 0 10px;background:#fff;border:2px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;font:inherit;color:var(--deep);text-align:left;transition:transform .2s,box-shadow .2s,border-color .2s}
+.soil svg{display:block;width:100%;height:auto;transition:transform .4s}
+.soil b{padding:0 10px;font-size:15px}.soil small{padding:0 10px;font-size:12px;color:var(--soft);line-height:1.35}
+.soil:hover{transform:translateY(-3px);box-shadow:0 6px 14px rgba(15,42,68,.14)}.soil:hover svg{transform:scale(1.05)}
+.soil img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;transition:transform .4s}.soil:hover img{transform:scale(1.05)}
+.soil[aria-pressed=true]{border-color:var(--d7);box-shadow:0 0 0 3px rgba(43,106,174,.25);animation:press .35s}
+.soil[aria-pressed=true]::after{content:'✓';position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;background:var(--d7);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;animation:pop .35s}
+.soil .reg{position:absolute;top:8px;left:8px;font-size:11px;font-weight:600;background:var(--pist);color:var(--deep);padding:2px 8px;border-radius:10px}
+.soilmore{grid-column:1/-1;margin:4px 0 0}
+.soiltip{margin-top:12px;text-align:left}
+.loadbar{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--line),var(--ice),var(--line));background-size:200% 100%;animation:shimmer 1.2s linear infinite;margin:6px 0 10px}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideL{from{opacity:0;transform:translateX(36px)}to{opacity:1;transform:none}}
+@keyframes slideR{from{opacity:0;transform:translateX(-36px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.5)}70%{opacity:1;transform:scale(1.1)}100%{transform:scale(1)}}
+@keyframes press{0%{transform:scale(1)}40%{transform:scale(.96)}100%{transform:scale(1)}}
+@keyframes sheetUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes zoom{from{transform:scale(1.1)}to{transform:scale(1)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes bubL{from{opacity:0;transform:translate(-10px,8px) scale(.95)}to{opacity:1;transform:none}}
+@keyframes bubR{from{opacity:0;transform:translate(10px,8px) scale(.95)}to{opacity:1;transform:none}}
+@keyframes dots{0%{content:''}25%{content:'.'}50%{content:'..'}75%{content:'...'}}
+@keyframes shimmer{to{background-position:-200% 0}}
+.view.on{animation:fadeIn .35s ease}
+.view.on .photo{animation:zoom 1.4s ease-out}
+.view.on .sheet{animation:sheetUp .55s cubic-bezier(.2,.8,.2,1)}
+#welcome.on .avatar{animation:pop .6s .2s both,float 3.2s 1s ease-in-out infinite}
+#welcome.on h1{animation:fadeUp .5s .3s both}#welcome.on p{animation:fadeUp .5s .4s both}#welcome.on .btn{animation:fadeUp .5s .5s both}
+.avatar.bump{animation:pop .35s}
+.step{animation:slideL .4s cubic-bezier(.2,.8,.2,1)}#onb[data-dir=back] .step{animation-name:slideR}
+.soils>*{animation:fadeUp .4s both}
+.soils>:nth-child(2){animation-delay:.05s}.soils>:nth-child(3){animation-delay:.1s}.soils>:nth-child(4){animation-delay:.15s}.soils>:nth-child(5){animation-delay:.2s}.soils>:nth-child(6){animation-delay:.25s}.soils>:nth-child(7){animation-delay:.3s}.soils>:nth-child(8){animation-delay:.35s}.soils>:nth-child(n+9){animation-delay:.4s}
+section.on>*{animation:fadeUp .45s both}
+section.on>:nth-child(2){animation-delay:.06s}section.on>:nth-child(3){animation-delay:.12s}section.on>:nth-child(4){animation-delay:.18s}section.on>:nth-child(5){animation-delay:.24s}section.on>:nth-child(6){animation-delay:.3s}section.on>:nth-child(7){animation-delay:.36s}section.on>:nth-child(8){animation-delay:.42s}section.on>:nth-child(n+9){animation-delay:.48s}
+section#chat.on>*{animation:fadeIn .3s both}
+.months .mo{animation:fadeUp .4s both}
+.months .mo:nth-child(2){animation-delay:.03s}.months .mo:nth-child(3){animation-delay:.06s}.months .mo:nth-child(4){animation-delay:.09s}.months .mo:nth-child(5){animation-delay:.12s}.months .mo:nth-child(6){animation-delay:.15s}.months .mo:nth-child(7){animation-delay:.18s}.months .mo:nth-child(8){animation-delay:.21s}.months .mo:nth-child(9){animation-delay:.24s}.months .mo:nth-child(10){animation-delay:.27s}.months .mo:nth-child(11){animation-delay:.3s}.months .mo:nth-child(12){animation-delay:.33s}
+.bars i{transform-origin:bottom;animation:grow .6s cubic-bezier(.2,.8,.2,1) both}
+.m.new.u{animation:bubR .3s cubic-bezier(.2,.8,.2,1) both}.m.new.b{animation:bubL .3s cubic-bezier(.2,.8,.2,1) both}
+.m.typing::after{content:'';animation:dots 1.2s steps(1) infinite}
+.btn{transition:transform .15s,box-shadow .2s,background-color .2s,color .2s}
+.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 10px rgba(15,42,68,.15)}
+.btn:active:not(:disabled){transform:scale(.96)}
+.item{transition:transform .2s,box-shadow .2s,border-color .2s}.item i{transition:transform .3s}
+.item:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(15,42,68,.12);border-color:var(--ice)}.item:hover i{transform:rotate(-10deg) scale(1.12)}
+.item:active{transform:scale(.98)}
+.card{transition:transform .2s,box-shadow .2s}
+.chips button{transition:background-color .2s,color .2s,transform .15s}.chips button:hover{background:var(--d7);color:#fff}.chips button:active{transform:scale(.95)}
+nav button{transition:color .2s,border-color .25s}nav button span{display:inline-block;transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+nav button[aria-current=page] span{transform:translateY(-3px) scale(1.18)}
+.dots i{transition:width .3s,background-color .3s,border-radius .3s}.dots i.on{width:26px;border-radius:5px}
+input,select,textarea{transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--ice);box-shadow:0 0 0 3px rgba(87,152,215,.25);outline:none}
+iframe:not([hidden]),.warn,.err{animation:fadeIn .4s}
+details{transition:box-shadow .2s}details[open]{box-shadow:0 4px 12px rgba(15,42,68,.08)}details[open] p{animation:fadeUp .3s}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
 <header><span>🌱 CultivAI</span><select id="lang" aria-label="Language" onchange="setLang(this.value)"><option value="en">English</option><option value="pt">Português</option><option value="es">Español</option></select></header>
 
-<!-- BOAS-VINDAS -->
 <div id="welcome" class="view"><div class="photo"></div><div class="sheet"><div class="avatar" aria-hidden="true">🌱</div>
  <h1 data-i="wT"></h1><p data-i="wX" style="color:var(--soft)"></p><button class="btn a big" onclick="begin()" data-i="start"></button></div></div>
 
-<!-- CADASTRO -->
 <div id="onb" class="view"><div class="photo" style="height:120px"></div><div class="sheet" style="min-height:0">
  <div class="avatar" id="av">?</div>
  <div class="step" data-s="0">
-  <label for="nome" data-i="name"></label><input id="nome" autocomplete="name" oninput="$('av').textContent=(this.value.trim()[0]||'?').toUpperCase()">
+  <label for="nome" data-i="name"></label><input id="nome" autocomplete="name" oninput="setAv(this.value)">
   <label for="cidade" data-i="city"></label>
   <div class="row"><input id="cidade"><button class="btn a" type="button" onclick="buscar()" data-i="search"></button></div>
   <button class="btn t" type="button" onclick="gps()" data-i="gps"></button>
@@ -74,7 +133,10 @@ details{background:#fff;border:1px solid var(--line);border-radius:12px;margin:8
  </div>
  <div class="step" data-s="2" hidden>
   <h2 data-i="s3"></h2>
-  <label for="solo" data-i="soil"></label><select id="solo"></select>
+  <span class="lbl" id="soilLbl" data-i="soil"></span><input id="solo" type="hidden">
+  <div id="soilNote" class="soilnote" aria-live="polite"></div>
+  <div id="soils" class="soils" role="group" aria-labelledby="soilLbl"></div>
+  <details class="soiltip"><summary data-i="tipT"></summary><p data-i="tipX"></p></details>
   <label for="agua" data-i="water"></label><select id="agua"></select>
   <label for="dif" data-i="diff"></label><textarea id="dif" rows="3"></textarea>
  </div>
@@ -82,7 +144,6 @@ details{background:#fff;border:1px solid var(--line);border-radius:12px;margin:8
  <div class="nav2"><button class="btn s" id="bv" type="button" onclick="passo(-1)" data-i="back"></button><button class="btn p" id="bn" type="button" onclick="passo(1)"></button></div>
  <p id="st" role="status"></p></div></div>
 
-<!-- APP -->
 <div id="app" class="view"><div class="pad">
  <section id="home"></section>
  <section id="chat"><div id="msgs" aria-live="polite"></div><div class="chips" id="chips"></div>
@@ -93,7 +154,7 @@ details{background:#fff;border:1px solid var(--line);border-radius:12px;margin:8
 
 <script>
     const AUD_USER_ID =
-  localStorage.getItem("CultivAI_user_id") || crypto.randomUUID();
+  localStorage.getItem("CultivAI_user_id") || (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
 
 localStorage.setItem("CultivAI_user_id", AUD_USER_ID);
 
@@ -117,7 +178,7 @@ window.fetch = (input, init = {}) => {
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const L={
-en:{wT:'Welcome to CultivAI',wX:'Tell us about your farm and get help with crop rotation and soil care.',start:'Get started',back:'Back',next:'Next',save:'Save and fetch NASA data',name:'Your name',city:'City',search:'Search',gps:'📍 Use my location',s2:'What do you grow?',crop:'Current crop',wish:'Crops you would like to plant',goal:'Your goal',s3:'Soil and water',soil:'What is your soil like?',water:'Water and irrigation',diff:'Main difficulties',
+en:{wT:'Welcome to CultivAI',wX:'Tell us about your farm and get help with crop rotation and soil care.',start:'Get started',back:'Back',next:'Next',save:'Save and fetch NASA data',name:'Your name',city:'City',search:'Search',gps:'📍 Use my location',s2:'What do you grow?',crop:'Current crop',wish:'Crops you would like to plant',goal:'Your goal',s3:'Soil and water',soil:'What is your soil like?',water:'Water and irrigation',diff:'Main difficulties', soilPick:'Tap the one that looks most like your soil.',soilLoading:'Looking up the most common soils in your region…',soilRegion:'Common soils in your region: ',soilSrc:'SoilGrids (ISRIC) model estimate for the chosen point. Check by looking at your own soil.',soilFail:'I could not identify the soils in your region right now. Choose by appearance.',soilCommon:'📍 In your region',soilMore:'See all soil types',soilLess:'Show only my region',tipT:'🖐️ Hand test: how to find out',tipX:'Wet a handful of soil and squeeze it. If it crumbles and does not hold shape, it is sandy. If it forms a long "snake" that does not break and sticks to your fingers, it is clay. If it forms a ball that breaks apart easily, it is mixed. If it feels smooth like talc, it is silty.',
 goals:['Increase productivity','Recover the soil','Save inputs and water'],soils:['Sandy (loose sand)','Clay (heavy mud)','Mixed',"I don't know"],waters:['Drip irrigation','Sprinkler','Rain only','Little water'],
 needLoc:'⚠ Enter your name and search your city (or use your location).',searching:'Searching…',notfound:'⚠ City not found.',nogeo:'⚠ Location is not available.',nasaWait:'Fetching NASA data…',
 tabs:['Home','Chat','Tips','Calendar','FAQ'],hi:'Hello, ',cChat:'Talk to the AI',cRecs:'My suggestions',cCal:'Farm calendar',cFaq:'Questions & answers',climate:'Regional climate',warn:'<b>NASA POWER</b> data: an estimate for an area of about 50 km, not a measurement on your farm. Period: ',temp:'Average temperature',rain:'Rain in 60 days',rad:'Radiation kWh/m²/day',rainDay:'Rain per day',smap:'Soil moisture (SMAP) is not integrated yet.',nasaFail:'NASA data unavailable',retry:'Try again',edit:'Edit registration',
@@ -126,7 +187,7 @@ chips:['How can I improve my soil health?','What can I plant after the current c
 recsT:'Suggestions for you',noRecs:'Chat with the AI to get suggestions.',approve:'Approve',reject:'Reject',archive:'Archive',why:'Why this reason? (optional)',ben:'Benefits',per:'Period',cost:'Costs',conf:'Confidence',
 st:{pendente:'pending',aprovada:'approved',recusada:'rejected',arquivada:'archived'},calT:'Calendar ',appr:'Approved activities',noAppr:'Approve a suggestion and it will appear here. Light blue days mark the period; the 1st day, in dark blue, is the start.',startm:'Start',months:'month(s)',
 faqT:'Questions & answers',faq:[['Is the climate data from my farm?','No. It comes from NASA POWER and is an estimate for an area of about 50 km around the chosen point, not a measurement on your farm.'],['What is crop rotation?','Alternating what you plant in the same area over time. It helps break pest and disease cycles and takes better care of the soil.'],['What are cover crops?','Plants grown to cover and protect the soil, or to be worked into it later. In perennial crops, such as grapes, they can grow between the rows.'],['Does the app tell me which nutrients my soil lacks?','No. Weather and rain do not show fertility. For that you need a soil analysis in a laboratory.'],['How do I accept a suggestion?','In the Tips tab, tap Approve. Approved suggestions go to the Calendar. You can also Reject or Archive.'],['Are the recommendations guaranteed?','No. They are AI suggestions based on your data and NASA data. Confirm with an agricultural technician before important decisions.']]},
-pt:{wT:'Bem-vindo ao CultivAI',wX:'Conte sobre sua propriedade e receba ajuda com rotação de culturas e cuidado com o solo.',start:'Começar',back:'Voltar',next:'Próximo',save:'Salvar e buscar dados da NASA',name:'Seu nome',city:'Cidade',search:'Buscar',gps:'📍 Usar minha localização',s2:'O que você planta?',crop:'Cultura atual',wish:'Culturas que gostaria de plantar',goal:'Seu objetivo',s3:'Solo e água',soil:'Como é o seu solo?',water:'Água e irrigação',diff:'Principais dificuldades',
+pt:{wT:'Bem-vindo ao CultivAI',wX:'Conte sobre sua propriedade e receba ajuda com rotação de culturas e cuidado com o solo.',start:'Começar',back:'Voltar',next:'Próximo',save:'Salvar e buscar dados da NASA',name:'Seu nome',city:'Cidade',search:'Buscar',gps:'📍 Usar minha localização',s2:'O que você planta?',crop:'Cultura atual',wish:'Culturas que gostaria de plantar',goal:'Seu objetivo',s3:'Solo e água',soil:'Como é o seu solo?',water:'Água e irrigação',diff:'Principais dificuldades', soilPick:'Toque no que mais parece com o seu solo.',soilLoading:'Procurando os solos mais comuns na sua região…',soilRegion:'Solos comuns na sua região: ',soilSrc:'Estimativa do modelo SoilGrids (ISRIC) para o ponto escolhido. Confira olhando o seu solo.',soilFail:'Não consegui identificar os solos da sua região agora. Escolha pela aparência.',soilCommon:'📍 Na sua região',soilMore:'Ver todos os tipos de solo',soilLess:'Mostrar só os da minha região',tipT:'🖐️ Teste da mão: como descobrir',tipX:'Molhe um punhado de terra e aperte. Se esfarelar e não segurar a forma, é arenoso. Se formar uma "cobrinha" comprida que não quebra e gruda nos dedos, é argiloso. Se formar uma bolinha que desmancha fácil, é misto. Se for liso como talco, é siltoso.',
 goals:['Aumentar a produtividade','Recuperar o solo','Economizar insumos e água'],soils:['Arenoso (areia solta)','Argiloso (barro pesado)','Misto','Não sei'],waters:['Gotejamento','Aspersão','Só chuva','Pouca água'],
 needLoc:'⚠ Informe seu nome e busque a cidade (ou use sua localização).',searching:'Buscando…',notfound:'⚠ Cidade não encontrada.',nogeo:'⚠ Localização indisponível.',nasaWait:'Buscando dados da NASA…',
 tabs:['Início','Chat','Dicas','Calendário','Dúvidas'],hi:'Olá, ',cChat:'Conversar com a IA',cRecs:'Minhas sugestões',cCal:'Calendário agrícola',cFaq:'Tira-dúvidas',climate:'Clima da região',warn:'Dados da <b>NASA POWER</b>: estimativa de uma área de ~50 km, não medição na sua propriedade. Período: ',temp:'Temperatura média',rain:'Chuva em 60 dias',rad:'Radiação kWh/m²/dia',rainDay:'Chuva por dia',smap:'Umidade do solo (SMAP) ainda não integrada.',nasaFail:'Dados da NASA indisponíveis',retry:'Tentar novamente',edit:'Editar cadastro',
@@ -135,7 +196,7 @@ chips:['Como posso melhorar a saúde do meu solo?','Qual cultura posso plantar d
 recsT:'Sugestões para você',noRecs:'Converse com a IA para receber sugestões.',approve:'Aprovar',reject:'Recusar',archive:'Arquivar',why:'Por que recusou? (opcional)',ben:'Benefícios',per:'Período',cost:'Custos',conf:'Confiança',
 st:{pendente:'pendente',aprovada:'aprovada',recusada:'recusada',arquivada:'arquivada'},calT:'Calendário ',appr:'Atividades aprovadas',noAppr:'Aprove uma sugestão para ela aparecer aqui. Dias em azul-claro indicam o período; o 1º dia, em azul-escuro, o início.',startm:'Início',months:'mês(es)',
 faqT:'Tira-dúvidas',faq:[['Os dados do clima são da minha propriedade?','Não. Vêm da NASA POWER e são uma estimativa para uma área de cerca de 50 km ao redor do ponto escolhido, não uma medição na sua propriedade.'],['O que é rotação de culturas?','É alternar o que se planta na mesma área ao longo do tempo. Ajuda a quebrar ciclos de pragas e doenças e a cuidar melhor do solo.'],['O que é cobertura vegetal?','São plantas cultivadas para cobrir e proteger o solo, ou para depois serem incorporadas a ele. Em culturas permanentes, como a uva, podem ficar nas entrelinhas.'],['O app diz quais nutrientes faltam no meu solo?','Não. Clima e chuva não mostram fertilidade. Para isso é preciso uma análise de solo em laboratório.'],['Como aceitar uma sugestão?','Na aba Dicas, toque em Aprovar. A sugestão aprovada vai para o Calendário. Você também pode Recusar ou Arquivar.'],['As recomendações são garantidas?','Não. São sugestões da IA com base nos seus dados e nos dados da NASA. Confirme com um técnico agrícola antes de decisões importantes.']]},
-es:{wT:'Bienvenido a CultivAI',wX:'Cuéntanos sobre tu finca y recibe ayuda con la rotación de cultivos y el cuidado del suelo.',start:'Comenzar',back:'Atrás',next:'Siguiente',save:'Guardar y buscar datos de la NASA',name:'Tu nombre',city:'Ciudad',search:'Buscar',gps:'📍 Usar mi ubicación',s2:'¿Qué cultivas?',crop:'Cultivo actual',wish:'Cultivos que te gustaría plantar',goal:'Tu objetivo',s3:'Suelo y agua',soil:'¿Cómo es tu suelo?',water:'Agua y riego',diff:'Principales dificultades',
+es:{wT:'Bienvenido a CultivAI',wX:'Cuéntanos sobre tu finca y recibe ayuda con la rotación de cultivos y el cuidado del suelo.',start:'Comenzar',back:'Atrás',next:'Siguiente',save:'Guardar y buscar datos de la NASA',name:'Tu nombre',city:'Ciudad',search:'Buscar',gps:'📍 Usar mi ubicación',s2:'¿Qué cultivas?',crop:'Cultivo actual',wish:'Cultivos que te gustaría plantar',goal:'Tu objetivo',s3:'Suelo y agua',soil:'¿Cómo es tu suelo?',water:'Agua y riego',diff:'Principales dificultades', soilPick:'Toca el que más se parezca a tu suelo.',soilLoading:'Buscando los suelos más comunes en tu región…',soilRegion:'Suelos comunes en tu región: ',soilSrc:'Estimación del modelo SoilGrids (ISRIC) para el punto elegido. Compruébalo mirando tu suelo.',soilFail:'No pude identificar los suelos de tu región ahora. Elige por la apariencia.',soilCommon:'📍 En tu región',soilMore:'Ver todos los tipos de suelo',soilLess:'Mostrar solo los de mi región',tipT:'🖐️ Prueba de la mano: cómo saberlo',tipX:'Moja un puñado de tierra y apriétalo. Si se desmorona y no mantiene la forma, es arenoso. Si forma una "culebrita" larga que no se rompe y se pega a los dedos, es arcilloso. Si forma una bolita que se deshace fácil, es mixto. Si es suave como talco, es limoso.',
 goals:['Aumentar la productividad','Recuperar el suelo','Ahorrar insumos y agua'],soils:['Arenoso (arena suelta)','Arcilloso (barro pesado)','Mixto','No sé'],waters:['Riego por goteo','Aspersión','Solo lluvia','Poca agua'],
 needLoc:'⚠ Escribe tu nombre y busca tu ciudad (o usa tu ubicación).',searching:'Buscando…',notfound:'⚠ Ciudad no encontrada.',nogeo:'⚠ Ubicación no disponible.',nasaWait:'Buscando datos de la NASA…',
 tabs:['Inicio','Chat','Consejos','Calendario','Dudas'],hi:'Hola, ',cChat:'Hablar con la IA',cRecs:'Mis sugerencias',cCal:'Calendario agrícola',cFaq:'Preguntas y respuestas',climate:'Clima de la región',warn:'Datos de <b>NASA POWER</b>: estimación de un área de ~50 km, no una medición en tu finca. Período: ',temp:'Temperatura media',rain:'Lluvia en 60 días',rad:'Radiación kWh/m²/día',rainDay:'Lluvia por día',smap:'La humedad del suelo (SMAP) aún no está integrada.',nasaFail:'Datos de la NASA no disponibles',retry:'Intentar de nuevo',edit:'Editar registro',
@@ -153,12 +214,13 @@ function fill(id,arr){const e=$(id),i=Math.max(0,e.selectedIndex);e.innerHTML=ar
 function applyLang(){document.documentElement.lang=LOC[lang];$('lang').value=lang;
  document.querySelectorAll('[data-i]').forEach(e=>e.textContent=t(e.dataset.i));
  document.querySelectorAll('[data-ph]').forEach(e=>e.placeholder=t(e.dataset.ph));
- fill('obj',t('goals'));fill('solo',t('soils'));fill('agua',t('waters'));
+ fill('obj',t('goals'));;fill('agua',t('waters')); renderSoils();
  $('nav').innerHTML=TABS.map((k,i)=>`<button id="b_${k}" onclick="go('${k}')"><span aria-hidden="true">${ICONS[i]}</span><br>${t('tabs')[i]}</button>`).join('');
  $('chips').innerHTML=t('chips').map(s=>`<button type="button">${esc(s)}</button>`).join('');
  $('mic').setAttribute('aria-label',t('listen'));$('send').setAttribute('aria-label','→');
  showStep();if(S.profile&&!editing){renderHome();renderMsgs();renderRecs();renderCal();renderFaq();go(cur)}}
-function setLang(v){lang=v;localStorage.setItem('lang',v);applyLang()}
+function setAv(v){const a=$('av'),c=(String(v).trim()[0]||'?').toUpperCase();if(a.textContent!=c){a.textContent=c;a.classList.remove('bump');void a.offsetWidth;a.classList.add('bump')}}
+ function setLang(v){lang=v;localStorage.setItem('lang',v);applyLang()}
 
 function go(id){cur=id;document.querySelectorAll('#app section').forEach(s=>s.classList.toggle('on',s.id==id));
  TABS.forEach(k=>{const b=$('b_'+k);k==id?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current')});scrollTo(0,0);
@@ -188,15 +250,91 @@ function showStep(){document.querySelectorAll('.step').forEach(s=>s.hidden=+s.da
 function passo(d){
  if(d>0&&step==0&&(!$('nome').value.trim()||!$('lat').value)){$('loc').className='err';$('loc').textContent=t('needLoc');return}
  if(d>0&&step==2)return salvar();
- step=Math.max(0,Math.min(2,step+d));showStep()}
-async function salvar(){const p={};F.forEach(k=>p[k]=$(k).value);p.lat=+p.lat;p.lon=+p.lon;
+  $('onb').dataset.dir=d<0?'back':'fwd';step=Math.max(0,Math.min(2,step+d));showStep();if(step==2)loadSoils()}
+async function salvar(){if(!$('solo').value){soilSel='naosei';$('solo').value=soilName('naosei')}const p={};F.forEach(k=>p[k]=$(k).value);p.lat=+p.lat;p.lon=+p.lon; if(soil.state=='ok')p.solosRegiao=soil.list.map(x=>`${x.w} ${x.p}%`).join(', ');
  $('bn').disabled=true;$('st').textContent=t('nasaWait');
  try{await fetch('/api/profile',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)});editing=false;step=0;cur='home';$('st').textContent=''}
  catch(e){$('st').className='err';$('st').textContent='⚠ '+e.message}
  $('bn').disabled=false;showStep();refresh()}
 function editar(){editing=true;step=0;F.forEach(k=>{const v=S.profile?.[k];if(v!==undefined)$(k).value=v});
- $('av').textContent=(($('nome').value.trim()[0])||'?').toUpperCase();showStep();mapa();refresh()}
+ soilSel=soilFromText($('solo').value);soilAll=false;$('onb').dataset.dir='fwd';
+ $('av').textContent=(($('nome').value.trim()[0])||'?').toUpperCase();showStep();renderSoils();mapa();refresh()}
 
+ /* ---------- Tipos de solo (ilustrações + região) ---------- */
+const SOILS=[
+ {id:'arenoso',n:{pt:'Arenoso (areia solta)',en:'Sandy (loose sand)',es:'Arenoso (arena suelta)'},h:{pt:'Esfarela na mão e a água some rápido.',en:'Crumbles in your hand; water drains fast.',es:'Se desmorona en la mano; el agua drena rápido.'},
+  v:{bg:['#EBCF92','#D4A85A'],dots:[110,.9,2.2,['#F8E7BC','#C4934A','#FFF4DA','#B78543']]}},
+ {id:'argiloso',n:{pt:'Argiloso (barro pesado)',en:'Clay (heavy mud)',es:'Arcilloso (barro pesado)'},h:{pt:'Gruda e vira massinha molhado; racha quando seca.',en:'Sticky like dough when wet; cracks when dry.',es:'Pegajoso como masa mojado; se agrieta al secar.'},
+  v:{bg:['#BA5A33','#8A3A1E'],dots:[30,.8,1.6,['#CF7A50','#73301A']],cracks:1}},
+ {id:'misto',n:{pt:'Misto',en:'Mixed',es:'Mixto'},h:{pt:'Escuro e fofo; forma bolinha que desmancha.',en:'Dark and crumbly; forms a ball that breaks apart.',es:'Oscuro y suelto; forma una bolita que se deshace.'},
+  v:{bg:['#6E4B2E','#4A301B'],dots:[70,1,2.6,['#8E6644','#3A2614','#A57D56']],roots:1}},
+ {id:'naosei',n:{pt:'Não sei',en:"I don't know",es:'No sé'},h:{pt:'Sem problema! A IA pode ajudar depois.',en:'No problem! The AI can help later.',es:'¡Sin problema! La IA puede ayudar después.'},v:null},
+ {id:'siltoso',n:{pt:'Siltoso (fino como talco)',en:'Silty (fine like talc)',es:'Limoso (fino como talco)'},h:{pt:'Liso ao tocar; escorrega quando molhado.',en:'Smooth to the touch; slippery when wet.',es:'Suave al tacto; resbaladizo mojado.'},
+  v:{bg:['#BCA68C','#98806A'],dots:[180,.4,.9,['#D2BEA6','#86705A']]}},
+ {id:'organico',n:{pt:'Orgânico (turfa, bem escuro)',en:'Organic (peat, very dark)',es:'Orgánico (turba, muy oscuro)'},h:{pt:'Preto e esponjoso, cheiro de folha; encharca.',en:'Black and spongy, smells of leaves; gets soggy.',es:'Negro y esponjoso, huele a hojas; se encharca.'},
+  v:{bg:['#3B2D22','#1C1510'],dots:[30,.8,1.6,['#5A4636']],fibers:1}},
+ {id:'pedregoso',n:{pt:'Pedregoso (raso, com pedras)',en:'Stony (shallow, rocky)',es:'Pedregoso (poco profundo)'},h:{pt:'Raso; a enxada bate em pedra logo.',en:'Shallow; the hoe hits rock quickly.',es:'Poco profundo; la azada choca con piedra pronto.'},
+  v:{bg:['#A08A72','#7A6652'],dots:[40,.6,1.4,['#B8A48C']],stones:1}},
+ {id:'calcario',n:{pt:'Calcário (claro, esbranquiçado)',en:'Chalky (pale, whitish)',es:'Calcáreo (claro, blanquecino)'},h:{pt:'Claro, com pedrinhas brancas; seca rápido.',en:'Pale with white bits; dries fast.',es:'Claro con piedritas blancas; se seca rápido.'},
+  v:{bg:['#ECE5D3','#CFC3A7'],dots:[60,1,2.6,['#FFFFFF','#B9AD92','#F7F2E6']]}},
+ {id:'encharcado',n:{pt:'Encharcado (cinza ou azulado)',en:'Waterlogged (grey or bluish)',es:'Encharcado (gris o azulado)'},h:{pt:'Fica alagado boa parte do ano.',en:'Flooded for much of the year.',es:'Inundado gran parte del año.'},
+  v:{bg:['#86938F','#5B6A6B'],dots:[40,.6,1.4,['#A3B0AD','#475556']],water:1}}];
+const WRB={Acrisols:['argiloso','Argissolo'],Lixisols:['argiloso','Argissolo'],Alisols:['argiloso','Argissolo'],Ferralsols:['argiloso','Latossolo'],Nitisols:['argiloso','Nitossolo'],
+ Vertisols:['argiloso','Vertissolo'],Luvisols:['argiloso','Luvissolo'],Plinthosols:['argiloso','Plintossolo'],Solonetz:['argiloso','Planossolo Nátrico'],
+ Arenosols:['arenoso','Neossolo Quartzarênico'],Podzols:['arenoso','Espodossolo'],
+ Cambisols:['misto','Cambissolo'],Chernozems:['misto','Chernossolo'],Phaeozems:['misto','Chernossolo'],Kastanozems:['misto','Chernossolo'],Umbrisols:['misto','Cambissolo Húmico'],Andosols:['misto','Andossolo'],Technosols:['misto','Solo antrópico'],
+ Fluvisols:['siltoso','Neossolo Flúvico'],Albeluvisols:['siltoso','Albeluvissolo'],Retisols:['siltoso','Retissolo'],Solonchaks:['siltoso','Gleissolo Sálico'],
+ Histosols:['organico','Organossolo'],Cryosols:['organico','Criossolo'],
+ Leptosols:['pedregoso','Neossolo Litólico'],Regosols:['pedregoso','Neossolo Regolítico'],Durisols:['pedregoso','Durissolo'],
+ Calcisols:['calcario','Calcissolo'],Gypsisols:['calcario','Gipsissolo'],
+ Gleysols:['encharcado','Gleissolo'],Planosols:['encharcado','Planossolo'],Stagnosols:['encharcado','Estagnossolo']};
+let soilSel='',soilAll=false,soil={key:'',state:'idle',list:[]};
+const soilName=id=>(SOILS.find(s=>s.id==id)||{n:{}}).n[lang]||'';
+const wrbName=w=>lang=='pt'?(WRB[w]?.[1]||w):lang=='es'?w.replace(/sols$/,'soles'):w;
+
+function soilSvg(s){const W=120,H=80,id='g'+s.id;
+ let seed=[...s.id].reduce((a,c)=>a*31+c.charCodeAt(0)|0,7);const R=()=>((seed=seed*1103515245+12345|0)>>>0)/4294967296;
+ if(!s.v)return `<svg viewBox="0 0 ${W} ${H}" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" x2="1"><stop offset="0" stop-color="#E3C88F"/><stop offset=".5" stop-color="#9A6A42"/><stop offset="1" stop-color="#5E6B6A"/></linearGradient></defs><rect width="${W}" height="${H}" fill="url(#${id})"/><circle cx="60" cy="42" r="20" fill="#fff" opacity=".9"/><text x="60" y="51" text-anchor="middle" font-size="26" font-weight="700" fill="#2B6AAE" font-family="Bricolage Grotesque,sans-serif">?</text></svg>`;
+ const v=s.v;let o=`<svg viewBox="0 0 ${W} ${H}" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${v.bg[0]}"/><stop offset="1" stop-color="${v.bg[1]}"/></linearGradient></defs><rect width="${W}" height="${H}" fill="url(#${id})"/>`;
+ if(v.water)o+=`<path d="M0 20 Q15 16 30 20 T60 20 T90 20 T120 20 V34 H0Z" fill="#9CC4E4" opacity=".55"/>`;
+ const[n,a,b,cs]=v.dots;for(let i=0;i<n;i++)o+=`<circle cx="${(R()*W).toFixed(1)}" cy="${(12+R()*(H-12)).toFixed(1)}" r="${(a+R()*(b-a)).toFixed(2)}" fill="${cs[i%cs.length]}"/>`;
+ if(v.cracks)for(let i=0;i<5;i++){let x=10+i*24+R()*8,y=14,d=`M${x.toFixed(1)} ${y}`;while(y<H){y+=8+R()*8;x+=R()*12-6;d+=` L${x.toFixed(1)} ${y.toFixed(1)}`}o+=`<path d="${d}" stroke="#5C2410" stroke-width="1.6" fill="none" stroke-linecap="round"/>`}
+ if(v.roots)for(let i=0;i<4;i++){const x=15+i*30+R()*10;o+=`<path d="M${x} 10 q${R()*16-8} 18 ${R()*10-5} 32 q${R()*12-6} 12 ${R()*14-7} 26" stroke="#D9BF95" stroke-width="1.3" fill="none" opacity=".8"/>`}
+ if(v.fibers)for(let i=0;i<40;i++){const x=R()*W,y=14+R()*(H-14),l=3+R()*6,ang=R()*Math.PI;o+=`<line x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${(x+Math.cos(ang)*l).toFixed(1)}" y2="${(y+Math.sin(ang)*l).toFixed(1)}" stroke="#7A5A3E" stroke-width="1"/>`}
+ if(v.stones)for(let i=0;i<14;i++){const c=['#C9C1B4','#8F8A80','#DDD6CA','#A79F92'][i%4];o+=`<ellipse cx="${(R()*W).toFixed(1)}" cy="${(18+R()*(H-18)).toFixed(1)}" rx="${(3+R()*7).toFixed(1)}" ry="${(2.5+R()*4).toFixed(1)}" fill="${c}" stroke="#5E554A" stroke-width=".8"/>`}
+ o+=`<rect width="${W}" height="10" fill="#8DB255"/>`;for(let x=2;x<W;x+=5)o+=`<path d="M${x} 10 l${(R()*3-1.5).toFixed(1)} -${(4+R()*6).toFixed(1)}" stroke="#6E9440" stroke-width="1.4" stroke-linecap="round"/>`;
+ return o+'</svg>'}
+function soilPic(s){return s.v?`<img src="img/${s.id}.jpg" alt="" loading="lazy" onerror="this.outerHTML=soilSvg(SOILS.find(x=>x.id=='${s.id}'))">`:soilSvg(s)}
+async function loadSoils(){const a=+$('lat').value,o=+$('lon').value;if(!a&&!o){soil={key:'',state:'fail',list:[]};return renderSoils()}
+ const key=a.toFixed(2)+','+o.toFixed(2);if(soil.key==key&&soil.state!='fail')return renderSoils();
+ soil={key,state:'loading',list:[]};renderSoils();
+ try{let d=null;try{d=JSON.parse(localStorage.getItem('soil:'+key))}catch(e){}
+  if(!d){const ac=new AbortController(),tm=setTimeout(()=>ac.abort(),12000);
+   const r=await fetch(`https://rest.isric.org/soilgrids/v2.0/classification/query?lon=${o}&lat=${a}&number_classes=8`,{signal:ac.signal});clearTimeout(tm);
+   if(!r.ok)throw new Error('HTTP '+r.status);d=await r.json();try{localStorage.setItem('soil:'+key,JSON.stringify(d))}catch(e){}}
+  const list=(d.wrb_class_probability||[]).filter(x=>x[1]>=5&&WRB[x[0]]).map(([w,p])=>({w,p,t:WRB[w][0]}));
+  if(soil.key!=key)return;soil={key,state:list.length?'ok':'fail',list}}
+ catch(e){if(soil.key==key)soil={key,state:'fail',list:[]}}
+ renderSoils()}
+
+function renderSoils(){if(!$('soils'))return;const ok=soil.state=='ok';
+ const score={};soil.list.forEach(x=>score[x.t]=(score[x.t]||0)+x.p);
+ let L2=[...SOILS].filter(s=>s.id!='naosei').sort((x,y)=>(score[y.id]||0)-(score[x.id]||0));
+ const reg=L2.filter(s=>score[s.id]);
+ const forced=!!(soilSel&&soilSel!='naosei'&&!score[soilSel]),showAll=!ok||soilAll||!reg.length||forced;
+ if(!showAll)L2=reg;L2.push(SOILS.find(s=>s.id=='naosei'));
+ const names={};soil.list.forEach(x=>{const nm=wrbName(x.w);names[nm]=(names[nm]||0)+x.p});
+ const top=Object.entries(names).sort((x,y)=>y[1]-x[1]).slice(0,4).map(([nm,p])=>`${esc(nm)} (${p}%)`).join(', ');
+ $('soilNote').innerHTML=soil.state=='loading'?`${t('soilLoading')}<div class="loadbar"></div>`
+  :ok?`${t('soilPick')}<br><b>${t('soilRegion')}</b>${top}.<small>${t('soilSrc')}</small>`
+  :soil.state=='fail'?`${t('soilPick')}<small>${t('soilFail')}</small>`:t('soilPick');
+ $('soils').innerHTML=L2.map(s=>`<button type="button" class="soil" data-soil="${s.id}" aria-pressed="${s.id==soilSel}">${soilPic(s)}${ok&&score[s.id]?`<span class="reg">${t('soilCommon')}</span>`:''}<b>${esc(s.n[lang])}</b><small>${esc(s.h[lang])}</small></button>`).join('')
+  +(ok&&!forced&&reg.length&&reg.length<SOILS.length-1?`<button type="button" class="btn t soilmore" data-more="1">${showAll?t('soilLess'):t('soilMore')}</button>`:'');
+ if(soilSel)$('solo').value=soilName(soilSel)}
+$('soils').onclick=e=>{const m=e.target.closest('[data-more]');if(m){soilAll=!soilAll;return renderSoils()}
+ const b=e.target.closest('.soil');if(!b)return;soilSel=b.dataset.soil;$('solo').value=soilName(soilSel);
+ $('soils').querySelectorAll('.soil').forEach(x=>x.setAttribute('aria-pressed',x==b))};
+function soilFromText(v){if(!v)return'';const s=SOILS.find(s=>Object.values(s.n).includes(v));return s?s.id:''}
 /* ---------- Início ---------- */
 function renderHome(){const p=S.profile,n=S.nasa;
  $('home').innerHTML=`<div class="card"><h1>${t('hi')}${esc(p.nome)}!</h1><span style="color:var(--soft)">📍 ${esc(p.cidade)}${p.uf?', '+esc(p.uf):''}</span></div>
@@ -204,21 +342,22 @@ function renderHome(){const p=S.profile,n=S.nasa;
  <h2 style="margin-top:20px">${t('climate')}</h2>`+(n?`
  <div class="warn">${t('warn')}${esc(n.periodo)}.</div>
  <div class="stat"><div><b>${n.tempMedia??'–'} °C</b><span>${t('temp')}</span></div><div><b>${n.chuvaTotalMm} mm</b><span>${t('rain')}</span></div><div><b>${n.radiacaoMedia??'–'}</b><span>${t('rad')}</span></div></div>
- <div class="card"><b>${t('rainDay')}</b><div class="bars" role="img" aria-label="${t('rainDay')}">${(()=>{const mx=Math.max(...n.days.map(d=>d.p||0),1);return n.days.map(d=>`<i title="${d.d}: ${d.p??0} mm" style="height:${Math.max(2,(d.p||0)/mx*80)}px"></i>`).join('')})()}</div></div>
+ <div class="card"><b>${t('rainDay')}</b><div class="bars" role="img" aria-label="${t('rainDay')}">${(()=>{const mx=Math.max(...n.days.map(d=>d.p||0),1);return n.days.map((d,i)=>`<i title="${d.d}: ${d.p??0} mm" style="height:${Math.max(2,(d.p||0)/mx*80)}px;animation-delay:${i*12}ms"></i>`).join('')})()}</div></div>
  <p style="font-size:14px;color:var(--soft)">${t('smap')}</p>`
  :`<div class="warn">${t('nasaFail')}${S.nasaErro?': '+esc(S.nasaErro):''}.</div>`)+`<button class="btn s" onclick="editar()">${t('edit')}</button>`}
 
 /* ---------- Chat ---------- */
 $('chips').onclick=e=>{if(e.target.tagName=='BUTTON'){$('q').value=e.target.textContent;enviar()}};
-function renderMsgs(){$('msgs').innerHTML=S.messages.length?S.messages.map((m,i)=>m.role=='user'?`<div class="m u">${esc(m.text)}</div>`:`<div class="m b">${esc(m.text)}<br><button class="say" data-i="${i}" aria-label="${t('listen')}">🔊</button></div>`).join(''):`<div class="m b">${t('intro')}</div>`}
+let seen=-1;
+function renderMsgs(){const nw=i=>seen>=0&&i>=seen?' new':'';$('msgs').innerHTML=S.messages.length?S.messages.map((m,i)=>m.role=='user'?`<div class="m u${nw(i)}">${esc(m.text)}</div>`:`<div class="m b${nw(i)}">${esc(m.text)}<br><button class="say" data-i="${i}" aria-label="${t('listen')}">🔊</button></div>`).join(''):`<div class="m b new">${t('intro')}</div>`;seen=S.messages.length}
 $('msgs').onclick=e=>{const b=e.target.closest('.say');if(b)falar(S.messages[+b.dataset.i].text)};
-function add(c,x){const d=document.createElement('div');d.className='m '+c;d.textContent=x;$('msgs').appendChild(d);d.scrollIntoView();return d}
+function add(c,x){const d=document.createElement('div');d.className='m new '+c;d.textContent=x;$('msgs').appendChild(d);d.scrollIntoView();return d}
 async function enviar(){const m=$('q').value.trim();if(!m||busy)return;busy=true;$('send').disabled=true;$('q').value='';
- add('u',m);const l=add('b',t('thinking'));
+ add('u',m);seen=S.messages.length+1;const l=add('b',t('thinking').replace(/…$/,''));l.classList.add('typing');
  try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:m,lang})}),d=await r.json();
   if(!r.ok)throw new Error(d.error||'');
   await refresh();if(d.recs?.length)add('b',t('created'));$('msgs').lastElementChild?.scrollIntoView()
- }catch(e){l.textContent=t('fail')+e.message}
+ }catch(e){l.classList.remove('typing');l.textContent=t('fail')+e.message}
  busy=false;$('send').disabled=false}
 function mic(){const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return alert(t('novoice'));
  const r=new R(),b=$('mic');r.lang=LOC[lang];b.textContent='⏺';
