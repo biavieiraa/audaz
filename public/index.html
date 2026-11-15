@@ -1,355 +1,1251 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>CultivAI</title><link rel="icon" type="image/png" href="img/logo.png"><link rel="apple-touch-icon" href="img/logo_reduzida.png">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Audaz</title><link rel="icon" type="image/png" href="img/logo.png"><link rel="apple-touch-icon" href="img/logo_reduzida.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--pist:#B9C255;--frost:#E6F1FA;--ice:#5798D7;--deep:#0F2A44;--d7:#2B6AAE;--soft:#566A80;--line:#CFE3F3;--err:#B3261E;--warnbg:#FFF1D6;--warn:#8A5300}
-*{box-sizing:border-box}[hidden]{display:none!important}
-body{margin:0;font:16px/1.5 Inter,system-ui,sans-serif;background:var(--frost);color:var(--deep);padding-bottom:76px}
-h1,h2,h3{font-family:'Bricolage Grotesque',Inter,sans-serif;line-height:1.2;margin:0 0 8px}h1{font-size:24px}h2{font-size:20px}h3{font-size:18px}
-:focus-visible{outline:2px solid var(--deep);outline-offset:4px}
-header{background:var(--d7);color:#fff;padding:8px 16px;display:flex;justify-content:space-between;align-items:center;font:700 20px 'Bricolage Grotesque',sans-serif}
-header select{width:auto;min-height:44px;background:#fff;font-size:14px}
-.pad{padding:16px;max-width:640px;margin:auto}section,.view{display:none}.on{display:block}
-.photo{height:230px;background:url(hero.jpg) center/cover,linear-gradient(135deg,#2B6AAE,#5798D7 60%,#B9C255)}
-.sheet{background:#fff;border-radius:24px 24px 0 0;margin-top:-28px;padding:24px 20px 32px;text-align:center;position:relative;max-width:640px;margin-inline:auto;min-height:55vh}
-.avatar{width:84px;height:84px;border-radius:50%;background:var(--line);margin:-66px auto 12px;display:flex;align-items:center;justify-content:center;font:700 32px 'Bricolage Grotesque';color:var(--d7);border:4px solid #fff}
-.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0;box-shadow:0 2px 4px rgba(15,42,68,.1)}
-.card.aprovada{border:2px solid var(--pist);background:#F8FAE8}.card.recusada,.card.arquivada{opacity:.75}
-label{display:block;margin:14px 0 4px;font-size:14px;color:var(--soft);font-weight:500;text-align:left}
-input,select,textarea{width:100%;min-height:48px;padding:10px 12px;font:16px Inter,sans-serif;color:var(--deep);background:#F7FAFD;border:1px solid #7C93AB;border-radius:8px}
-.btn{min-height:48px;min-width:44px;padding:10px 18px;border-radius:8px;font:600 16px Inter,sans-serif;cursor:pointer;border:2px solid var(--d7);margin:8px 8px 0 0}
-.p{background:var(--d7);color:#fff}.s{background:#fff;color:var(--d7)}.t{background:var(--frost);color:var(--d7);border-color:transparent}
-.a{background:var(--pist);color:var(--deep);border-color:var(--pist)}.big{width:100%;margin:20px 0 0}
-.btn:disabled{background:#EEF2F6;color:#5F7389;border-color:#EEF2F6}
-.row{display:flex;gap:8px;align-items:center}.row>input{flex:1}.row .btn{margin:0}
-nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:#fff;border-top:1px solid var(--line);box-shadow:0 -2px 8px rgba(15,42,68,.1)}
-nav button{flex:1;min-height:60px;border:0;background:none;font:500 12px Inter,sans-serif;color:var(--soft);cursor:pointer;border-top:3px solid transparent}
-nav button[aria-current=page]{color:var(--d7);font-weight:600;border-top-color:var(--d7)}
-.dots{display:flex;gap:8px;justify-content:center;margin:20px 0 12px}.dots i{width:10px;height:10px;border-radius:50%;background:var(--line);border:1px solid #7C93AB}.dots i.on{background:var(--d7);border-color:var(--d7)}
-.nav2{display:flex;justify-content:space-between}.nav2 .btn{margin:0}
-iframe{width:100%;height:230px;border:1px solid var(--line);border-radius:12px;margin-top:12px}
-.err{color:var(--err);font-size:14px;text-align:left}.warn{background:var(--warnbg);color:var(--warn);padding:10px 12px;border-radius:8px;font-size:14px;margin:8px 0;text-align:left}
-.item{display:flex;align-items:center;gap:14px;width:100%;min-height:72px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin:10px 0;font:600 17px Inter;color:var(--deep);cursor:pointer;text-align:left}
-.item i{flex:none;width:48px;height:48px;border-radius:50%;background:var(--frost);display:flex;align-items:center;justify-content:center;font-style:normal;font-size:22px}
-.stat{display:flex;gap:8px}.stat>div{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}.stat b{display:block;font:700 20px 'Bricolage Grotesque';color:var(--d7)}.stat span{font-size:12px;color:var(--soft)}
-.bars{display:flex;align-items:flex-end;gap:1px;height:80px}.bars i{flex:1;background:var(--ice);min-height:2px;border-radius:2px 2px 0 0}
-#msgs{min-height:45vh;display:flex;flex-direction:column}
-.m{max-width:85%;padding:10px 12px;margin:5px 0;border-radius:12px;white-space:pre-wrap;word-wrap:break-word}
-.u{background:var(--d7);color:#fff;align-self:flex-end;border-bottom-right-radius:2px}.b{background:#fff;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:2px}
-.say{background:none;border:0;font-size:18px;cursor:pointer;min-width:44px;min-height:44px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.chips button{min-height:44px;padding:8px 12px;border-radius:22px;border:1px solid var(--d7);background:#fff;color:var(--d7);font:500 14px Inter;cursor:pointer}
-#bar{position:sticky;bottom:68px;display:flex;gap:6px;background:var(--frost);padding:8px 0}#bar input{flex:1}#bar .btn{margin:0;padding:10px 14px}
-.tag{font-size:12px;font-weight:600;padding:2px 8px;border-radius:10px;background:var(--frost);color:var(--d7)}
-.months{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mo{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px}
-.mo h3{font-size:14px;margin:0 0 4px;text-transform:capitalize}.g{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;font-size:11px;text-align:center}
-.g span{padding:2px 0;border-radius:3px;background:#F1F4D0}.g .h{background:none;color:var(--soft);font-weight:600}.g .e{background:none}
-.g .p{background:var(--ice);color:var(--deep)}.g .s{background:var(--deep);color:#fff;font-weight:700}
-details{background:#fff;border:1px solid var(--line);border-radius:12px;margin:8px 0}summary{padding:14px 16px;font-weight:600;cursor:pointer;min-height:48px}details p{margin:0;padding:0 16px 14px}
-.lbl{display:block;margin:14px 0 4px;font-size:14px;color:var(--soft);font-weight:500;text-align:left}
-.soilnote{font-size:14px;text-align:left;margin:6px 0 10px;color:var(--soft)}
-.soilnote b{color:var(--deep)}.soilnote small{display:block;margin-top:4px;font-size:12px}
-.soils{display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:left}
-.soil{position:relative;display:flex;flex-direction:column;gap:4px;padding:0 0 10px;background:#fff;border:2px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;font:inherit;color:var(--deep);text-align:left;transition:transform .2s,box-shadow .2s,border-color .2s}
-.soil svg{display:block;width:100%;height:auto;transition:transform .4s}
-.soil b{padding:0 10px;font-size:15px}.soil small{padding:0 10px;font-size:12px;color:var(--soft);line-height:1.35}
-.soil:hover{transform:translateY(-3px);box-shadow:0 6px 14px rgba(15,42,68,.14)}.soil:hover svg{transform:scale(1.05)}
-.soil img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;transition:transform .4s}.soil:hover img{transform:scale(1.05)}
-.soil[aria-pressed=true]{border-color:var(--d7);box-shadow:0 0 0 3px rgba(43,106,174,.25);animation:press .35s}
-.soil[aria-pressed=true]::after{content:'✓';position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;background:var(--d7);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;animation:pop .35s}
-.soil .reg{position:absolute;top:8px;left:8px;font-size:11px;font-weight:600;background:var(--pist);color:var(--deep);padding:2px 8px;border-radius:10px}
-.soilmore{grid-column:1/-1;margin:4px 0 0}
-.soiltip{margin-top:12px;text-align:left}
-.loadbar{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--line),var(--ice),var(--line));background-size:200% 100%;animation:shimmer 1.2s linear infinite;margin:6px 0 10px}
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes slideL{from{opacity:0;transform:translateX(36px)}to{opacity:1;transform:none}}
-@keyframes slideR{from{opacity:0;transform:translateX(-36px)}to{opacity:1;transform:none}}
-@keyframes pop{0%{opacity:0;transform:scale(.5)}70%{opacity:1;transform:scale(1.1)}100%{transform:scale(1)}}
-@keyframes press{0%{transform:scale(1)}40%{transform:scale(.96)}100%{transform:scale(1)}}
-@keyframes sheetUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
-@keyframes zoom{from{transform:scale(1.1)}to{transform:scale(1)}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
-@keyframes bubL{from{opacity:0;transform:translate(-10px,8px) scale(.95)}to{opacity:1;transform:none}}
-@keyframes bubR{from{opacity:0;transform:translate(10px,8px) scale(.95)}to{opacity:1;transform:none}}
-@keyframes dots{0%{content:''}25%{content:'.'}50%{content:'..'}75%{content:'...'}}
-@keyframes shimmer{to{background-position:-200% 0}}
-.view.on{animation:fadeIn .35s ease}
-.view.on .photo{animation:zoom 1.4s ease-out}
-.view.on .sheet{animation:sheetUp .55s cubic-bezier(.2,.8,.2,1)}
-#welcome.on .avatar{animation:pop .6s .2s both,float 3.2s 1s ease-in-out infinite}
-#welcome.on h1{animation:fadeUp .5s .3s both}#welcome.on p{animation:fadeUp .5s .4s both}#welcome.on .btn{animation:fadeUp .5s .5s both}
-.avatar.bump{animation:pop .35s}
-.step{animation:slideL .4s cubic-bezier(.2,.8,.2,1)}#onb[data-dir=back] .step{animation-name:slideR}
-.soils>*{animation:fadeUp .4s both}
-.soils>:nth-child(2){animation-delay:.05s}.soils>:nth-child(3){animation-delay:.1s}.soils>:nth-child(4){animation-delay:.15s}.soils>:nth-child(5){animation-delay:.2s}.soils>:nth-child(6){animation-delay:.25s}.soils>:nth-child(7){animation-delay:.3s}.soils>:nth-child(8){animation-delay:.35s}.soils>:nth-child(n+9){animation-delay:.4s}
-section.on>*{animation:fadeUp .45s both}
-section.on>:nth-child(2){animation-delay:.06s}section.on>:nth-child(3){animation-delay:.12s}section.on>:nth-child(4){animation-delay:.18s}section.on>:nth-child(5){animation-delay:.24s}section.on>:nth-child(6){animation-delay:.3s}section.on>:nth-child(7){animation-delay:.36s}section.on>:nth-child(8){animation-delay:.42s}section.on>:nth-child(n+9){animation-delay:.48s}
-section#chat.on>*{animation:fadeIn .3s both}
-.months .mo{animation:fadeUp .4s both}
-.months .mo:nth-child(2){animation-delay:.03s}.months .mo:nth-child(3){animation-delay:.06s}.months .mo:nth-child(4){animation-delay:.09s}.months .mo:nth-child(5){animation-delay:.12s}.months .mo:nth-child(6){animation-delay:.15s}.months .mo:nth-child(7){animation-delay:.18s}.months .mo:nth-child(8){animation-delay:.21s}.months .mo:nth-child(9){animation-delay:.24s}.months .mo:nth-child(10){animation-delay:.27s}.months .mo:nth-child(11){animation-delay:.3s}.months .mo:nth-child(12){animation-delay:.33s}
-.bars i{transform-origin:bottom;animation:grow .6s cubic-bezier(.2,.8,.2,1) both}
-.m.new.u{animation:bubR .3s cubic-bezier(.2,.8,.2,1) both}.m.new.b{animation:bubL .3s cubic-bezier(.2,.8,.2,1) both}
-.m.typing::after{content:'';animation:dots 1.2s steps(1) infinite}
-.btn{transition:transform .15s,box-shadow .2s,background-color .2s,color .2s}
-.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 10px rgba(15,42,68,.15)}
-.btn:active:not(:disabled){transform:scale(.96)}
-.item{transition:transform .2s,box-shadow .2s,border-color .2s}.item i{transition:transform .3s}
-.item:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(15,42,68,.12);border-color:var(--ice)}.item:hover i{transform:rotate(-10deg) scale(1.12)}
-.item:active{transform:scale(.98)}
-.card{transition:transform .2s,box-shadow .2s}
-.chips button{transition:background-color .2s,color .2s,transform .15s}.chips button:hover{background:var(--d7);color:#fff}.chips button:active{transform:scale(.95)}
-nav button{transition:color .2s,border-color .25s}nav button span{display:inline-block;transition:transform .25s cubic-bezier(.2,.8,.2,1)}
-nav button[aria-current=page] span{transform:translateY(-3px) scale(1.18)}
-.dots i{transition:width .3s,background-color .3s,border-radius .3s}.dots i.on{width:26px;border-radius:5px}
-input,select,textarea{transition:border-color .2s,box-shadow .2s}
-input:focus,select:focus,textarea:focus{border-color:var(--ice);box-shadow:0 0 0 3px rgba(87,152,215,.25);outline:none}
-iframe:not([hidden]),.warn,.err{animation:fadeIn .4s}
-.calhoje{color:var(--soft);font-size:14px;margin:0 0 10px}.calhoje::first-letter{text-transform:uppercase}
-.g .today{box-shadow:inset 0 0 0 2px var(--pist);font-weight:700;animation:hoje 1.6s ease-in-out 3}
-@keyframes hoje{50%{box-shadow:inset 0 0 0 2px var(--pist),0 0 0 4px rgba(185,194,85,.45)}}
-.brand{display:flex;align-items:center;gap:8px}.brand img{width:34px;height:34px;border-radius:50%;background:#fff;padding:2px;object-fit:contain}
-.avatar.logo{width:116px;height:116px;margin-top:-82px;background:#fff;box-shadow:0 4px 14px rgba(15,42,68,.15)}.avatar.logo img{width:90%;height:90%;object-fit:contain}
-details{transition:box-shadow .2s}details[open]{box-shadow:0 4px 12px rgba(15,42,68,.08)}details[open] p{animation:fadeUp .3s}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style></head><body>
-<header><span class="brand"><img src="img/logo_reduzida.png" alt="" width="34" height="34">CultivAI</span><select id="lang" aria-label="Language" onchange="setLang(this.value)"><option value="en">English</option><option value="pt">Português</option><option value="es">Español</option></select></header>
+:root {
+  --ol: #7D863C;
+  --ol2: #6A7332;
+  --lime: #E2EB8B;
+  --tile: #F4F4FA;
+  --ink: #14161A;
+  --soft: #5F6470;
+  --line: #E4E5EE;
+  --link: #2B5FA8;
+  --chk: #5B5BD6;
+  --err: #B3261E;
+  --warnbg: #FFF1D6;
+  --warn: #8A5300;
+}
 
-<div id="welcome" class="view"><div class="photo"></div><div class="sheet"><div class="avatar logo" aria-hidden="true"><img src="img/logo_reduzida.png" alt=""></div>
- <h1 data-i="wT"></h1><p data-i="wX" style="color:var(--soft)"></p><button class="btn a big" onclick="begin()" data-i="start"></button></div></div>
+* {
+  box-sizing: border-box;
+}
 
-<div id="onb" class="view"><div class="photo" style="height:120px"></div><div class="sheet" style="min-height:0">
- <div class="avatar" id="av">?</div>
- <div class="step" data-s="0">
-  <label for="nome" data-i="name"></label><input id="nome" autocomplete="name" oninput="setAv(this.value)">
-  <label for="cidade" data-i="city"></label>
-  <div class="row"><input id="cidade"><button class="btn a" type="button" onclick="buscar()" data-i="search"></button></div>
-  <button class="btn t" type="button" onclick="gps()" data-i="gps"></button>
-  <p id="loc" role="status" style="margin:8px 0 0;text-align:left"></p>
-  <iframe id="map" title="Map" hidden></iframe>
-  <input id="uf" type="hidden"><input id="lat" type="hidden"><input id="lon" type="hidden">
- </div>
- <div class="step" data-s="1" hidden>
-  <h2 data-i="s2"></h2>
-  <label for="atual" data-i="crop"></label><input id="atual">
-  <label for="desejo" data-i="wish"></label><input id="desejo">
-  <label for="obj" data-i="goal"></label><select id="obj"></select>
- </div>
- <div class="step" data-s="2" hidden>
-  <h2 data-i="s3"></h2>
-  <span class="lbl" id="soilLbl" data-i="soil"></span><input id="solo" type="hidden">
-  <div id="soilNote" class="soilnote" aria-live="polite"></div>
-  <div id="soils" class="soils" role="group" aria-labelledby="soilLbl"></div>
-  <details class="soiltip"><summary data-i="tipT"></summary><p data-i="tipX"></p></details>
-  <label for="agua" data-i="water"></label><select id="agua"></select>
-  <label for="dif" data-i="diff"></label><textarea id="dif" rows="3"></textarea>
- </div>
- <div class="dots" id="dots" role="img"><i class="on"></i><i></i><i></i></div>
- <div class="nav2"><button class="btn s" id="bv" type="button" onclick="passo(-1)" data-i="back"></button><button class="btn p" id="bn" type="button" onclick="passo(1)"></button></div>
- <p id="st" role="status"></p></div></div>
+[hidden] {
+  display: none !important;
+}
 
-<div id="app" class="view"><div class="pad">
- <section id="home"></section>
- <section id="chat"><div id="msgs" aria-live="polite"></div><div class="chips" id="chips"></div>
-  <div id="bar"><input id="q" data-ph="ask" onkeydown="if(event.key=='Enter')enviar()"><button class="btn s" id="mic" type="button" onclick="mic()">🎤</button><button class="btn p" id="send" type="button" onclick="enviar()">➤</button></div></section>
- <section id="recs"></section><section id="cal"></section><section id="faq"></section>
-</div></div>
-<nav id="nav" hidden></nav>
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
 
-<script>
-    const AUD_USER_ID =
-  localStorage.getItem("CultivAI_user_id") || (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
+body {
+  margin: 0;
+  min-height: 100vh;
+  font: 16px/1.5 Inter, system-ui, sans-serif;
+  background: #EDEDF2;
+  color: var(--ink);
+}
 
-localStorage.setItem("CultivAI_user_id", AUD_USER_ID);
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
 
-const originalFetch = window.fetch.bind(window);
+button {
+  -webkit-tap-highlight-color: transparent;
+}
 
-window.fetch = (input, init = {}) => {
-  const url = typeof input === "string" ? input : input.url;
+.wrap {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+}
 
-  if (url.startsWith("/api/")) {
-    const headers = new Headers(
-      init.headers || (input instanceof Request ? input.headers : undefined)
-    );
+h1,
+h2,
+h3 {
+  font-family: 'Bricolage Grotesque', Inter, sans-serif;
+  line-height: 1.2;
+  margin: 0 0 8px;
+}
 
-    headers.set("x-CultivAI-user", AUD_USER_ID);
+h1 {
+  font-size: 21px;
+  text-align: center;
+}
 
-    return originalFetch(input, { ...init, headers });
+h2 {
+  font-size: 19px;
+}
+
+h3 {
+  font-size: 17px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+#lang {
+  position: fixed;
+  top: 12px;
+  right: max(12px, calc(50% - 220px));
+  z-index: 20;
+  width: auto;
+  height: 40px;
+  font-size: 13px;
+  padding: 0 10px;
+  background: rgba(255,255,255,.95);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.view,
+section {
+  display: none;
+}
+
+.view.on,
+section.on {
+  display: block;
+}
+
+.photo {
+  height: 290px;
+  background: url(hero.jpg) center/cover, linear-gradient(135deg,#7D863C,#B9C255 60%,#E2EB8B);
+}
+
+.photo.short {
+  height: 150px;
+}
+
+.sheet {
+  background: #fff;
+  border-radius: 28px 28px 0 0;
+  margin-top: -28px;
+  padding: 0 24px 32px;
+  position: relative;
+}
+
+.badge {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--lime);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  margin: 0 auto 14px;
+  border: 4px solid #fff;
+  flex: none;
+}
+
+.badge.up {
+  margin-top: -46px;
+}
+
+.badge.sm {
+  width: 48px;
+  height: 48px;
+  border: 0;
+  margin: 0;
+}
+
+.scr {
+  width: 100%;
+  padding: 44px 24px 24px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.steps {
+  flex: 1;
+}
+
+.pad {
+  padding: 20px 20px 32px;
+}
+
+label {
+  display: block;
+  margin: 20px 0 8px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  min-width: 0;
+  height: 52px;
+  padding: 0 16px;
+  color: var(--ink);
+  background: var(--tile);
+  border: 1px solid transparent;
+  border-radius: 8px;
+}
+
+select {
+  appearance: none;
+  background: var(--tile) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2314161A' stroke-width='2.5'%3E%3Cpath d='M5 9l7 7 7-7'/%3E%3C/svg%3E") no-repeat right 16px center;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--ol);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(125,134,60,.25);
+}
+
+.link {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--link);
+  text-decoration: underline;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.or {
+  margin: 14px 0 4px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.go {
+  width: 100%;
+  min-height: 56px;
+  background: var(--ol);
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  font: 700 18px 'Bricolage Grotesque', sans-serif;
+  cursor: pointer;
+  margin-top: 24px;
+}
+
+.go:hover {
+  background: var(--ol2);
+}
+
+.go:active {
+  transform: scale(.98);
+}
+
+.go:disabled {
+  background: #D6D8C4;
+  color: #666;
+}
+
+.btn {
+  min-height: 46px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font: 600 15px Inter, sans-serif;
+  cursor: pointer;
+  border: 2px solid var(--ol);
+  margin: 8px 8px 0 0;
+}
+
+.pri {
+  background: var(--ol);
+  color: #fff;
+}
+
+.sec {
+  background: #fff;
+  color: var(--ol2);
+}
+
+.ter {
+  background: var(--tile);
+  color: var(--ol2);
+  border-color: transparent;
+}
+
+.foot {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.foot .link {
+  justify-self: start;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.dots {
+  display: flex;
+  gap: 8px;
+}
+
+.dots i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #D9DAE3;
+  transition: background .3s;
+}
+
+.dots i.on {
+  background: var(--ink);
+}
+
+.mapbox {
+  margin-top: 12px;
+  height: 180px;
+  border-radius: 8px;
+  background: #D9D9D9;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  color: var(--soft);
+  overflow: hidden;
+  text-align: center;
+  padding: 8px;
+}
+
+.mapbox iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.err {
+  color: var(--err);
+  font-size: 14px;
+  margin: 6px 0 0;
+}
+
+.note {
+  font-size: 13px;
+  color: var(--soft);
+  margin: 6px 0 12px;
+}
+
+.note small {
+  display: block;
+  font-size: 12px;
+}
+
+.warn {
+  background: var(--warnbg);
+  color: var(--warn);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.soils {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 16px;
+}
+
+.soil {
+  min-width: 0;
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+  cursor: pointer;
+  animation: up .4s both;
+  animation-delay: calc(var(--n)*50ms);
+}
+
+.ph {
+  position: relative;
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--c,#999);
+}
+
+.ph img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s;
+}
+
+.soil:hover img {
+  transform: scale(1.05);
+}
+
+.ph.qm {
+  background: linear-gradient(135deg,#D9B878,#6B7470);
+  display: grid;
+  place-items: center;
+}
+
+.ph.qm span.q {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--link);
+  font: 700 30px 'Bricolage Grotesque';
+  display: grid;
+  place-items: center;
+}
+
+.cb {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background: #fff;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.soil[aria-pressed=true] .cb {
+  background: var(--chk);
+}
+
+.soil[aria-pressed=true] .cb::after {
+  content: '✓';
+  animation: pop .3s;
+}
+
+.reg {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--lime);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.soil b {
+  display: block;
+  font-weight: 500;
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+.soil small {
+  display: block;
+  color: var(--soft);
+  font-size: 13px;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+.more {
+  grid-column: 1/-1;
+}
+
+.load {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg,var(--line),var(--ol),var(--line));
+  background-size: 200% 100%;
+  animation: sh 1.2s linear infinite;
+  margin: 6px 0;
+}
+
+.info {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+  font-size: 14px;
+}
+
+.info li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 30px;
+}
+
+.info li span {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.info svg {
+  flex: none;
+  color: var(--soft);
+}
+
+.info .link {
+  font-size: 13px;
+  min-height: 30px;
+}
+
+.svc {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  min-height: 64px;
+  background: var(--tile);
+  border: 0;
+  border-radius: 10px;
+  padding: 8px 14px;
+  margin: 12px 0;
+  font: 700 18px 'Bricolage Grotesque', sans-serif;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.svc:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(20,22,26,.1);
+}
+
+.svc:active {
+  transform: scale(.98);
+}
+
+.top {
+  padding: 14px 20px 0;
+}
+
+.top .link {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 12px 0;
+  overflow-wrap: anywhere;
+}
+
+.card.aprovada {
+  border-left: 6px solid var(--ol);
+  background: #FAFBF0;
+}
+
+.card.recusada,
+.card.arquivada {
+  opacity: .7;
+}
+
+.tag {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: var(--lime);
+}
+
+.stat {
+  display: flex;
+  gap: 8px;
+}
+
+.stat > div {
+  flex: 1;
+  min-width: 0;
+  background: var(--tile);
+  border-radius: 10px;
+  padding: 10px 6px;
+  text-align: center;
+}
+
+.stat b {
+  display: block;
+  font: 700 19px 'Bricolage Grotesque';
+  overflow-wrap: anywhere;
+}
+
+.stat span {
+  font-size: 12px;
+  color: var(--soft);
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 1px;
+  height: 80px;
+}
+
+.bars i {
+  flex: 1;
+  background: var(--ol);
+  min-height: 2px;
+  border-radius: 2px 2px 0 0;
+  transform-origin: bottom;
+  animation: grow .6s both;
+}
+
+#msgs {
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.m {
+  max-width: 85%;
+  padding: 10px 12px;
+  margin: 5px 0;
+  border-radius: 12px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+.u {
+  background: var(--ol);
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 2px;
+}
+
+.b {
+  background: var(--tile);
+  align-self: flex-start;
+  border-bottom-left-radius: 2px;
+}
+
+.m.new {
+  animation: up .3s both;
+}
+
+.m.typing::after {
+  content: '';
+  animation: dt 1.2s steps(1) infinite;
+}
+
+.say {
+  background: none;
+  border: 0;
+  font-size: 18px;
+  cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0;
+}
+
+.chips button {
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: 22px;
+  border: 1px solid var(--ol);
+  background: #fff;
+  color: var(--ol2);
+  font: 500 14px Inter;
+  cursor: pointer;
+}
+
+.chips button:hover {
+  background: var(--ol);
+  color: #fff;
+}
+
+#bar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  gap: 6px;
+  background: #fff;
+  padding: 10px 0;
+}
+
+#bar input {
+  flex: 1;
+  min-width: 0;
+}
+
+#bar .btn {
+  flex: none;
+  margin: 0;
+  height: 52px;
+}
+
+.months {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.mo {
+  min-width: 0;
+  background: var(--tile);
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.mo h3 {
+  font-size: 14px;
+  margin: 0 0 4px;
+  text-transform: capitalize;
+}
+
+.g {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 2px;
+  font-size: 11px;
+  text-align: center;
+}
+
+.g span {
+  padding: 3px 0;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.g .h {
+  background: none;
+  color: var(--soft);
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.g .e {
+  background: none;
+}
+
+.g .cp {
+  background: var(--lime);
+}
+
+.g .cs {
+  background: var(--ol);
+  color: #fff;
+  font-weight: 700;
+}
+
+.g .today {
+  box-shadow: inset 0 0 0 2px var(--ink);
+  font-weight: 700;
+}
+
+.calhoje {
+  color: var(--soft);
+  font-size: 14px;
+  margin: 0 0 10px;
+}
+
+details {
+  background: var(--tile);
+  border-radius: 10px;
+  margin: 8px 0;
+}
+
+summary {
+  padding: 14px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 48px;
+}
+
+details p {
+  margin: 0;
+  padding: 0 16px 14px;
+}
+
+.view.on {
+  animation: fi .35s;
+}
+
+.step {
+  animation: sl .4s;
+}
+
+#onb[data-dir=back] .step {
+  animation-name: sr;
+}
+
+@keyframes fi {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes sl {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes sr {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes pop {
+  0% { transform: scale(.4); }
+  70% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@keyframes grow {
+  from { transform: scaleY(0); }
+}
+
+@keyframes sh {
+  to { background-position: -200% 0; }
+}
+
+@keyframes dt {
+  0% { content: ''; }
+  25% { content: '.'; }
+  50% { content: '..'; }
+  75% { content: '...'; }
+}
+
+section.on > * {
+  animation: up .4s both;
+}
+
+.badge.up.logo {
+  width: 96px;
+  height: 96px;
+  margin-top: -64px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(20,22,26,.15);
+}
+
+.badge.logo img {
+  width: 82%;
+  height: 82%;
+  object-fit: contain;
+}
+
+.hubR h2 {
+  margin-top: 26px;
+}
+
+/* CELULARES PEQUENOS */
+@media (max-width: 360px) {
+  .scr {
+    padding-left: 18px;
+    padding-right: 18px;
   }
 
-  return originalFetch(input, init);
-};
+  .sheet {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .pad {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .soils {
+    gap: 16px 10px;
+  }
+
+  .stat {
+    gap: 4px;
+  }
+
+  .stat b {
+    font-size: 16px;
+  }
+
+  .months {
+    gap: 6px;
+  }
+
+  .mo {
+    padding: 5px;
+  }
+}
+
+/* TABLETS */
+@media (min-width: 640px) {
+  .wrap {
+    max-width: 760px;
+    box-shadow: 0 0 35px rgba(20,22,26,.08);
+  }
+
+  .scr {
+    max-width: 680px;
+    margin: 0 auto;
+    padding-top: 64px;
+  }
+
+  .soils {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .months {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .photo.short {
+    height: 200px;
+  }
+}
+
+/* COMPUTADORES */
+@media (min-width: 900px) {
+  body {
+    padding: 24px;
+  }
+
+  .wrap {
+    max-width: 1200px;
+    min-height: calc(100vh - 48px);
+    border-radius: 18px;
+    box-shadow: 0 8px 40px rgba(20,22,26,.10);
+  }
+
+  #lang {
+    right: 32px;
+    top: 32px;
+  }
+
+  #welcome.on {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 48px);
+  }
+
+  #welcome .photo {
+    height: auto;
+    min-height: calc(100vh - 48px);
+    background-position: center;
+  }
+
+  #welcome .sheet {
+    border-radius: 0;
+    margin: 0;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100vh - 48px) !important;
+  }
+
+  #welcome .badge.up {
+    margin-top: 0;
+  }
+
+  .scr {
+    max-width: 760px;
+    min-height: calc(100vh - 48px);
+    padding: 72px 40px 40px;
+  }
+
+  .photo.short {
+    height: 240px;
+  }
+
+  .sheet {
+    padding: 0 56px 48px;
+  }
+
+  #app section.pad {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 36px 48px 48px;
+  }
+
+  .hubgrid {
+    display: grid;
+    grid-template-columns: minmax(250px, .85fr) minmax(0, 1.15fr);
+    gap: 48px;
+    align-items: start;
+  }
+
+  .hubR h2 {
+    margin-top: 12px;
+  }
+
+  .soils {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .months {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  #msgs {
+    min-height: 55vh;
+    max-width: 850px;
+    margin: 0 auto;
+  }
+
+  #bar,
+  #chips {
+    max-width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .card {
+    padding: 22px;
+  }
+}
+
+/* TELAS GRANDES */
+@media (min-width: 1400px) {
+  .wrap {
+    max-width: 1320px;
+  }
+
+  #app section.pad {
+    max-width: 1120px;
+  }
+
+  .hubgrid {
+    gap: 64px;
+  }
+}
+
+/* ACESSIBILIDADE */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+</style></head><body>
+<select id="lang" aria-label="Language" onchange="setLang(this.value)"><option value="en">English</option><option value="pt">Português</option><option value="es">Español</option></select>
+<div class="wrap">
+
+<div id="welcome" class="view"><div class="photo"></div><div class="sheet" style="min-height:60vh;text-align:center"><div class="badge up" data-ic="clover" data-s="34"></div>
+ <h1 data-i="wT" style="margin-top:36px"></h1><p data-i="wX" style="font-size:14px;margin:0 0 36px"></p><button class="go" onclick="begin()" data-i="start"></button></div></div>
+
+<div id="onb" class="view"><div class="scr">
+ <div class="steps">
+  <div class="step" data-s="0"><div class="badge" data-ic="user"></div><h1 data-i="nameT"></h1><label for="nome" data-i="name"></label><input id="nome" autocomplete="name" data-ph="namePh" onkeydown="if(event.key=='Enter')passo(1)"><p id="nmerr" class="err" role="alert"></p></div>
+  <div class="step" data-s="1" hidden><div class="badge" data-ic="pin"></div><h1 data-i="locT"></h1>
+   <label for="cidade" data-i="city"></label><input id="cidade" autocomplete="off" data-ph="cityPh">
+   <p class="or"><span data-i="or"></span> <button class="link" type="button" onclick="gps()" data-i="gps"></button></p>
+   <p id="loc" role="status" class="note"></p>
+   <div class="mapbox"><span id="mapph" data-i="mapPh"></span><iframe id="map" title="Map" hidden></iframe></div>
+   <input id="uf" type="hidden"><input id="lat" type="hidden"><input id="lon" type="hidden"></div>
+  <div class="step" data-s="2" hidden><div class="badge" data-ic="land"></div><h1 data-i="soilT"></h1>
+   <label data-i="soilPick" style="margin-bottom:4px"></label><input id="solo" type="hidden"><div id="soilNote" class="note" aria-live="polite"></div>
+   <div id="soils" class="soils" role="group"></div></div>
+  <div class="step" data-s="3" hidden><div class="badge" data-ic="sprout"></div><h1 data-i="cropT"></h1>
+   <label for="atual" data-i="crop"></label><input id="atual" list="crops" data-ph="cropPh">
+   <label for="desejo" data-i="other"></label><input id="desejo" list="crops" data-ph="cropPh"><datalist id="crops"></datalist>
+   <label for="agua" data-i="irr"></label><select id="agua"></select>
+   <label for="obj" data-i="goal"></label><select id="obj"></select></div>
+ </div>
+ <p id="st" role="status" class="note"></p>
+ <button class="go" id="bn" onclick="passo(1)" style="margin-top:12px"></button>
+ <div class="foot"><button class="link" id="bv" onclick="passo(-1)" data-i="back"></button><div class="dots" id="dots" role="img"><i></i><i></i><i></i><i></i></div><span></span></div>
+</div></div>
+
+<div id="app" class="view">
+ <section id="home"></section>
+ <section id="chat" class="pad"><div style="margin:-2px 0 6px"><button class="link" onclick="go('home')" data-i="back" style="color:var(--ink);text-decoration:none"></button></div>
+  <div id="msgs" aria-live="polite"></div><div class="chips" id="chips"></div>
+  <div id="bar"><input id="q" data-ph="ask" onkeydown="if(event.key=='Enter')enviar()"><button class="btn sec" id="mic" type="button" onclick="mic()">🎤</button><button class="btn pri" id="send" type="button" onclick="enviar()">➤</button></div></section>
+ <section id="recs" class="pad"></section><section id="cal" class="pad"></section><section id="faq" class="pad"></section>
+</div>
+</div>
+
+<script>
+const AUD_USER_ID=localStorage.getItem("CultivAI_user_id")||(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2));
+localStorage.setItem("CultivAI_user_id",AUD_USER_ID);
+const originalFetch=window.fetch.bind(window);
+window.fetch=(input,init={})=>{const url=typeof input==="string"?input:input.url;
+ if(url.startsWith("/api/")){const h=new Headers(init.headers||(input instanceof Request?input.headers:undefined));h.set("x-CultivAI-user",AUD_USER_ID);return originalFetch(input,{...init,headers:h})}
+ return originalFetch(input,init)};
+
+const APP='Audaz';
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const IC={user:'<circle cx="12" cy="8" r="4.5"/><path d="M3.5 21a8.5 8.5 0 0 1 17 0z"/>',clover:'<circle cx="8" cy="8" r="4.5"/><circle cx="16" cy="8" r="4.5"/><circle cx="8" cy="16" r="4.5"/><circle cx="16" cy="16" r="4.5"/>',
+pin:'<path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/>',
+land:'<path d="M2 20l7-11 4 6 2.5-3.5L22 20H2z"/><circle cx="17.5" cy="6" r="2.5"/>',
+sprout:'<path d="M11 22v-9C6.5 13 3.5 10 3.5 5.5 8 5.5 11 8.5 11 13z"/><path d="M13 22v-5c0-4 3-7 7.5-7 0 4.5-3 7.5-7.5 7.5z"/>',
+chat:'<path d="M4 3h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>',
+cal:'<path d="M7 2h2v2h6V2h2v2h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2V2zM5 10v10h14V10H5z"/>',
+bulb:'<path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2zM9 19h6v1.5a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 20.5V19z"/>',
+help:'<circle cx="12" cy="12" r="10"/><text x="12" y="17" text-anchor="middle" font-size="14" font-weight="700" fill="#E2EB8B">?</text>'};
+const ico=(k,s=26)=>`<svg viewBox="0 0 24 24" width="${s}" height="${s}" fill="currentColor" fill-rule="evenodd" aria-hidden="true">${IC[k]}</svg>`;
+
 const L={
-en:{wT:'Welcome to CultivAI',wX:'Tell us about your farm and get help with crop rotation and soil care.',start:'Get started',back:'Back',next:'Next',save:'Save and fetch NASA data',name:'Your name',city:'City',search:'Search',gps:'📍 Use my location',s2:'What do you grow?',crop:'Current crop',wish:'Crops you would like to plant',goal:'Your goal',s3:'Soil and water',soil:'What is your soil like?',water:'Water and irrigation',diff:'Main difficulties', soilPick:'Tap the one that looks most like your soil.',soilLoading:'Looking up the most common soils in your region…',soilRegion:'Common soils in your region: ',soilSrc:'SoilGrids (ISRIC) model estimate for the chosen point. Check by looking at your own soil.',soilFail:'I could not identify the soils in your region right now. Choose by appearance.',soilCommon:'📍 In your region',soilMore:'See all soil types',soilLess:'Show only my region',tipT:'🖐️ Hand test: how to find out',tipX:'Wet a handful of soil and squeeze it. If it crumbles and does not hold shape, it is sandy. If it forms a long "snake" that does not break and sticks to your fingers, it is clay. If it forms a ball that breaks apart easily, it is mixed. If it feels smooth like talc, it is silty.',
-goals:['Increase productivity','Recover the soil','Save inputs and water'],soils:['Sandy (loose sand)','Clay (heavy mud)','Mixed',"I don't know"],waters:['Drip irrigation','Sprinkler','Rain only','Little water'],
-needLoc:'⚠ Enter your name and search your city (or use your location).',searching:'Searching…',notfound:'⚠ City not found.',nogeo:'⚠ Location is not available.',nasaWait:'Fetching NASA data…',
-tabs:['Home','Chat','Tips','Calendar','FAQ'],hi:'Hello, ',cChat:'Talk to the AI',cRecs:'My suggestions',cCal:'Farm calendar',cFaq:'Questions & answers',climate:'Regional climate',warn:'<b>NASA POWER</b> data: an estimate for an area of about 50 km, not a measurement on your farm. Period: ',temp:'Average temperature',rain:'Rain in 60 days',rad:'Radiation kWh/m²/day',rainDay:'Rain per day',smap:'Soil moisture (SMAP) is not integrated yet.',nasaFail:'NASA data unavailable',retry:'Try again',edit:'Edit registration',
-ask:'Ask something…',thinking:'Thinking…',fail:'I could not answer now: ',intro:'Hi! I am CultivAI. Ask about your soil, your crops or your local climate.',created:'✅ I created suggestion(s) for you. See the Tips tab.',listen:'Listen',novoice:'Your browser does not support voice. Use Chrome.',
+en:{wT:'Welcome to '+APP+'!',wX:'Your chat app to manage your production and crop rotation.',start:'Get started',back:'← Back',cont:'Continue',done:'Finish',nameT:'What is your name?',name:'Your name:',namePh:'Type your name here...',needName:'⚠ Please enter your name.',hi:'Hello, ',locT:'Your location',city:'Your city:',cityPh:'Type your city here...',or:'or',gps:'Use my location',mapPh:'The map appears here after you search your city',soilT:'What is your soil like?',soilPick:'Choose the soil type:',cropT:'What do you grow?',crop:'Current crop:',other:'Other crops:',irr:'Irrigation type:',goal:'Current goal:',cropPh:'Corn, soy, coffee, grapes...',irrPh:'Drip, Sprinkler,...',goalPh:'Recover the soil, save...',
+goals:['Increase productivity','Recover the soil','Save inputs and water'],waters:['Drip irrigation','Sprinkler','Rain only','Little water'],crops:['Corn','Soybean','Coffee','Grapes','Mango','Beans','Cassava','Sugarcane','Banana','Tomato','Rice','Cotton'],
+soilLoading:'Looking up the most common soils in your region…',soilRegion:'Common soils in your region: ',soilSrc:'SoilGrids (ISRIC) model estimate for the chosen point. Check by looking at your own soil.',soilFail:'I could not identify the soils in your region now. Choose by appearance.',soilCommon:'In your region',soilMore:'See all soil types',soilLess:'Show only my region',soilPre:'Soil: ',
+needLoc:'⚠ Search your city (or use your location) to continue.',searching:'Searching…',notfound:'⚠ City not found.',nogeo:'⚠ Location is not available.',nasaWait:'Fetching NASA data…',
+svc:'Services',edit:'Edit registration',cChat:'Chat',cCal:'Calendar',cRecs:'Suggestions',cFaq:'FAQ',climate:'Regional climate',warn:'<b>NASA POWER</b> data: an estimate for an area of about 50 km, not a measurement on your farm. Period: ',temp:'Average temperature',rain:'Rain in 60 days',rad:'Radiation kWh/m²/day',rainDay:'Rain per day',smap:'Soil moisture (SMAP) is not integrated yet.',nasaFail:'NASA data unavailable',
+ask:'Ask something…',thinking:'Thinking…',fail:'I could not answer now: ',intro:'Hi! I am '+APP+'. Ask about your soil, your crops or your local climate.',created:'✅ I created suggestion(s) for you. See Suggestions.',listen:'Listen',novoice:'Your browser does not support voice. Use Chrome.',
 chips:['How can I improve my soil health?','What can I plant after the current crop?','How can I save water?','What is the climate like in my region?'],
 recsT:'Suggestions for you',noRecs:'Chat with the AI to get suggestions.',approve:'Approve',reject:'Reject',archive:'Archive',why:'Why this reason? (optional)',ben:'Benefits',per:'Period',cost:'Costs',conf:'Confidence',
-st:{pendente:'pending',aprovada:'approved',recusada:'rejected',arquivada:'archived'},calT:'Calendar ',appr:'Approved activities',noAppr:'Approve a suggestion and it will appear here. Light blue days mark the period; the 1st day, in dark blue, is the start.',startm:'Start',months:'month(s)',
-faqT:'Questions & answers',faq:[['Is the climate data from my farm?','No. It comes from NASA POWER and is an estimate for an area of about 50 km around the chosen point, not a measurement on your farm.'],['What is crop rotation?','Alternating what you plant in the same area over time. It helps break pest and disease cycles and takes better care of the soil.'],['What are cover crops?','Plants grown to cover and protect the soil, or to be worked into it later. In perennial crops, such as grapes, they can grow between the rows.'],['Does the app tell me which nutrients my soil lacks?','No. Weather and rain do not show fertility. For that you need a soil analysis in a laboratory.'],['How do I accept a suggestion?','In the Tips tab, tap Approve. Approved suggestions go to the Calendar. You can also Reject or Archive.'],['Are the recommendations guaranteed?','No. They are AI suggestions based on your data and NASA data. Confirm with an agricultural technician before important decisions.']]},
-pt:{wT:'Bem-vindo ao CultivAI',wX:'Conte sobre sua propriedade e receba ajuda com rotação de culturas e cuidado com o solo.',start:'Começar',back:'Voltar',next:'Próximo',save:'Salvar e buscar dados da NASA',name:'Seu nome',city:'Cidade',search:'Buscar',gps:'📍 Usar minha localização',s2:'O que você planta?',crop:'Cultura atual',wish:'Culturas que gostaria de plantar',goal:'Seu objetivo',s3:'Solo e água',soil:'Como é o seu solo?',water:'Água e irrigação',diff:'Principais dificuldades', soilPick:'Toque no que mais parece com o seu solo.',soilLoading:'Procurando os solos mais comuns na sua região…',soilRegion:'Solos comuns na sua região: ',soilSrc:'Estimativa do modelo SoilGrids (ISRIC) para o ponto escolhido. Confira olhando o seu solo.',soilFail:'Não consegui identificar os solos da sua região agora. Escolha pela aparência.',soilCommon:'📍 Na sua região',soilMore:'Ver todos os tipos de solo',soilLess:'Mostrar só os da minha região',tipT:'🖐️ Teste da mão: como descobrir',tipX:'Molhe um punhado de terra e aperte. Se esfarelar e não segurar a forma, é arenoso. Se formar uma "cobrinha" comprida que não quebra e gruda nos dedos, é argiloso. Se formar uma bolinha que desmancha fácil, é misto. Se for liso como talco, é siltoso.',
-goals:['Aumentar a produtividade','Recuperar o solo','Economizar insumos e água'],soils:['Arenoso (areia solta)','Argiloso (barro pesado)','Misto','Não sei'],waters:['Gotejamento','Aspersão','Só chuva','Pouca água'],
-needLoc:'⚠ Informe seu nome e busque a cidade (ou use sua localização).',searching:'Buscando…',notfound:'⚠ Cidade não encontrada.',nogeo:'⚠ Localização indisponível.',nasaWait:'Buscando dados da NASA…',
-tabs:['Início','Chat','Dicas','Calendário','Dúvidas'],hi:'Olá, ',cChat:'Conversar com a IA',cRecs:'Minhas sugestões',cCal:'Calendário agrícola',cFaq:'Tira-dúvidas',climate:'Clima da região',warn:'Dados da <b>NASA POWER</b>: estimativa de uma área de ~50 km, não medição na sua propriedade. Período: ',temp:'Temperatura média',rain:'Chuva em 60 dias',rad:'Radiação kWh/m²/dia',rainDay:'Chuva por dia',smap:'Umidade do solo (SMAP) ainda não integrada.',nasaFail:'Dados da NASA indisponíveis',retry:'Tentar novamente',edit:'Editar cadastro',
-ask:'Pergunte algo…',thinking:'Pensando…',fail:'Não consegui responder agora: ',intro:'Olá! Sou o CultivAI. Pergunte sobre seu solo, suas culturas ou o clima da sua região.',created:'✅ Criei sugestão(ões) para você. Veja na aba Dicas.',listen:'Ouvir',novoice:'Seu navegador não suporta voz. Use o Chrome.',
+st:{pendente:'pending',aprovada:'approved',recusada:'rejected',arquivada:'archived'},calT:'Calendar',today:'Today',appr:'Approved activities',noAppr:'Approve a suggestion and it will appear here. Green days mark the period; the dark day is the start.',startm:'Start',months:'month(s)',
+faqT:'FAQ',faq:[['Is the climate data from my farm?','No. It comes from NASA POWER and is an estimate for an area of about 50 km around the chosen point.'],['What is crop rotation?','Alternating what you plant in the same area over time. It breaks pest and disease cycles and cares for the soil.'],['What are cover crops?','Plants grown to cover and protect the soil, or to be worked into it later. In perennial crops like grapes, they can grow between the rows.'],['Does the app tell me which nutrients my soil lacks?','No. Weather does not show fertility. For that you need a laboratory soil analysis.'],['How do I accept a suggestion?','In Suggestions, tap Approve. It goes to the Calendar. You can also Reject or Archive.'],['Are the recommendations guaranteed?','No. They are AI suggestions based on your data and NASA data. Confirm with an agricultural technician.']]},
+pt:{wT:'Bem vindo ao '+APP+'!',wX:'O seu app de conversa que permite você gerenciar sua produção e rotação de culturas.',start:'Começar',back:'← Voltar',cont:'Continuar',done:'Concluir',nameT:'Qual é o seu nome?',name:'Seu nome:',namePh:'Escreva seu nome aqui...',needName:'⚠ Digite seu nome para continuar.',hi:'Olá, ',locT:'Sua localização',city:'Sua cidade:',cityPh:'Escreva sua cidade aqui...',or:'ou',gps:'Usar minha localização',mapPh:'O mapa aparece aqui depois que você buscar sua cidade',soilT:'Como é seu solo?',soilPick:'Escolha o tipo de solo:',cropT:'O que você planta?',crop:'Cultura atual:',other:'Outras culturas:',irr:'Tipo de irrigação:',goal:'Objetivo atual:',cropPh:'Milho, soja, café, uva...',irrPh:'Gotejamento, Aspersão,...',goalPh:'Recuperar o solo, economizar...',
+goals:['Aumentar a produtividade','Recuperar o solo','Economizar insumos e água'],waters:['Gotejamento','Aspersão','Só chuva','Pouca água'],crops:['Milho','Soja','Café','Uva','Manga','Feijão','Mandioca','Cana-de-açúcar','Banana','Tomate','Arroz','Algodão'],
+soilLoading:'Procurando os solos mais comuns na sua região…',soilRegion:'Solos comuns na sua região: ',soilSrc:'Estimativa do modelo SoilGrids (ISRIC) para o ponto escolhido. Confira olhando o seu solo.',soilFail:'Não consegui identificar os solos da sua região agora. Escolha pela aparência.',soilCommon:'Na sua região',soilMore:'Ver todos os tipos de solo',soilLess:'Mostrar só os da minha região',soilPre:'Solo: ',
+needLoc:'⚠ Busque sua cidade (ou use sua localização) para continuar.',searching:'Buscando…',notfound:'⚠ Cidade não encontrada.',nogeo:'⚠ Localização indisponível.',nasaWait:'Buscando dados da NASA…',
+svc:'Serviços',edit:'Editar cadastro',cChat:'Conversa',cCal:'Calendário',cRecs:'Sugestões',cFaq:'Tira-dúvidas',climate:'Clima da região',warn:'Dados da <b>NASA POWER</b>: estimativa de uma área de ~50 km, não medição na sua propriedade. Período: ',temp:'Temperatura média',rain:'Chuva em 60 dias',rad:'Radiação kWh/m²/dia',rainDay:'Chuva por dia',smap:'Umidade do solo (SMAP) ainda não integrada.',nasaFail:'Dados da NASA indisponíveis',
+ask:'Pergunte algo…',thinking:'Pensando…',fail:'Não consegui responder agora: ',intro:'Olá! Sou o '+APP+'. Pergunte sobre seu solo, suas culturas ou o clima da sua região.',created:'✅ Criei sugestão(ões) para você. Veja em Sugestões.',listen:'Ouvir',novoice:'Seu navegador não suporta voz. Use o Chrome.',
 chips:['Como posso melhorar a saúde do meu solo?','Qual cultura posso plantar depois da atual?','Como posso economizar água?','Quais são as condições climáticas da minha região?'],
 recsT:'Sugestões para você',noRecs:'Converse com a IA para receber sugestões.',approve:'Aprovar',reject:'Recusar',archive:'Arquivar',why:'Por que recusou? (opcional)',ben:'Benefícios',per:'Período',cost:'Custos',conf:'Confiança',
-st:{pendente:'pendente',aprovada:'aprovada',recusada:'recusada',arquivada:'arquivada'},calT:'Calendário ',appr:'Atividades aprovadas',noAppr:'Aprove uma sugestão para ela aparecer aqui. Dias em azul-claro indicam o período; o 1º dia, em azul-escuro, o início.',startm:'Início',months:'mês(es)',
-faqT:'Tira-dúvidas',faq:[['Os dados do clima são da minha propriedade?','Não. Vêm da NASA POWER e são uma estimativa para uma área de cerca de 50 km ao redor do ponto escolhido, não uma medição na sua propriedade.'],['O que é rotação de culturas?','É alternar o que se planta na mesma área ao longo do tempo. Ajuda a quebrar ciclos de pragas e doenças e a cuidar melhor do solo.'],['O que é cobertura vegetal?','São plantas cultivadas para cobrir e proteger o solo, ou para depois serem incorporadas a ele. Em culturas permanentes, como a uva, podem ficar nas entrelinhas.'],['O app diz quais nutrientes faltam no meu solo?','Não. Clima e chuva não mostram fertilidade. Para isso é preciso uma análise de solo em laboratório.'],['Como aceitar uma sugestão?','Na aba Dicas, toque em Aprovar. A sugestão aprovada vai para o Calendário. Você também pode Recusar ou Arquivar.'],['As recomendações são garantidas?','Não. São sugestões da IA com base nos seus dados e nos dados da NASA. Confirme com um técnico agrícola antes de decisões importantes.']]},
-es:{wT:'Bienvenido a CultivAI',wX:'Cuéntanos sobre tu finca y recibe ayuda con la rotación de cultivos y el cuidado del suelo.',start:'Comenzar',back:'Atrás',next:'Siguiente',save:'Guardar y buscar datos de la NASA',name:'Tu nombre',city:'Ciudad',search:'Buscar',gps:'📍 Usar mi ubicación',s2:'¿Qué cultivas?',crop:'Cultivo actual',wish:'Cultivos que te gustaría plantar',goal:'Tu objetivo',s3:'Suelo y agua',soil:'¿Cómo es tu suelo?',water:'Agua y riego',diff:'Principales dificultades', soilPick:'Toca el que más se parezca a tu suelo.',soilLoading:'Buscando los suelos más comunes en tu región…',soilRegion:'Suelos comunes en tu región: ',soilSrc:'Estimación del modelo SoilGrids (ISRIC) para el punto elegido. Compruébalo mirando tu suelo.',soilFail:'No pude identificar los suelos de tu región ahora. Elige por la apariencia.',soilCommon:'📍 En tu región',soilMore:'Ver todos los tipos de suelo',soilLess:'Mostrar solo los de mi región',tipT:'🖐️ Prueba de la mano: cómo saberlo',tipX:'Moja un puñado de tierra y apriétalo. Si se desmorona y no mantiene la forma, es arenoso. Si forma una "culebrita" larga que no se rompe y se pega a los dedos, es arcilloso. Si forma una bolita que se deshace fácil, es mixto. Si es suave como talco, es limoso.',
-goals:['Aumentar la productividad','Recuperar el suelo','Ahorrar insumos y agua'],soils:['Arenoso (arena suelta)','Arcilloso (barro pesado)','Mixto','No sé'],waters:['Riego por goteo','Aspersión','Solo lluvia','Poca agua'],
-needLoc:'⚠ Escribe tu nombre y busca tu ciudad (o usa tu ubicación).',searching:'Buscando…',notfound:'⚠ Ciudad no encontrada.',nogeo:'⚠ Ubicación no disponible.',nasaWait:'Buscando datos de la NASA…',
-tabs:['Inicio','Chat','Consejos','Calendario','Dudas'],hi:'Hola, ',cChat:'Hablar con la IA',cRecs:'Mis sugerencias',cCal:'Calendario agrícola',cFaq:'Preguntas y respuestas',climate:'Clima de la región',warn:'Datos de <b>NASA POWER</b>: estimación de un área de ~50 km, no una medición en tu finca. Período: ',temp:'Temperatura media',rain:'Lluvia en 60 días',rad:'Radiación kWh/m²/día',rainDay:'Lluvia por día',smap:'La humedad del suelo (SMAP) aún no está integrada.',nasaFail:'Datos de la NASA no disponibles',retry:'Intentar de nuevo',edit:'Editar registro',
-ask:'Pregunta algo…',thinking:'Pensando…',fail:'No pude responder ahora: ',intro:'¡Hola! Soy CultivAI. Pregunta sobre tu suelo, tus cultivos o el clima de tu región.',created:'✅ Creé sugerencia(s) para ti. Míralas en la pestaña Consejos.',listen:'Escuchar',novoice:'Tu navegador no admite voz. Usa Chrome.',
+st:{pendente:'pendente',aprovada:'aprovada',recusada:'recusada',arquivada:'arquivada'},calT:'Calendário',today:'Hoje',appr:'Atividades aprovadas',noAppr:'Aprove uma sugestão para ela aparecer aqui. Dias em verde marcam o período; o dia escuro é o início.',startm:'Início',months:'mês(es)',
+faqT:'Tira-dúvidas',faq:[['Os dados do clima são da minha propriedade?','Não. Vêm da NASA POWER e são uma estimativa para uma área de cerca de 50 km ao redor do ponto escolhido.'],['O que é rotação de culturas?','É alternar o que se planta na mesma área ao longo do tempo. Quebra ciclos de pragas e doenças e cuida do solo.'],['O que é cobertura vegetal?','São plantas cultivadas para cobrir e proteger o solo, ou para serem incorporadas a ele. Em culturas permanentes, como a uva, ficam nas entrelinhas.'],['O app diz quais nutrientes faltam no meu solo?','Não. O clima não mostra fertilidade. Para isso é preciso uma análise de solo em laboratório.'],['Como aceitar uma sugestão?','Em Sugestões, toque em Aprovar. Ela vai para o Calendário. Você também pode Recusar ou Arquivar.'],['As recomendações são garantidas?','Não. São sugestões da IA com base nos seus dados e nos da NASA. Confirme com um técnico agrícola.']]},
+es:{wT:'¡Bienvenido a '+APP+'!',wX:'Tu app de conversación para gestionar tu producción y la rotación de cultivos.',start:'Comenzar',back:'← Atrás',cont:'Continuar',done:'Terminar',nameT:'¿Cómo te llamas?',name:'Tu nombre:',namePh:'Escribe tu nombre aquí...',needName:'⚠ Escribe tu nombre para continuar.',hi:'Hola, ',locT:'Tu ubicación',city:'Tu ciudad:',cityPh:'Escribe tu ciudad aquí...',or:'o',gps:'Usar mi ubicación',mapPh:'El mapa aparece aquí después de buscar tu ciudad',soilT:'¿Cómo es tu suelo?',soilPick:'Elige el tipo de suelo:',cropT:'¿Qué cultivas?',crop:'Cultivo actual:',other:'Otros cultivos:',irr:'Tipo de riego:',goal:'Objetivo actual:',cropPh:'Maíz, soja, café, uva...',irrPh:'Goteo, Aspersión,...',goalPh:'Recuperar el suelo, ahorrar...',
+goals:['Aumentar la productividad','Recuperar el suelo','Ahorrar insumos y agua'],waters:['Riego por goteo','Aspersión','Solo lluvia','Poca agua'],crops:['Maíz','Soja','Café','Uva','Mango','Frijol','Yuca','Caña de azúcar','Banano','Tomate','Arroz','Algodón'],
+soilLoading:'Buscando los suelos más comunes en tu región…',soilRegion:'Suelos comunes en tu región: ',soilSrc:'Estimación del modelo SoilGrids (ISRIC) para el punto elegido. Compruébalo mirando tu suelo.',soilFail:'No pude identificar los suelos de tu región ahora. Elige por la apariencia.',soilCommon:'En tu región',soilMore:'Ver todos los tipos de suelo',soilLess:'Mostrar solo los de mi región',soilPre:'Suelo: ',
+needLoc:'⚠ Busca tu ciudad (o usa tu ubicación) para continuar.',searching:'Buscando…',notfound:'⚠ Ciudad no encontrada.',nogeo:'⚠ Ubicación no disponible.',nasaWait:'Buscando datos de la NASA…',
+svc:'Servicios',edit:'Editar registro',cChat:'Conversación',cCal:'Calendario',cRecs:'Sugerencias',cFaq:'Preguntas',climate:'Clima de la región',warn:'Datos de <b>NASA POWER</b>: estimación de un área de ~50 km, no una medición en tu finca. Período: ',temp:'Temperatura media',rain:'Lluvia en 60 días',rad:'Radiación kWh/m²/día',rainDay:'Lluvia por día',smap:'La humedad del suelo (SMAP) aún no está integrada.',nasaFail:'Datos de la NASA no disponibles',
+ask:'Pregunta algo…',thinking:'Pensando…',fail:'No pude responder ahora: ',intro:'¡Hola! Soy '+APP+'. Pregunta sobre tu suelo, tus cultivos o el clima de tu región.',created:'✅ Creé sugerencia(s) para ti. Míralas en Sugerencias.',listen:'Escuchar',novoice:'Tu navegador no admite voz. Usa Chrome.',
 chips:['¿Cómo puedo mejorar la salud de mi suelo?','¿Qué puedo plantar después del cultivo actual?','¿Cómo puedo ahorrar agua?','¿Cómo es el clima de mi región?'],
 recsT:'Sugerencias para ti',noRecs:'Chatea con la IA para recibir sugerencias.',approve:'Aprobar',reject:'Rechazar',archive:'Archivar',why:'¿Por qué lo rechazaste? (opcional)',ben:'Beneficios',per:'Período',cost:'Costos',conf:'Confianza',
-st:{pendente:'pendiente',aprovada:'aprobada',recusada:'rechazada',arquivada:'archivada'},calT:'Calendario ',appr:'Actividades aprobadas',noAppr:'Aprueba una sugerencia y aparecerá aquí. Los días en azul claro marcan el período; el día 1, en azul oscuro, es el inicio.',startm:'Inicio',months:'mes(es)',
-faqT:'Preguntas y respuestas',faq:[['¿Los datos del clima son de mi finca?','No. Vienen de NASA POWER y son una estimación para un área de unos 50 km alrededor del punto elegido, no una medición en tu finca.'],['¿Qué es la rotación de cultivos?','Alternar lo que se planta en la misma área a lo largo del tiempo. Ayuda a cortar ciclos de plagas y enfermedades y a cuidar mejor el suelo.'],['¿Qué es la cobertura vegetal?','Son plantas cultivadas para cubrir y proteger el suelo, o para incorporarlas después. En cultivos permanentes, como la uva, pueden crecer entre las hileras.'],['¿La app dice qué nutrientes le faltan a mi suelo?','No. El clima y la lluvia no muestran la fertilidad. Para eso se necesita un análisis de suelo en laboratorio.'],['¿Cómo acepto una sugerencia?','En la pestaña Consejos, toca Aprobar. La sugerencia aprobada va al Calendario. También puedes Rechazar o Archivar.'],['¿Las recomendaciones están garantizadas?','No. Son sugerencias de la IA basadas en tus datos y en los de la NASA. Confirma con un técnico agrícola antes de decisiones importantes.']]}};
-const LOC={pt:'pt-BR',en:'en',es:'es'},ICONS=['🏠','💬','🌱','📅','❓'],TABS=['home','chat','recs','cal','faq'];
+st:{pendente:'pendiente',aprovada:'aprobada',recusada:'rechazada',arquivada:'archivada'},calT:'Calendario',today:'Hoy',appr:'Actividades aprobadas',noAppr:'Aprueba una sugerencia y aparecerá aquí. Los días en verde marcan el período; el día oscuro es el inicio.',startm:'Inicio',months:'mes(es)',
+faqT:'Preguntas y respuestas',faq:[['¿Los datos del clima son de mi finca?','No. Vienen de NASA POWER y son una estimación para un área de unos 50 km alrededor del punto elegido.'],['¿Qué es la rotación de cultivos?','Alternar lo que se planta en la misma área con el tiempo. Corta ciclos de plagas y enfermedades y cuida el suelo.'],['¿Qué es la cobertura vegetal?','Plantas cultivadas para cubrir y proteger el suelo, o para incorporarlas después. En cultivos permanentes, como la uva, crecen entre las hileras.'],['¿La app dice qué nutrientes le faltan a mi suelo?','No. El clima no muestra la fertilidad. Para eso se necesita un análisis de suelo en laboratorio.'],['¿Cómo acepto una sugerencia?','En Sugerencias, toca Aprobar. Va al Calendario. También puedes Rechazar o Archivar.'],['¿Las recomendaciones están garantizadas?','No. Son sugerencias de la IA basadas en tus datos y en los de la NASA. Confirma con un técnico agrícola.']]}};
+const LOC={pt:'pt-BR',en:'en',es:'es'};
 let lang=localStorage.getItem('lang')||(['pt','es'].includes((navigator.language||'').slice(0,2))?navigator.language.slice(0,2):'en');
 const t=k=>L[lang][k]??L.en[k]??k;
 let S={profile:null,nasa:null,messages:[],recs:[]},step=0,editing=false,started=false,busy=false,cur='home';
 
-function fill(id,arr){const e=$(id),i=Math.max(0,e.selectedIndex);e.innerHTML=arr.map(x=>`<option>${esc(x)}</option>`).join('');e.selectedIndex=i}
+function fill(id,arr,ph){const e=$(id),i=Math.max(0,e.selectedIndex);e.innerHTML=`<option value="" disabled hidden>${esc(t(ph))}</option>`+arr.map(x=>`<option>${esc(x)}</option>`).join('');e.selectedIndex=i}
 function applyLang(){document.documentElement.lang=LOC[lang];$('lang').value=lang;
  document.querySelectorAll('[data-i]').forEach(e=>e.textContent=t(e.dataset.i));
  document.querySelectorAll('[data-ph]').forEach(e=>e.placeholder=t(e.dataset.ph));
- fill('obj',t('goals'));;fill('agua',t('waters')); renderSoils();
- $('nav').innerHTML=TABS.map((k,i)=>`<button id="b_${k}" onclick="go('${k}')"><span aria-hidden="true">${ICONS[i]}</span><br>${t('tabs')[i]}</button>`).join('');
+ document.querySelectorAll('[data-ic]').forEach(e=>e.innerHTML=ico(e.dataset.ic,+e.dataset.s||30));
+ fill('agua',t('waters'),'irrPh');fill('obj',t('goals'),'goalPh');$('crops').innerHTML=t('crops').map(c=>`<option value="${esc(c)}">`).join('');
  $('chips').innerHTML=t('chips').map(s=>`<button type="button">${esc(s)}</button>`).join('');
  $('mic').setAttribute('aria-label',t('listen'));$('send').setAttribute('aria-label','→');
- showStep();if(S.profile&&!editing){renderHome();renderMsgs();renderRecs();renderCal();renderFaq();go(cur)}}
-function setAv(v){const a=$('av'),c=(String(v).trim()[0]||'?').toUpperCase();if(a.textContent!=c){a.textContent=c;a.classList.remove('bump');void a.offsetWidth;a.classList.add('bump')}}
- function setLang(v){lang=v;localStorage.setItem('lang',v);applyLang()}
-
-function go(id){cur=id;document.querySelectorAll('#app section').forEach(s=>s.classList.toggle('on',s.id==id));
- TABS.forEach(k=>{const b=$('b_'+k);k==id?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current')});scrollTo(0,0);
+ renderSoils();showStep();if(S.profile&&!editing){renderHome();renderMsgs();renderRecs();renderCal();renderFaq()}}
+function setLang(v){lang=v;localStorage.setItem('lang',v);applyLang()}
+function go(id){cur=id;document.querySelectorAll('#app section').forEach(s=>s.classList.toggle('on',s.id==id));scrollTo(0,0);
  if(id=='chat')setTimeout(()=>$('msgs').lastElementChild?.scrollIntoView(),0)}
+const topbar=()=>`<div style="margin:-2px 0 8px"><button class="link" onclick="go('home')" style="color:var(--ink);text-decoration:none">${t('back')}</button></div>`;
 
 async function refresh(){S=await (await fetch('/api/state')).json();
- const onb=!S.profile||editing;
- $('welcome').classList.toggle('on',!S.profile&&!started&&!editing);$('onb').classList.toggle('on',onb&&(started||editing||!!S.profile));
- $('app').classList.toggle('on',!onb);$('nav').hidden=onb;
- if(!onb){renderHome();renderMsgs();renderRecs();renderCal();renderFaq();go(cur)}}
-function begin(){started=true;refresh()}
+ const onb=editing||(!S.profile&&started);
+ $('welcome').classList.toggle('on',!S.profile&&!started&&!editing);$('onb').classList.toggle('on',onb);$('app').classList.toggle('on',!onb&&!!S.profile);
+ if(!onb&&S.profile){renderHome();renderMsgs();renderRecs();renderCal();renderFaq();go(cur)}}
+function begin(){started=true;step=0;showStep();refresh()}
 
 /* ---------- Cadastro ---------- */
-const F=['nome','cidade','uf','lat','lon','atual','desejo','solo','agua','dif','obj'];
-function mapa(){const a=+$('lat').value,o=+$('lon').value;if(!a&&!o)return;const f=$('map');f.hidden=false;
+function mapa(){const a=+$('lat').value,o=+$('lon').value;if(!a&&!o)return;const f=$('map');f.hidden=false;$('mapph').hidden=true;
  f.src=`https://www.openstreetmap.org/export/embed.html?bbox=${o-.2},${a-.15},${o+.2},${a+.15}&layer=mapnik&marker=${a},${o}`;
- $('loc').className='';$('loc').textContent=`📍 ${$('cidade').value||''} (${a.toFixed(3)}, ${o.toFixed(3)})`}
-async function buscar(){const q=$('cidade').value.trim();if(!q)return;$('loc').className='';$('loc').textContent=t('searching');
- const r=await fetch(`/api/geocode?q=${encodeURIComponent(q)}&lang=${lang}`),d=await r.json();
- if(!r.ok){$('loc').className='err';$('loc').textContent=t('notfound');return}
- $('cidade').value=d.cidade;$('uf').value=d.uf;$('lat').value=d.lat;$('lon').value=d.lon;mapa()}
+ $('loc').className='note';$('loc').textContent=`📍 ${$('cidade').value||''} (${a.toFixed(3)}, ${o.toFixed(3)})`}
+let tm;$('cidade').oninput=()=>{clearTimeout(tm);$('lat').value='';tm=setTimeout(buscar,800)};
+$('cidade').onkeydown=e=>{if(e.key=='Enter'){clearTimeout(tm);buscar()}};
+async function buscar(){const q=$('cidade').value.trim();if(q.length<2)return;$('loc').className='note';$('loc').textContent=t('searching');
+ try{const r=await fetch(`/api/geocode?q=${encodeURIComponent(q)}&lang=${lang}`),d=await r.json();
+  if($('cidade').value.trim()!=q)return;
+  if(!r.ok){$('loc').className='err';$('loc').textContent=t('notfound');return}
+  $('cidade').value=d.cidade;$('uf').value=d.uf;$('lat').value=d.lat;$('lon').value=d.lon;mapa()}
+ catch(e){$('loc').className='err';$('loc').textContent=t('notfound')}}
 function gps(){if(!navigator.geolocation){$('loc').className='err';$('loc').textContent=t('nogeo');return}
- navigator.geolocation.getCurrentPosition(p=>{$('lat').value=p.coords.latitude;$('lon').value=p.coords.longitude;mapa()},()=>{$('loc').className='err';$('loc').textContent=t('nogeo')})}
+ navigator.geolocation.getCurrentPosition(p=>{$('cidade').value='';$('uf').value='';$('lat').value=p.coords.latitude;$('lon').value=p.coords.longitude;mapa()},()=>{$('loc').className='err';$('loc').textContent=t('nogeo')})}
 function showStep(){document.querySelectorAll('.step').forEach(s=>s.hidden=+s.dataset.s!=step);
- [...$('dots').children].forEach((d,i)=>d.classList.toggle('on',i==step));$('dots').setAttribute('aria-label',`${step+1}/3`);
- $('bv').style.visibility=step?'visible':'hidden';$('bn').textContent=step==2?t('save'):t('next')}
-function passo(d){
- if(d>0&&step==0&&(!$('nome').value.trim()||!$('lat').value)){$('loc').className='err';$('loc').textContent=t('needLoc');return}
- if(d>0&&step==2)return salvar();
-  $('onb').dataset.dir=d<0?'back':'fwd';step=Math.max(0,Math.min(2,step+d));showStep();if(step==2)loadSoils()}
-async function salvar(){if(!$('solo').value){soilSel='naosei';$('solo').value=soilName('naosei')}const p={};F.forEach(k=>p[k]=$(k).value);p.lat=+p.lat;p.lon=+p.lon; if(soil.state=='ok')p.solosRegiao=soil.list.map(x=>`${x.w} ${x.p}%`).join(', ');
- $('bn').disabled=true;$('st').textContent=t('nasaWait');
- try{await fetch('/api/profile',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)});editing=false;step=0;cur='home';$('st').textContent=''}
+ [...$('dots').children].forEach((d,i)=>d.classList.toggle('on',i==step));$('dots').setAttribute('aria-label',`${step+1}/4`);$('bn').textContent=step==3?t('done'):t('cont')}
+async function passo(d){
+ if(d<0&&step==0){if(editing)editing=false;else started=false;return refresh()}
+ if(d>0&&step==0){if(!$('nome').value.trim()){$('nmerr').textContent=t('needName');return}$('nmerr').textContent=''}
+ if(d>0&&step==1&&!$('lat').value){clearTimeout(tm);await buscar();if(!$('lat').value){$('loc').className='err';$('loc').textContent=t('needLoc');return}}
+ if(d>0&&step==3)return salvar();
+ $('onb').dataset.dir=d<0?'back':'fwd';step+=d;showStep();scrollTo(0,0);if(step==2)loadSoils()}
+async function salvar(){if(!soilSel){soilSel='naosei';$('solo').value=soilName('naosei')}
+ const p={nome:$('nome').value.trim(),cidade:$('cidade').value.trim(),uf:$('uf').value,lat:+$('lat').value,lon:+$('lon').value,solo:$('solo').value,atual:$('atual').value.trim(),desejo:$('desejo').value.trim(),agua:$('agua').value,obj:$('obj').value};
+ if(soil.state=='ok')p.solosRegiao=soil.list.map(x=>`${x.w} ${x.p}%`).join(', ');
+ $('bn').disabled=true;$('st').className='note';$('st').textContent=t('nasaWait');
+ try{await fetch('/api/profile',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)});editing=false;started=false;step=0;cur='home';$('st').textContent=''}
  catch(e){$('st').className='err';$('st').textContent='⚠ '+e.message}
  $('bn').disabled=false;showStep();refresh()}
-function editar(){editing=true;step=0;F.forEach(k=>{const v=S.profile?.[k];if(v!==undefined)$(k).value=v});
- soilSel=soilFromText($('solo').value);soilAll=false;$('onb').dataset.dir='fwd';
- $('av').textContent=(($('nome').value.trim()[0])||'?').toUpperCase();showStep();renderSoils();mapa();refresh()}
+function editar(){editing=true;step=0;const p=S.profile||{};
+ ['nome','cidade','uf','lat','lon','atual','desejo'].forEach(k=>$(k).value=p[k]??'');
+ [['agua','waters'],['obj','goals']].forEach(([id,k])=>{const i=L[lang][k].indexOf(p[id]);$(id).selectedIndex=i<0?0:i+1});
+ soilSel=soilFromText(p.solo);$('solo').value=p.solo||'';soilAll=false;$('onb').dataset.dir='fwd';$('map').hidden=true;$('mapph').hidden=false;
+ showStep();renderSoils();mapa();refresh()}
 
- /* ---------- Tipos de solo (ilustrações + região) ---------- */
+/* ---------- Tipos de solo ---------- */
 const SOILS=[
- {id:'arenoso',n:{pt:'Arenoso (areia solta)',en:'Sandy (loose sand)',es:'Arenoso (arena suelta)'},h:{pt:'Esfarela na mão e a água some rápido.',en:'Crumbles in your hand; water drains fast.',es:'Se desmorona en la mano; el agua drena rápido.'},
-  v:{bg:['#EBCF92','#D4A85A'],dots:[110,.9,2.2,['#F8E7BC','#C4934A','#FFF4DA','#B78543']]}},
- {id:'argiloso',n:{pt:'Argiloso (barro pesado)',en:'Clay (heavy mud)',es:'Arcilloso (barro pesado)'},h:{pt:'Gruda e vira massinha molhado; racha quando seca.',en:'Sticky like dough when wet; cracks when dry.',es:'Pegajoso como masa mojado; se agrieta al secar.'},
-  v:{bg:['#BA5A33','#8A3A1E'],dots:[30,.8,1.6,['#CF7A50','#73301A']],cracks:1}},
- {id:'misto',n:{pt:'Misto',en:'Mixed',es:'Mixto'},h:{pt:'Escuro e fofo; forma bolinha que desmancha.',en:'Dark and crumbly; forms a ball that breaks apart.',es:'Oscuro y suelto; forma una bolita que se deshace.'},
-  v:{bg:['#6E4B2E','#4A301B'],dots:[70,1,2.6,['#8E6644','#3A2614','#A57D56']],roots:1}},
- {id:'naosei',n:{pt:'Não sei',en:"I don't know",es:'No sé'},h:{pt:'Sem problema! A IA pode ajudar depois.',en:'No problem! The AI can help later.',es:'¡Sin problema! La IA puede ayudar después.'},v:null},
- {id:'siltoso',n:{pt:'Siltoso (fino como talco)',en:'Silty (fine like talc)',es:'Limoso (fino como talco)'},h:{pt:'Liso ao tocar; escorrega quando molhado.',en:'Smooth to the touch; slippery when wet.',es:'Suave al tacto; resbaladizo mojado.'},
-  v:{bg:['#BCA68C','#98806A'],dots:[180,.4,.9,['#D2BEA6','#86705A']]}},
- {id:'organico',n:{pt:'Orgânico (turfa, bem escuro)',en:'Organic (peat, very dark)',es:'Orgánico (turba, muy oscuro)'},h:{pt:'Preto e esponjoso, cheiro de folha; encharca.',en:'Black and spongy, smells of leaves; gets soggy.',es:'Negro y esponjoso, huele a hojas; se encharca.'},
-  v:{bg:['#3B2D22','#1C1510'],dots:[30,.8,1.6,['#5A4636']],fibers:1}},
- {id:'pedregoso',n:{pt:'Pedregoso (raso, com pedras)',en:'Stony (shallow, rocky)',es:'Pedregoso (poco profundo)'},h:{pt:'Raso; a enxada bate em pedra logo.',en:'Shallow; the hoe hits rock quickly.',es:'Poco profundo; la azada choca con piedra pronto.'},
-  v:{bg:['#A08A72','#7A6652'],dots:[40,.6,1.4,['#B8A48C']],stones:1}},
- {id:'calcario',n:{pt:'Calcário (claro, esbranquiçado)',en:'Chalky (pale, whitish)',es:'Calcáreo (claro, blanquecino)'},h:{pt:'Claro, com pedrinhas brancas; seca rápido.',en:'Pale with white bits; dries fast.',es:'Claro con piedritas blancas; se seca rápido.'},
-  v:{bg:['#ECE5D3','#CFC3A7'],dots:[60,1,2.6,['#FFFFFF','#B9AD92','#F7F2E6']]}},
- {id:'encharcado',n:{pt:'Encharcado (cinza ou azulado)',en:'Waterlogged (grey or bluish)',es:'Encharcado (gris o azulado)'},h:{pt:'Fica alagado boa parte do ano.',en:'Flooded for much of the year.',es:'Inundado gran parte del año.'},
-  v:{bg:['#86938F','#5B6A6B'],dots:[40,.6,1.4,['#A3B0AD','#475556']],water:1}}];
-const WRB={Acrisols:['argiloso','Argissolo'],Lixisols:['argiloso','Argissolo'],Alisols:['argiloso','Argissolo'],Ferralsols:['argiloso','Latossolo'],Nitisols:['argiloso','Nitossolo'],
- Vertisols:['argiloso','Vertissolo'],Luvisols:['argiloso','Luvissolo'],Plinthosols:['argiloso','Plintossolo'],Solonetz:['argiloso','Planossolo Nátrico'],
+ {id:'misto',c:'#6E4B2E',n:{pt:'Misto',en:'Mixed',es:'Mixto'},h:{pt:'Escuro e fofo; forma bolinha que desmancha.',en:'Dark and crumbly; forms a ball that breaks apart.',es:'Oscuro y suelto; forma una bolita que se deshace.'}},
+ {id:'arenoso',c:'#D9B878',n:{pt:'Arenoso (areia solta)',en:'Sandy (loose sand)',es:'Arenoso (arena suelta)'},h:{pt:'Esfarela na mão e a água some rápido.',en:'Crumbles in your hand; water drains fast.',es:'Se desmorona en la mano; el agua drena rápido.'}},
+ {id:'argiloso',c:'#A04A28',n:{pt:'Argiloso (barro pesado)',en:'Clay (heavy mud)',es:'Arcilloso (barro pesado)'},h:{pt:'Gruda e vira massinha molhado; racha quando seca.',en:'Sticky like dough when wet; cracks when dry.',es:'Pegajoso como masa mojado; se agrieta al secar.'}},
+ {id:'pedregoso',c:'#A08A72',n:{pt:'Pedregoso (raso, com pedras)',en:'Stony (shallow, rocky)',es:'Pedregoso (poco profundo)'},h:{pt:'Raso; a enxada bate em pedra logo.',en:'Shallow; the hoe hits rock quickly.',es:'Poco profundo; la azada choca con piedra pronto.'}},
+ {id:'calcario',c:'#E6DFCC',n:{pt:'Calcário (claro, esbranquiçado)',en:'Chalky (pale, whitish)',es:'Calcáreo (claro, blanquecino)'},h:{pt:'Claro, com pedrinhas brancas; seca rápido.',en:'Pale with white bits; dries fast.',es:'Claro con piedritas blancas; se seca rápido.'}},
+ {id:'siltoso',c:'#AE9A82',n:{pt:'Siltoso (fino como talco)',en:'Silty (fine like talc)',es:'Limoso (fino como talco)'},h:{pt:'Liso ao tocar; escorrega quando molhado.',en:'Smooth to the touch; slippery when wet.',es:'Suave al tacto; resbaladizo mojado.'}},
+ {id:'naosei',n:{pt:'Não sei',en:"I don't know",es:'No sé'},h:{pt:'Sem problema! A IA pode ajudar depois.',en:'No problem! The AI can help later.',es:'¡Sin problema! La IA puede ayudar después.'}}];
+const WRB={Acrisols:['argiloso','Argissolo'],Lixisols:['argiloso','Argissolo'],Alisols:['argiloso','Argissolo'],Ferralsols:['argiloso','Latossolo'],Nitisols:['argiloso','Nitossolo'],Vertisols:['argiloso','Vertissolo'],Luvisols:['argiloso','Luvissolo'],Plinthosols:['argiloso','Plintossolo'],Solonetz:['argiloso','Planossolo Nátrico'],Gleysols:['argiloso','Gleissolo'],Planosols:['argiloso','Planossolo'],Stagnosols:['argiloso','Estagnossolo'],
  Arenosols:['arenoso','Neossolo Quartzarênico'],Podzols:['arenoso','Espodossolo'],
- Cambisols:['misto','Cambissolo'],Chernozems:['misto','Chernossolo'],Phaeozems:['misto','Chernossolo'],Kastanozems:['misto','Chernossolo'],Umbrisols:['misto','Cambissolo Húmico'],Andosols:['misto','Andossolo'],Technosols:['misto','Solo antrópico'],
+ Cambisols:['misto','Cambissolo'],Chernozems:['misto','Chernossolo'],Phaeozems:['misto','Chernossolo'],Kastanozems:['misto','Chernossolo'],Umbrisols:['misto','Cambissolo Húmico'],Andosols:['misto','Andossolo'],Technosols:['misto','Solo antrópico'],Histosols:['misto','Organossolo'],Cryosols:['misto','Criossolo'],
  Fluvisols:['siltoso','Neossolo Flúvico'],Albeluvisols:['siltoso','Albeluvissolo'],Retisols:['siltoso','Retissolo'],Solonchaks:['siltoso','Gleissolo Sálico'],
- Histosols:['organico','Organossolo'],Cryosols:['organico','Criossolo'],
- Leptosols:['pedregoso','Neossolo Litólico'],Regosols:['pedregoso','Neossolo Regolítico'],Durisols:['pedregoso','Durissolo'],
- Calcisols:['calcario','Calcissolo'],Gypsisols:['calcario','Gipsissolo'],
- Gleysols:['encharcado','Gleissolo'],Planosols:['encharcado','Planossolo'],Stagnosols:['encharcado','Estagnossolo']};
+ Leptosols:['pedregoso','Neossolo Litólico'],Regosols:['pedregoso','Neossolo Regolítico'],Durisols:['pedregoso','Durissolo'],Calcisols:['calcario','Calcissolo'],Gypsisols:['calcario','Gipsissolo']};
 let soilSel='',soilAll=false,soil={key:'',state:'idle',list:[]};
 const soilName=id=>(SOILS.find(s=>s.id==id)||{n:{}}).n[lang]||'';
+const soilFromText=v=>{const s=SOILS.find(s=>Object.values(s.n).includes(v));return s?s.id:''};
 const wrbName=w=>lang=='pt'?(WRB[w]?.[1]||w):lang=='es'?w.replace(/sols$/,'soles'):w;
-
-function soilSvg(s){const W=120,H=80,id='g'+s.id;
- let seed=[...s.id].reduce((a,c)=>a*31+c.charCodeAt(0)|0,7);const R=()=>((seed=seed*1103515245+12345|0)>>>0)/4294967296;
- if(!s.v)return `<svg viewBox="0 0 ${W} ${H}" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" x2="1"><stop offset="0" stop-color="#E3C88F"/><stop offset=".5" stop-color="#9A6A42"/><stop offset="1" stop-color="#5E6B6A"/></linearGradient></defs><rect width="${W}" height="${H}" fill="url(#${id})"/><circle cx="60" cy="42" r="20" fill="#fff" opacity=".9"/><text x="60" y="51" text-anchor="middle" font-size="26" font-weight="700" fill="#2B6AAE" font-family="Bricolage Grotesque,sans-serif">?</text></svg>`;
- const v=s.v;let o=`<svg viewBox="0 0 ${W} ${H}" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${v.bg[0]}"/><stop offset="1" stop-color="${v.bg[1]}"/></linearGradient></defs><rect width="${W}" height="${H}" fill="url(#${id})"/>`;
- if(v.water)o+=`<path d="M0 20 Q15 16 30 20 T60 20 T90 20 T120 20 V34 H0Z" fill="#9CC4E4" opacity=".55"/>`;
- const[n,a,b,cs]=v.dots;for(let i=0;i<n;i++)o+=`<circle cx="${(R()*W).toFixed(1)}" cy="${(12+R()*(H-12)).toFixed(1)}" r="${(a+R()*(b-a)).toFixed(2)}" fill="${cs[i%cs.length]}"/>`;
- if(v.cracks)for(let i=0;i<5;i++){let x=10+i*24+R()*8,y=14,d=`M${x.toFixed(1)} ${y}`;while(y<H){y+=8+R()*8;x+=R()*12-6;d+=` L${x.toFixed(1)} ${y.toFixed(1)}`}o+=`<path d="${d}" stroke="#5C2410" stroke-width="1.6" fill="none" stroke-linecap="round"/>`}
- if(v.roots)for(let i=0;i<4;i++){const x=15+i*30+R()*10;o+=`<path d="M${x} 10 q${R()*16-8} 18 ${R()*10-5} 32 q${R()*12-6} 12 ${R()*14-7} 26" stroke="#D9BF95" stroke-width="1.3" fill="none" opacity=".8"/>`}
- if(v.fibers)for(let i=0;i<40;i++){const x=R()*W,y=14+R()*(H-14),l=3+R()*6,ang=R()*Math.PI;o+=`<line x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${(x+Math.cos(ang)*l).toFixed(1)}" y2="${(y+Math.sin(ang)*l).toFixed(1)}" stroke="#7A5A3E" stroke-width="1"/>`}
- if(v.stones)for(let i=0;i<14;i++){const c=['#C9C1B4','#8F8A80','#DDD6CA','#A79F92'][i%4];o+=`<ellipse cx="${(R()*W).toFixed(1)}" cy="${(18+R()*(H-18)).toFixed(1)}" rx="${(3+R()*7).toFixed(1)}" ry="${(2.5+R()*4).toFixed(1)}" fill="${c}" stroke="#5E554A" stroke-width=".8"/>`}
- o+=`<rect width="${W}" height="10" fill="#8DB255"/>`;for(let x=2;x<W;x+=5)o+=`<path d="M${x} 10 l${(R()*3-1.5).toFixed(1)} -${(4+R()*6).toFixed(1)}" stroke="#6E9440" stroke-width="1.4" stroke-linecap="round"/>`;
- return o+'</svg>'}
-function soilPic(s){return s.v?`<img src="img/${s.id}.jpg" alt="" loading="lazy" onerror="this.outerHTML=soilSvg(SOILS.find(x=>x.id=='${s.id}'))">`:soilSvg(s)}
 async function loadSoils(){const a=+$('lat').value,o=+$('lon').value;if(!a&&!o){soil={key:'',state:'fail',list:[]};return renderSoils()}
  const key=a.toFixed(2)+','+o.toFixed(2);if(soil.key==key&&soil.state!='fail')return renderSoils();
  soil={key,state:'loading',list:[]};renderSoils();
  try{let d=null;try{d=JSON.parse(localStorage.getItem('soil:'+key))}catch(e){}
-  if(!d){const ac=new AbortController(),tm=setTimeout(()=>ac.abort(),12000);
-   const r=await fetch(`https://rest.isric.org/soilgrids/v2.0/classification/query?lon=${o}&lat=${a}&number_classes=8`,{signal:ac.signal});clearTimeout(tm);
+  if(!d){const ac=new AbortController(),tt=setTimeout(()=>ac.abort(),12000);
+   const r=await fetch(`https://rest.isric.org/soilgrids/v2.0/classification/query?lon=${o}&lat=${a}&number_classes=8`,{signal:ac.signal});clearTimeout(tt);
    if(!r.ok)throw new Error('HTTP '+r.status);d=await r.json();try{localStorage.setItem('soil:'+key,JSON.stringify(d))}catch(e){}}
   const list=(d.wrb_class_probability||[]).filter(x=>x[1]>=5&&WRB[x[0]]).map(([w,p])=>({w,p,t:WRB[w][0]}));
   if(soil.key!=key)return;soil={key,state:list.length?'ok':'fail',list}}
  catch(e){if(soil.key==key)soil={key,state:'fail',list:[]}}
  renderSoils()}
-
-function renderSoils(){if(!$('soils'))return;const ok=soil.state=='ok';
- const score={};soil.list.forEach(x=>score[x.t]=(score[x.t]||0)+x.p);
- let L2=[...SOILS].filter(s=>s.id!='naosei').sort((x,y)=>(score[y.id]||0)-(score[x.id]||0));
- const reg=L2.filter(s=>score[s.id]);
+function renderSoils(){const ok=soil.state=='ok',score={};soil.list.forEach(x=>score[x.t]=(score[x.t]||0)+x.p);
+ let list=SOILS.filter(s=>s.id!='naosei');const reg=list.filter(s=>score[s.id]).sort((x,y)=>score[y.id]-score[x.id]);
  const forced=!!(soilSel&&soilSel!='naosei'&&!score[soilSel]),showAll=!ok||soilAll||!reg.length||forced;
- if(!showAll)L2=reg;L2.push(SOILS.find(s=>s.id=='naosei'));
- const names={};soil.list.forEach(x=>{const nm=wrbName(x.w);names[nm]=(names[nm]||0)+x.p});
- const top=Object.entries(names).sort((x,y)=>y[1]-x[1]).slice(0,4).map(([nm,p])=>`${esc(nm)} (${p}%)`).join(', ');
- $('soilNote').innerHTML=soil.state=='loading'?`${t('soilLoading')}<div class="loadbar"></div>`
-  :ok?`${t('soilPick')}<br><b>${t('soilRegion')}</b>${top}.<small>${t('soilSrc')}</small>`
-  :soil.state=='fail'?`${t('soilPick')}<small>${t('soilFail')}</small>`:t('soilPick');
- $('soils').innerHTML=L2.map(s=>`<button type="button" class="soil" data-soil="${s.id}" aria-pressed="${s.id==soilSel}">${soilPic(s)}${ok&&score[s.id]?`<span class="reg">${t('soilCommon')}</span>`:''}<b>${esc(s.n[lang])}</b><small>${esc(s.h[lang])}</small></button>`).join('')
-  +(ok&&!forced&&reg.length&&reg.length<SOILS.length-1?`<button type="button" class="btn t soilmore" data-more="1">${showAll?t('soilLess'):t('soilMore')}</button>`:'');
+ if(!showAll)list=reg;list=[...list,SOILS.find(s=>s.id=='naosei')];
+ const names={};soil.list.forEach(x=>{const n=wrbName(x.w);names[n]=(names[n]||0)+x.p});
+ const top=Object.entries(names).sort((x,y)=>y[1]-x[1]).slice(0,4).map(([n,p])=>`${esc(n)} (${p}%)`).join(', ');
+ $('soilNote').innerHTML=soil.state=='loading'?`${t('soilLoading')}<div class="load"></div>`:ok?`<b>${t('soilRegion')}</b>${top}.<small>${t('soilSrc')}</small>`:soil.state=='fail'?t('soilFail'):'';
+ $('soils').innerHTML=list.map((s,i)=>`<button type="button" class="soil" style="--n:${i}" data-soil="${s.id}" aria-pressed="${s.id==soilSel}">${s.id=='naosei'?'<span class="ph qm"><span class="q">?</span><span class="cb"></span></span>':`<span class="ph" style="--c:${s.c}"><img src="img/${s.id}.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="cb"></span>${ok&&score[s.id]?`<span class="reg">${t('soilCommon')}</span>`:''}</span>`}<b>${esc(s.n[lang])}</b><small>${esc(s.h[lang])}</small></button>`).join('')
+  +(ok&&!forced&&reg.length&&reg.length<SOILS.length-1?`<button type="button" class="btn ter more" data-more="1">${showAll?t('soilLess'):t('soilMore')}</button>`:'');
  if(soilSel)$('solo').value=soilName(soilSel)}
-$('soils').onclick=e=>{const m=e.target.closest('[data-more]');if(m){soilAll=!soilAll;return renderSoils()}
- const b=e.target.closest('.soil');if(!b)return;soilSel=b.dataset.soil;$('solo').value=soilName(soilSel);
- $('soils').querySelectorAll('.soil').forEach(x=>x.setAttribute('aria-pressed',x==b))};
-function soilFromText(v){if(!v)return'';const s=SOILS.find(s=>Object.values(s.n).includes(v));return s?s.id:''}
-/* ---------- Início ---------- */
-function renderHome(){const p=S.profile,n=S.nasa;
- $('home').innerHTML=`<div class="card"><h1>${t('hi')}${esc(p.nome)}!</h1><span style="color:var(--soft)">📍 ${esc(p.cidade)}${p.uf?', '+esc(p.uf):''}</span></div>
- ${[['chat','💬','cChat'],['recs','🌱','cRecs'],['cal','📅','cCal'],['faq','❓','cFaq']].map(a=>`<button class="item" onclick="go('${a[0]}')"><i aria-hidden="true">${a[1]}</i>${t(a[2])}</button>`).join('')}
- <h2 style="margin-top:20px">${t('climate')}</h2>`+(n?`
+$('soils').onclick=e=>{if(e.target.closest('[data-more]')){soilAll=!soilAll;return renderSoils()}
+ const b=e.target.closest('.soil');if(!b)return;soilSel=b.dataset.soil;$('solo').value=soilName(soilSel);$('soils').querySelectorAll('.soil').forEach(x=>x.setAttribute('aria-pressed',x==b))};
+
+/* ---------- Hub (Serviços) ---------- */
+function renderHome(){const p=S.profile,n=S.nasa,sid=soilFromText(p.solo),city=p.cidade||`${(+p.lat).toFixed(2)}, ${(+p.lon).toFixed(2)}`;
+ const crops=[p.atual,p.desejo].filter(Boolean).join(' · ');
+ $('home').innerHTML=`<div class="photo short"></div><div class="sheet"><div class="badge up logo"><img src="img/logo_reduzida.png" alt="" onerror="this.outerHTML=ico('clover',34)"></div><h1 style="margin-bottom:4px">${p.nome?t('hi')+esc(p.nome)+'!':t('svc')}</h1>${p.nome?`<p style="text-align:center;margin:0 0 14px;color:var(--soft);font-size:14px">${t('svc')}</p>`:''}
+ <ul class="info"><li>${ico('pin',16)}<span>${esc(city)}${p.uf?', '+esc(p.uf):''}</span></li><li>${ico('land',16)}<span>${esc(sid?t('soilPre')+soilName(sid):p.solo||'')}</span></li><li>${ico('sprout',16)}<span>${esc(crops)}</span><button class="link" onclick="editar()">${t('edit')}</button></li></ul>
+ <div class="hubgrid"><div>${[['chat','chat','cChat'],['cal','cal','cCal'],['recs','bulb','cRecs'],['faq','help','cFaq']].map(a=>`<button class="svc" onclick="go('${a[0]}')"><span class="badge sm">${ico(a[1],22)}</span>${t(a[2])}</button>`).join('')}
+ </div><div class="hubR"><h2>${t('climate')}</h2>`+(n?`
  <div class="warn">${t('warn')}${esc(n.periodo)}.</div>
  <div class="stat"><div><b>${n.tempMedia??'–'} °C</b><span>${t('temp')}</span></div><div><b>${n.chuvaTotalMm} mm</b><span>${t('rain')}</span></div><div><b>${n.radiacaoMedia??'–'}</b><span>${t('rad')}</span></div></div>
  <div class="card"><b>${t('rainDay')}</b><div class="bars" role="img" aria-label="${t('rainDay')}">${(()=>{const mx=Math.max(...n.days.map(d=>d.p||0),1);return n.days.map((d,i)=>`<i title="${d.d}: ${d.p??0} mm" style="height:${Math.max(2,(d.p||0)/mx*80)}px;animation-delay:${i*12}ms"></i>`).join('')})()}</div></div>
- <p style="font-size:14px;color:var(--soft)">${t('smap')}</p>`
- :`<div class="warn">${t('nasaFail')}${S.nasaErro?': '+esc(S.nasaErro):''}.</div>`)+`<button class="btn s" onclick="editar()">${t('edit')}</button>`}
+ <p style="font-size:13px;color:var(--soft)">${t('smap')}</p>`:`<div class="warn">${t('nasaFail')}${S.nasaErro?': '+esc(S.nasaErro):''}.</div>`)+'</div></div></div>'}
 
 /* ---------- Chat ---------- */
 $('chips').onclick=e=>{if(e.target.tagName=='BUTTON'){$('q').value=e.target.textContent;enviar()}};
@@ -372,29 +1268,37 @@ function falar(x){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(
 /* ---------- Sugestões ---------- */
 const ord={pendente:0,aprovada:1,arquivada:2,recusada:3};
 function renderRecs(){const R=[...S.recs].sort((a,b)=>ord[a.status]-ord[b.status]);
- $('recs').innerHTML=`<h2>${t('recsT')}</h2>`+(R.length?R.map(r=>`<div class="card ${r.status}"><h3>${esc(r.titulo)} <span class="tag">${t('st')[r.status]}</span></h3>
+ $('recs').innerHTML=topbar()+`<h2>${t('recsT')}</h2>`+(R.length?R.map(r=>`<div class="card ${r.status}"><h3>${esc(r.titulo)} <span class="tag">${t('st')[r.status]}</span></h3>
  <p>${esc(r.motivo)}</p><p><b>🌿 ${t('ben')}:</b> ${esc(r.beneficios)}</p><p><b>🗓️ ${t('per')}:</b> ${esc(r.periodo)}</p>
  ${(r.etapas||[]).length?`<ol>${r.etapas.map(e=>`<li>${esc(e)}</li>`).join('')}</ol>`:''}${r.custos?`<p><b>💰 ${t('cost')}:</b> ${esc(r.custos)}</p>`:''}
  <div class="warn">${t('conf')}: ${esc(r.confianca)}. ${esc(r.limitacoes)}</div>
- ${r.status=='pendente'?`<button class="btn p" onclick="decidir('${r.id}','aprovada')">${t('approve')}</button><button class="btn s" onclick="decidir('${r.id}','recusada')">${t('reject')}</button><button class="btn t" onclick="decidir('${r.id}','arquivada')">${t('archive')}</button>`:''}</div>`).join(''):`<p>${t('noRecs')}</p>`)}
+ ${r.status=='pendente'?`<button class="btn pri" onclick="decidir('${r.id}','aprovada')">${t('approve')}</button><button class="btn sec" onclick="decidir('${r.id}','recusada')">${t('reject')}</button><button class="btn ter" onclick="decidir('${r.id}','arquivada')">${t('archive')}</button>`:''}</div>`).join(''):`<p>${t('noRecs')}</p>`)}
 async function decidir(id,status){let motivo;if(status=='recusada')motivo=prompt(t('why'));
  await fetch('/api/rec/'+id,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({status,motivo})});refresh()}
 
-/* ---------- Calendário anual ---------- */
-function renderCal(){const now=new Date(),y0=now.getFullYear(),m0=now.getMonth(),lc=LOC[lang],MN=(y,m)=>new Date(y,m,1).toLocaleString(lc,{month:'long'});
- const WD=[...Array(7)].map((_,i)=>new Date(2024,0,1+i).toLocaleString(lc,{weekday:'short'})[0].toUpperCase());
- const ap=S.recs.filter(r=>r.status=='aprovada'),mk={};
- ap.forEach(r=>{const s=(+r.mes_inicio||0)-1;if(s<0||s>11)return;for(let i=0;i<Math.max(1,+r.duracao_meses||1);i++){const m=(s+i)%12;(mk[m]=mk[m]||{}).p=1;if(!i)mk[m].s=1}});
- const fim=new Date(y0,m0+11,1),HJ={pt:'Hoje',en:'Today',es:'Hoy'}[lang];
- let h=`<h2>${t('calT')}${MN(y0,m0)} ${y0} – ${MN(fim.getFullYear(),fim.getMonth())} ${fim.getFullYear()}</h2><p class="calhoje">📍 ${HJ}: ${now.toLocaleDateString(lc,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p><div class="months">`;
+/* ---------- Calendário (12 meses a partir de hoje, com datas reais) ---------- */
+function renderCal(){const now=new Date(),y0=now.getFullYear(),m0=now.getMonth(),lc=LOC[lang],today=new Date(y0,m0,now.getDate());
+ const MN=(y,m)=>new Date(y,m,1).toLocaleString(lc,{month:'long'});
+ const WD=[...Array(7)].map((_,i)=>new Date(2024,0,1+i).toLocaleString(lc,{weekday:'short'}).replace('.','').slice(0,3));
+ const ap=S.recs.filter(r=>r.status=='aprovada').map(r=>{const mi=+r.mes_inicio;let start=null,end=null;
+  if(mi>=1&&mi<=12){const off=((mi-1)-m0+12)%12;start=off?new Date(y0,m0+off,1):today;const dur=Math.max(1,Math.round(+r.duracao_meses)||1);end=new Date(start.getFullYear(),start.getMonth()+dur,start.getDate())}
+  return{r,start,end}});
+ const rg=ap.filter(x=>x.start),fim=new Date(y0,m0+11,1);
+ let h=topbar()+`<h2>${t('calT')} ${MN(y0,m0)} ${y0} – ${MN(fim.getFullYear(),fim.getMonth())} ${fim.getFullYear()}</h2><p class="calhoje">📍 ${t('today')}: ${now.toLocaleDateString(lc,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p><div class="months">`;
  for(let k=0;k<12;k++){const dt=new Date(y0,m0+k,1),y=dt.getFullYear(),m=dt.getMonth(),off=(dt.getDay()+6)%7,nd=new Date(y,m+1,0).getDate();
   h+=`<div class="mo"><h3>${MN(y,m)}${y!=y0?' '+y:''}</h3><div class="g">${WD.map(d=>`<span class="h">${d}</span>`).join('')}${'<span class="e"></span>'.repeat(off)}`;
-  for(let d=1;d<=nd;d++){const c=(mk[m]?.s&&d==1?'s':mk[m]?.p?'p':'')+(k==0&&d==now.getDate()?' today':'');h+=`<span class="${c}"${c.includes('today')?` title="${HJ}"`:''}>${d}</span>`}
+  for(let d=1;d<=nd;d++){const dd=new Date(y,m,d);let c='';if(rg.some(x=>+x.start==+dd))c='cs';else if(rg.some(x=>dd>=x.start&&dd<x.end))c='cp';if(+dd==+today)c+=' today';h+=`<span class="${c}">${d}</span>`}
   h+='</div></div>'}
+<<<<<<< HEAD
  h+=`</div><h3 style="margin-top:16px">${t('appr')}</h3>`;
  h+=ap.length?ap.map(r=>`<div class="card aprovada"><b>${esc(r.titulo)}</b><br>📅 ${t('startm')}: ${(+r.mes_inicio>=1&&+r.mes_inicio<=12)?MN(y0,+r.mes_inicio-1):'–'} · ${esc(r.duracao_meses)} ${t('months')}${(r.etapas||[]).length?`<ol>${r.etapas.map(e=>`<li>${esc(e)}</li>`).join('')}</ol>`:''}</div>`).join(''):`<p>${t('noAppr')}</p>`;
  $('cal').innerHTML=h}
 function renderFaq(){$('faq').innerHTML=`<h2>${t('faqT')}</h2>`+t('faq').map(f=>`<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join('')}
+=======
+ h+=`</div><h3 style="margin-top:18px">${t('appr')}</h3>`+(ap.length?ap.map(({r,start})=>`<div class="card aprovada"><b>${esc(r.titulo)}</b><br>📅 ${t('startm')}: ${start?start.toLocaleDateString(lc,{month:'long',year:'numeric'}):'–'} · ${esc(r.duracao_meses)} ${t('months')}${(r.etapas||[]).length?`<ol>${r.etapas.map(e=>`<li>${esc(e)}</li>`).join('')}</ol>`:''}</div>`).join(''):`<p>${t('noAppr')}</p>`);
+ $('cal').innerHTML=h}
+function renderFaq(){$('faq').innerHTML=topbar()+`<h2>${t('faqT')}</h2>`+t('faq').map(f=>`<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join('')}
+>>>>>>> 4e5367f (ajustando identidade visual)
 
 applyLang();refresh();
 </script></body></html>
