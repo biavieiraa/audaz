@@ -1,5 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>CultivAI</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>CultivAI</title><link rel="icon" type="image/png" href="img/logo.png"><link rel="apple-touch-icon" href="img/logo_reduzida.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -107,11 +107,16 @@ nav button[aria-current=page] span{transform:translateY(-3px) scale(1.18)}
 input,select,textarea{transition:border-color .2s,box-shadow .2s}
 input:focus,select:focus,textarea:focus{border-color:var(--ice);box-shadow:0 0 0 3px rgba(87,152,215,.25);outline:none}
 iframe:not([hidden]),.warn,.err{animation:fadeIn .4s}
+.calhoje{color:var(--soft);font-size:14px;margin:0 0 10px}.calhoje::first-letter{text-transform:uppercase}
+.g .today{box-shadow:inset 0 0 0 2px var(--pist);font-weight:700;animation:hoje 1.6s ease-in-out 3}
+@keyframes hoje{50%{box-shadow:inset 0 0 0 2px var(--pist),0 0 0 4px rgba(185,194,85,.45)}}
+.brand{display:flex;align-items:center;gap:8px}.brand img{width:34px;height:34px;border-radius:50%;background:#fff;padding:2px;object-fit:contain}
+.avatar.logo{width:116px;height:116px;margin-top:-82px;background:#fff;box-shadow:0 4px 14px rgba(15,42,68,.15)}.avatar.logo img{width:90%;height:90%;object-fit:contain}
 details{transition:box-shadow .2s}details[open]{box-shadow:0 4px 12px rgba(15,42,68,.08)}details[open] p{animation:fadeUp .3s}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
-<header><span>🌱 CultivAI</span><select id="lang" aria-label="Language" onchange="setLang(this.value)"><option value="en">English</option><option value="pt">Português</option><option value="es">Español</option></select></header>
+<header><span class="brand"><img src="img/logo_reduzida.png" alt="" width="34" height="34">CultivAI</span><select id="lang" aria-label="Language" onchange="setLang(this.value)"><option value="en">English</option><option value="pt">Português</option><option value="es">Español</option></select></header>
 
-<div id="welcome" class="view"><div class="photo"></div><div class="sheet"><div class="avatar" aria-hidden="true">🌱</div>
+<div id="welcome" class="view"><div class="photo"></div><div class="sheet"><div class="avatar logo" aria-hidden="true"><img src="img/logo_reduzida.png" alt=""></div>
  <h1 data-i="wT"></h1><p data-i="wX" style="color:var(--soft)"></p><button class="btn a big" onclick="begin()" data-i="start"></button></div></div>
 
 <div id="onb" class="view"><div class="photo" style="height:120px"></div><div class="sheet" style="min-height:0">
@@ -376,18 +381,19 @@ async function decidir(id,status){let motivo;if(status=='recusada')motivo=prompt
  await fetch('/api/rec/'+id,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({status,motivo})});refresh()}
 
 /* ---------- Calendário anual ---------- */
-function renderCal(){const y=new Date().getFullYear(),lc=LOC[lang],MN=m=>new Date(y,m,1).toLocaleString(lc,{month:'long'});
+function renderCal(){const now=new Date(),y0=now.getFullYear(),m0=now.getMonth(),lc=LOC[lang],MN=(y,m)=>new Date(y,m,1).toLocaleString(lc,{month:'long'});
  const WD=[...Array(7)].map((_,i)=>new Date(2024,0,1+i).toLocaleString(lc,{weekday:'short'})[0].toUpperCase());
  const ap=S.recs.filter(r=>r.status=='aprovada'),mk={};
  ap.forEach(r=>{const s=(+r.mes_inicio||0)-1;if(s<0||s>11)return;for(let i=0;i<Math.max(1,+r.duracao_meses||1);i++){const m=(s+i)%12;(mk[m]=mk[m]||{}).p=1;if(!i)mk[m].s=1}});
- let h=`<h2>${t('calT')}${y}</h2><div class="months">`;
- for(let m=0;m<12;m++){const off=(new Date(y,m,1).getDay()+6)%7,nd=new Date(y,m+1,0).getDate();
-  h+=`<div class="mo"><h3>${MN(m)}</h3><div class="g">${WD.map(d=>`<span class="h">${d}</span>`).join('')}${'<span class="e"></span>'.repeat(off)}`;
-  for(let d=1;d<=nd;d++)h+=`<span class="${mk[m]?.s&&d==1?'s':mk[m]?.p?'p':''}">${d}</span>`;h+='</div></div>'}
+ const fim=new Date(y0,m0+11,1),HJ={pt:'Hoje',en:'Today',es:'Hoy'}[lang];
+ let h=`<h2>${t('calT')}${MN(y0,m0)} ${y0} – ${MN(fim.getFullYear(),fim.getMonth())} ${fim.getFullYear()}</h2><p class="calhoje">📍 ${HJ}: ${now.toLocaleDateString(lc,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p><div class="months">`;
+ for(let k=0;k<12;k++){const dt=new Date(y0,m0+k,1),y=dt.getFullYear(),m=dt.getMonth(),off=(dt.getDay()+6)%7,nd=new Date(y,m+1,0).getDate();
+  h+=`<div class="mo"><h3>${MN(y,m)}${y!=y0?' '+y:''}</h3><div class="g">${WD.map(d=>`<span class="h">${d}</span>`).join('')}${'<span class="e"></span>'.repeat(off)}`;
+  for(let d=1;d<=nd;d++){const c=(mk[m]?.s&&d==1?'s':mk[m]?.p?'p':'')+(k==0&&d==now.getDate()?' today':'');h+=`<span class="${c}"${c.includes('today')?` title="${HJ}"`:''}>${d}</span>`}
+  h+='</div></div>'}
  h+=`</div><h3 style="margin-top:16px">${t('appr')}</h3>`;
- h+=ap.length?ap.map(r=>`<div class="card aprovada"><b>${esc(r.titulo)}</b><br>📅 ${t('startm')}: ${(+r.mes_inicio>=1&&+r.mes_inicio<=12)?MN(+r.mes_inicio-1):'–'} · ${esc(r.duracao_meses)} ${t('months')}${(r.etapas||[]).length?`<ol>${r.etapas.map(e=>`<li>${esc(e)}</li>`).join('')}</ol>`:''}</div>`).join(''):`<p>${t('noAppr')}</p>`;
- $('cal').innerHTML=h}
-function renderFaq(){$('faq').innerHTML=`<h2>${t('faqT')}</h2>`+t('faq').map(f=>`<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join('')}
+ h+=ap.length?ap.map(r=>`<div class="card aprovada"><b>${esc(r.titulo)}</b><br>📅 ${t('startm')}: ${(+r.mes_inicio>=1&&+r.mes_inicio<=12)?MN(y0,+r.mes_inicio-1):'–'} · ${esc(r.duracao_meses)} ${t('months')}${(r.etapas||[]).length?`<ol>${r.etapas.map(e=>`<li>${esc(e)}</li>`).join('')}</ol>`:''}</div>`).join(''):`<p>${t('noAppr')}</p>`;
+ $('cal').innerHTML=h}$('faq').innerHTML=`<h2>${t('faqT')}</h2>`+t('faq').map(f=>`<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join('')}
 
 applyLang();refresh();
 </script></body></html>
