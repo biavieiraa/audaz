@@ -1,4 +1,4 @@
-<p align="center"><img src="public/img/logo_com_nome.png" alt="CultivAI" width="220"></p>
+<p align="center"><img src="public/img/logo.png" alt="CultivAI" width="220"></p>
 
 # 🌱 CultivAI
 
