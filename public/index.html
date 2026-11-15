@@ -1,5 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>CultivAI</title><link rel="icon" type="image/png" href="img/logo.png"><link rel="apple-touch-icon" href="img/logo_reduzida.png">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>CultivAI</title><link rel="icon" type="image/png" href="img/logo_reduzida.png"><link rel="apple-touch-icon" href="img/logo_reduzida.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -1419,7 +1419,7 @@ $('soils').onclick=e=>{if(e.target.closest('[data-more]')){soilAll=!soilAll;retu
 /* ---------- Hub (Serviços) ---------- */
 function renderHome(){const p=S.profile,n=S.nasa,sid=soilFromText(p.solo),city=p.cidade||`${(+p.lat).toFixed(2)}, ${(+p.lon).toFixed(2)}`;
  const crops=[p.atual,p.desejo].filter(Boolean).join(' · ');
- $('home').innerHTML=`<div class="photo short"></div><div class="sheet"><div class="badge up logo"><img src="img/logo_reduzida.png" alt="" onerror="this.outerHTML=ico('clover',34)"></div><h1 style="margin-bottom:4px">${p.nome?t('hi')+esc(p.nome)+'!':t('svc')}</h1>${p.nome?`<p style="text-align:center;margin:0 0 14px;color:var(--soft);font-size:14px">${t('svc')}</p>`:''}
+ $('home').innerHTML=`<div class="photo short"></div><div class="sheet"><div class="badge up logo"><img src="img/logo.png" alt="" onerror="this.outerHTML=ico('clover',34)"></div><h1 style="margin-bottom:4px">${p.nome?t('hi')+esc(p.nome)+'!':t('svc')}</h1>${p.nome?`<p style="text-align:center;margin:0 0 14px;color:var(--soft);font-size:14px">${t('svc')}</p>`:''}
  <ul class="info"><li>${ico('pin',16)}<span>${esc(city)}${p.uf?', '+esc(p.uf):''}</span></li><li>${ico('land',16)}<span>${esc(sid?t('soilPre')+soilName(sid):p.solo||'')}</span></li><li>${ico('sprout',16)}<span>${esc(crops)}</span><button class="link" onclick="editar()">${t('edit')}</button></li></ul>
  <div class="hubgrid"><div>${[['chat','chat','cChat'],['cal','cal','cCal'],['recs','bulb','cRecs'],['faq','help','cFaq']].map(a=>`<button class="svc" onclick="go('${a[0]}')"><span class="badge sm">${ico(a[1],22)}</span>${t(a[2])}</button>`).join('')}
  </div><div class="hubR"><h2>${t('climate')}</h2>`+(n?`
