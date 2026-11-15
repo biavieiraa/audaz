@@ -1909,6 +1909,24 @@ function mic(){const R=window.SpeechRecognition||window.webkitSpeechRecognition;
 {const f=renderHome;renderHome=function(){f();const c=document.querySelector('#home .hubgrid>div');if(c)c.insertAdjacentHTML('afterbegin',`<div id="hojeCampo">${homeHoje()}</div>`)}}
 {const f=atualizarDados;atualizarDados=async function(){await f();if(S.profile)renderHome()}}
 {const f=go;go=function(id){if(id=='cal')$('cal').classList.remove('still');return f(id)}}
+/* ---------- Datas exatas das sugestões ---------- */
+// Referência: o dia em que a sugestão foi aprovada (ou criada). Para sugestões pendentes, hoje.
+function refDate(r){if(r.status=='aprovada'){const a=Date.parse(r.aprovadaEm||'');if(a)return d0(new Date(a));const ts=+String(r.id||'').slice(0,13);if(ts>1e12&&ts<4e12)return d0(new Date(ts))}return d0(new Date())}
+// Soma meses sem "pular" mês curto (31/jan + 1 mês = 28/fev).
+function addM(d,n){const y=d.getFullYear(),m=d.getMonth()+n,last=new Date(y,m+1,0).getDate();return new Date(y,m,Math.min(d.getDate(),last))}
+// Início: no mesmo mês da referência começa naquele dia; mês seguinte começa no dia 1º; mês que já passou vai para o ano que vem.
+// Fim: exatamente "duracao_meses" depois do início (último dia incluído).
+function recDates(r){const dur=Math.min(24,Math.max(1,Math.round(+r.duracao_meses||1)));let ini;
+ const di=/^(\d{4})-(\d{2})-(\d{2})/.exec(r.data_inicio||'');
+ if(di)ini=new Date(+di[1],+di[2]-1,+di[3]);
+ else{const m=Math.round(+r.mes_inicio);if(!(m>=1&&m<=12))return null;const ref=refDate(r),rm=ref.getMonth()+1,y=ref.getFullYear();
+  ini=m==rm?ref:new Date(m>rm?y:y+1,m-1,1)}
+ const fim=addD(addM(ini,dur),-1),D=diffD(ini,fim)+1;
+ const et=(r.etapas||[]).map(e=>{const s=stepTxt(e).trim();return {s,w:+(e&&e.dias)>0?+e.dias:0,tipo:TIPO[e?.tipo]?e.tipo:inferTipo(s),como:String(e?.como||'').trim(),cada:Math.round(+(e&&e.a_cada_dias))>0?Math.round(+e.a_cada_dias):0}}).filter(x=>x.s);
+ const n=et.length,useW=n&&et.every(x=>x.w),tot=useW?et.reduce((a,x)=>a+x.w,0):n;let acc=0;
+ let steps=et.map((x,k)=>{const a=Math.floor(D*acc/tot);acc+=useW?x.w:1;const b=Math.max(a,Math.floor(D*acc/tot)-1);return {...x,k,dias:x.w,ini:addD(ini,a),fim:addD(ini,b)}});
+ if(!n)steps=[{s:r.titulo,k:0,tipo:inferTipo(r.titulo),como:'',cada:0,ini,fim}];
+ return {ini,fim,D,dur,steps,n}}
 function renderFaq(){$('faq').innerHTML=topbar()+`<h2>${t('faqT')}</h2>`+t('faq').map(f=>`<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join('')}
 
 applyLang();refresh();
