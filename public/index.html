@@ -852,6 +852,118 @@ section.on > * {
   margin-top: 26px;
 }
 
+/* CALENDÁRIO */
+#cal.still > * { animation: none; }
+.calhoje svg { vertical-align: -3px; margin-right: 4px; }
+.seg { display: flex; gap: 4px; padding: 4px; margin: 6px 0 16px; background: var(--tile); border-radius: 10px; }
+.seg button { flex: 1; min-height: 42px; border: 0; border-radius: 8px; background: none; font: 600 14px Inter, sans-serif; color: var(--soft); cursor: pointer; transition: background-color .2s, color .2s, box-shadow .2s; }
+.seg button[aria-selected=true] { background: #fff; color: var(--ink); box-shadow: 0 1px 4px rgba(20,22,26,.12); }
+.calnav { display: flex; align-items: center; gap: 6px; margin: 0 0 12px; }
+.calnav h3 { flex: 1; margin: 0; text-align: center; }
+.calnav h3::first-letter { text-transform: uppercase; }
+.calnav .btn { margin: 0; min-height: 42px; padding: 6px 14px; }
+.week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; margin: 0 0 12px; }
+.week.anim, .mgrid.anim { animation: fi .3s; }
+.wk { position: relative; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 0 6px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink); cursor: pointer; transition: transform .15s; }
+.wk small { font-size: 11px; color: var(--soft); text-transform: capitalize; }
+.wk b { font: 700 18px 'Bricolage Grotesque', sans-serif; }
+.wk:hover { transform: translateY(-2px); }
+.wk.today { box-shadow: inset 0 0 0 2px var(--ink); }
+.wk.sel { background: var(--ol); border-color: var(--ol); color: #fff; }
+.wk.sel small { color: #EEF1D6; }
+.wdots { display: flex; gap: 2px; height: 6px; }
+.wdots i { width: 6px; height: 6px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(20,22,26,.3); }
+.wk .dot, .cd .dot { position: absolute; top: 5px; right: 5px; width: 7px; height: 7px; border-radius: 50%; background: var(--chk); }
+.dotk { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--chk); vertical-align: middle; margin-left: 4px; }
+.dhero { display: flex; align-items: center; gap: 16px; padding: 14px 16px; margin-bottom: 12px; background: var(--tile); border-radius: 12px; }
+.dbig { min-width: 62px; font: 800 50px/1 'Bricolage Grotesque', sans-serif; color: var(--ol2); text-align: center; }
+.dinfo { display: flex; flex-direction: column; gap: 2px; }
+.dinfo b { font-size: 18px; text-transform: capitalize; }
+.dinfo > span { font-size: 14px; color: var(--soft); }
+.chips2 { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.tag.hj { background: var(--ink); color: #fff; }
+.dsec { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin: 0 0 12px; }
+.dsec > h3 { margin-bottom: 6px; }
+.dsh { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.dsh h3 { margin: 0; }
+.dayp .dsec { border: 0; padding: 0; margin: 10px 0; }
+.pb { height: 6px; margin: 6px 0; overflow: hidden; background: var(--line); border-radius: 3px; }
+.pb i { display: block; height: 100%; background: var(--ol); border-radius: 3px; transition: width .6s; }
+.tasks { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.tk { display: flex; align-items: flex-start; gap: 10px; margin: 0; padding: 10px 12px; font-weight: 400; font-size: 15px; color: var(--ink); background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--c); border-radius: 10px; cursor: pointer; transition: background-color .2s, opacity .2s; }
+.tk:hover { background: #FBFBFD; }
+.tk input { flex: none; width: 22px; height: 22px; margin: 2px 0 0; padding: 0; accent-color: var(--chk); cursor: pointer; }
+.tk .tx { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.tk .tx small { font-size: 12px; line-height: 1.4; color: var(--soft); }
+.tk .como, .tl .como { display: block; padding: 4px 8px; color: var(--ink) !important; background: var(--tile); border-radius: 6px; }
+.tk.done { opacity: .6; }
+.tk.done b { text-decoration: line-through; }
+.tkh { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.evd { display: inline-block; width: 9px; height: 9px; margin-right: 5px; border-radius: 2px; box-shadow: inset 0 0 0 1px rgba(20,22,26,.25); }
+.cat, .kc { display: inline-block; padding: 1px 8px; font-size: 11px; font-weight: 600; line-height: 1.5; border-radius: 10px; white-space: nowrap; }
+.cat { color: var(--k); background: color-mix(in srgb, var(--k) 12%, #fff); border: 1px solid color-mix(in srgb, var(--k) 30%, #fff); vertical-align: 1px; }
+.kc { border: 1px solid transparent; }
+.k-inicio { background: var(--lime); color: var(--ink); }
+.k-repetir { background: #E7E7FB; color: #3F3FB0; }
+.k-fim { background: #FDE7DC; color: #9A3412; }
+.livre { margin: 6px 0; color: var(--soft); }
+.livre b { font-size: 16px; color: var(--ink); }
+.nxt { text-align: left; font-weight: 500; }
+.mgrid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px 0; padding: 6px; background: var(--tile); border-radius: 12px; }
+.mgrid .wd { padding: 4px 0; font-size: 11px; font-weight: 600; color: var(--soft); text-align: center; text-transform: capitalize; }
+.cd { position: relative; display: flex; flex-direction: column; align-items: stretch; min-height: 56px; padding: 4px 0 6px; font: 500 14px Inter, sans-serif; color: var(--ink); background: none; border: 0; border-radius: 8px; cursor: pointer; transition: background-color .15s; }
+.cd:hover { background: #fff; }
+.cd .n { width: 28px; height: 28px; margin: 0 auto 4px; line-height: 28px; text-align: center; border-radius: 50%; }
+.cd.out { color: #A6A9B4; }
+.cd.out .bs { opacity: .45; }
+.cd.today .n { box-shadow: inset 0 0 0 2px var(--ink); font-weight: 700; }
+.cd.sel { background: #fff; box-shadow: inset 0 0 0 2px var(--ol); }
+.cd .bs { display: flex; flex-direction: column; gap: 2px; }
+.cd .bs i { height: 6px; box-shadow: inset 0 1px 0 rgba(20,22,26,.1), inset 0 -1px 0 rgba(20,22,26,.1); }
+.cd .bs i.bar0 { margin-left: 4px; border-radius: 3px 0 0 3px; }
+.cd .bs i.bar1 { margin-right: 4px; border-radius: 0 3px 3px 0; }
+.cd .bs i.bar0.bar1 { border-radius: 3px; }
+.cd .bs em { font-size: 10px; font-style: normal; color: var(--soft); text-align: center; }
+.calhint { margin: 8px 0 0; font-size: 13px; color: var(--soft); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 10px 0; font-size: 13px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.legend i { flex: none; width: 12px; height: 12px; border-radius: 3px; box-shadow: inset 0 0 0 1px rgba(20,22,26,.2); }
+.dayp { padding: 14px 16px; margin-top: 12px; border: 1px solid var(--line); border-radius: 12px; }
+.dayp > h3::first-letter { text-transform: uppercase; }
+.muted { font-size: 14px; color: var(--soft); }
+.dayev { border-left: 4px solid var(--c); padding: 2px 0 2px 12px; margin: 14px 0 4px; }
+.dayev p { margin: 4px 0 2px; font-size: 14px; }
+.dayev small { display: block; font-size: 12px; color: var(--soft); }
+.dayev .tag, .agev .tag { font-size: 11px; vertical-align: 2px; }
+.agev { border-left: 6px solid var(--c); }
+.agev .rng { margin: 4px 0 6px; font-size: 14px; color: var(--soft); }
+.ptx { margin: 0 0 8px; font-size: 13px; }
+.tl { list-style: none; margin: 10px 0 6px 6px; padding: 0; border-left: 2px solid var(--line); }
+.tl li { position: relative; padding: 2px 0 10px 16px; font-size: 14px; }
+.tl li::before { content: ''; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 2px solid #B9BCC8; box-sizing: border-box; }
+.tl li small { display: block; font-size: 12px; color: var(--soft); }
+.tl li.ok::before { background: var(--ol); border-color: var(--ol); }
+.tl li.ok > span { color: var(--soft); text-decoration: line-through; }
+.tl li.now::before { border-color: var(--ol); box-shadow: 0 0 0 4px var(--lime); }
+.tl li.now > span { font-weight: 700; }
+.agh { display: flex; align-items: center; gap: 8px; margin: 18px 0 4px; }
+.agtop { text-align: right; }
+button.mo { align-self: start; width: 100%; border: 0; font: inherit; color: inherit; text-align: left; cursor: pointer; transition: transform .2s, box-shadow .2s; }
+button.mo:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(20,22,26,.1); }
+.calempty { background: var(--tile); border: 0; }
+.hojec { background: var(--tile); border: 0; margin-top: 0; }
+.hojec h2 { margin-bottom: 4px; }
+.recdate { font-size: 14px; margin: 4px 0; }
+.steps-l li { margin-bottom: 4px; }
+#mic svg, #send svg { vertical-align: middle; }
+.say { color: var(--ol2); }
+.btn svg { vertical-align: -4px; }
+@media (min-width: 900px) {
+  .daygrid, .monthgrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+  .monthgrid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
+  .monthgrid .dayp { margin-top: 0; }
+  .cd { min-height: 64px; }
+}
 /* CELULARES PEQUENOS */
 @media (max-width: 360px) {
   .scr {
@@ -1606,6 +1718,197 @@ function renderCal(){
 
  $('cal').innerHTML=h;
 }
+/* ---------- Calendário (acompanha as sugestões aprovadas) ---------- */
+const CAL={
+pt:{dia:'Dia',mes:'Mês',ano:'Ano',agenda:'Agenda',hoje:'Hoje',prev:'Mês anterior',next:'Próximo mês',prevD:'Dia anterior',nextD:'Próximo dia',etapa:'Etapa',de:'de',dia1:'Dia',
+ faltam:n=>n==1?'falta 1 dia':`faltam ${n} dias`,comeca:n=>n==1?'começa amanhã':`começa em ${n} dias`,terminaHoje:'último dia',concluida:'concluída',
+ andamento:'Em andamento',proximas:'Próximas',concluidas:'Concluídas',ics:'Adicionar ao meu calendário',icsAll:'Exportar tudo para meu calendário',verMes:'Ver no mês',
+ vazio:'Nenhuma atividade aprovada ainda. Aprove uma sugestão em Sugestões e ela aparece aqui, com as tarefas de cada dia.',irDicas:'Ver sugestões',
+ semData:'Sem mês de início definido',ativ:'atividade(s)',verCal:'Ver no calendário',noCal:'No calendário',seAprovar:'Se aprovar, vai para o calendário',cultura:'Cultura',
+ legenda:'Toque em um dia para ver as tarefas.',ponto:'= tem tarefa neste dia',tarefas:'Tarefas do dia',feitas:(a,b)=>`${a} de ${b} feitas`,
+ livre:'Dia livre ',livreTxt:'Nenhuma tarefa para este dia.',proxTarefa:'Próxima tarefa',abrirDia:'Abrir o dia completo →',emAnd:'Atividades em andamento',
+ k_inicio:'Começa hoje',k_repetir:'Repetir hoje',k_fim:'Último dia',cada:n=>n==1?'todo dia':`a cada ${n} dias`,hojeCampo:'Hoje no campo',
+ nadaHoje:'Nenhuma tarefa para hoje. Aproveite para observar a lavoura. ',est:{ver:'Verão',out:'Outono',inv:'Inverno',pri:'Primavera'},hemS:'hemisfério sul',hemN:'hemisfério norte'},
+en:{dia:'Day',mes:'Month',ano:'Year',agenda:'Agenda',hoje:'Today',prev:'Previous month',next:'Next month',prevD:'Previous day',nextD:'Next day',etapa:'Step',de:'of',dia1:'Day',
+ faltam:n=>n==1?'1 day left':`${n} days left`,comeca:n=>n==1?'starts tomorrow':`starts in ${n} days`,terminaHoje:'last day',concluida:'done',
+ andamento:'In progress',proximas:'Upcoming',concluidas:'Done',ics:'Add to my calendar',icsAll:'Export all to my calendar',verMes:'See in month',
+ vazio:'No approved activities yet. Approve a suggestion in Suggestions and it shows up here, with the tasks for each day.',irDicas:'See suggestions',
+ semData:'No start month set',ativ:'activity(ies)',verCal:'See in calendar',noCal:'In the calendar',seAprovar:'If approved, it goes to the calendar',cultura:'Crop',
+ legenda:'Tap a day to see its tasks.',ponto:'= has a task this day',tarefas:'Tasks for the day',feitas:(a,b)=>`${a} of ${b} done`,
+ livre:'Free day ',livreTxt:'No tasks for this day.',proxTarefa:'Next task',abrirDia:'Open the full day →',emAnd:'Activities in progress',
+ k_inicio:'Starts today',k_repetir:'Repeat today',k_fim:'Last day',cada:n=>n==1?'every day':`every ${n} days`,hojeCampo:'Today in the field',
+ nadaHoje:'No tasks for today. A good day to check on your crops. ',est:{ver:'Summer',out:'Autumn',inv:'Winter',pri:'Spring'},hemS:'southern hemisphere',hemN:'northern hemisphere'},
+es:{dia:'Día',mes:'Mes',ano:'Año',agenda:'Agenda',hoje:'Hoy',prev:'Mes anterior',next:'Mes siguiente',prevD:'Día anterior',nextD:'Día siguiente',etapa:'Etapa',de:'de',dia1:'Día',
+ faltam:n=>n==1?'falta 1 día':`faltan ${n} días`,comeca:n=>n==1?'empieza mañana':`empieza en ${n} días`,terminaHoje:'último día',concluida:'terminada',
+ andamento:'En curso',proximas:'Próximas',concluidas:'Terminadas',ics:'Añadir a mi calendario',icsAll:'Exportar todo a mi calendario',verMes:'Ver en el mes',
+ vazio:'Aún no hay actividades aprobadas. Aprueba una sugerencia en Sugerencias y aparecerá aquí, con las tareas de cada día.',irDicas:'Ver sugerencias',
+ semData:'Sin mes de inicio definido',ativ:'actividad(es)',verCal:'Ver en el calendario',noCal:'En el calendario',seAprovar:'Si la apruebas, va al calendario',cultura:'Cultivo',
+ legenda:'Toca un día para ver sus tareas.',ponto:'= hay tarea este día',tarefas:'Tareas del día',feitas:(a,b)=>`${a} de ${b} hechas`,
+ livre:'Día libre ',livreTxt:'No hay tareas para este día.',proxTarefa:'Próxima tarea',abrirDia:'Abrir el día completo →',emAnd:'Actividades en curso',
+ k_inicio:'Empieza hoy',k_repetir:'Repetir hoy',k_fim:'Último día',cada:n=>n==1?'todos los días':`cada ${n} días`,hojeCampo:'Hoy en el campo',
+ nadaHoje:'No hay tareas para hoy. Buen día para observar tu cultivo. ',est:{ver:'Verano',out:'Otoño',inv:'Invierno',pri:'Primavera'},hemS:'hemisferio sur',hemN:'hemisferio norte'}};
+const ct=k=>(CAL[lang]||CAL.en)[k];
+const TIPO={plantio:'#3F7D20',irrigacao:'#1D6FB8',adubacao:'#7C3AED',cobertura:'#92400E',colheita:'#A16207',poda:'#0F766E',pragas:'#B91C1C',preparo:'#57534E',observacao:'#4F46E5',outro:'#64748B'};
+const TIPON={pt:{plantio:'Plantio',irrigacao:'Irrigação',adubacao:'Adubação',cobertura:'Cobertura do solo',colheita:'Colheita',poda:'Poda',pragas:'Pragas e doenças',preparo:'Preparo do solo',observacao:'Observação',outro:'Outro'},
+ en:{plantio:'Planting',irrigacao:'Irrigation',adubacao:'Fertilizing',cobertura:'Soil cover',colheita:'Harvest',poda:'Pruning',pragas:'Pests & diseases',preparo:'Soil prep',observacao:'Monitoring',outro:'Other'},
+ es:{plantio:'Siembra',irrigacao:'Riego',adubacao:'Abonado',cobertura:'Cobertura del suelo',colheita:'Cosecha',poda:'Poda',pragas:'Plagas y enfermedades',preparo:'Preparación del suelo',observacao:'Observación',outro:'Otro'}};
+const cat=k=>{k=TIPO[k]?k:'outro';return `<span class="cat" style="--k:${TIPO[k]}">${(TIPON[lang]||TIPON.en)[k]}</span>`};
+function inferTipo(t){t=String(t).toLowerCase();return /reg[aeu]|irrig|água|agua|water|riego/.test(t)?'irrigacao':/semea|plant|muda|sow|siembr/.test(t)?'plantio':/colh|harvest|cosech/.test(t)?'colheita':
+ /adub|esterco|compost|fertil|abon|calc[aá]rio|lime/.test(t)?'adubacao':/palh|cobert|mulch|cubiert|ro[cç]a/.test(t)?'cobertura':/pod[ae]|prun/.test(t)?'poda':/prag|inset|pest|plaga|doen/.test(t)?'pragas':
+ /prepar|arar|grade|limp|till|cerc/.test(t)?'preparo':/observ|acompanh|monitor|verific|check|medir/.test(t)?'observacao':'outro'}
+let calView='dia',calCur=null,calSel=null,calAnim=false;try{calView=localStorage.getItem('calView')||'dia'}catch(e){}if(!['dia','mes','ano','agenda'].includes(calView))calView='dia';
+const d0=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate());
+const addD=(d,n)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);
+const diffD=(a,b)=>Math.round((d0(b)-d0(a))/864e5);
+const isoD=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const fmtD=(d,o)=>d.toLocaleDateString(LOC[lang],o||{day:'numeric',month:'short',year:'numeric'});
+const fmtC=d=>fmtD(d,{day:'numeric',month:'short'});
+const stepTxt=e=>typeof e=='string'?e:String(e?.texto??e?.etapa??e?.nome??'');
+function estacao(d){const lat=+S.profile?.lat;if(!Number.isFinite(lat))return'';const md=(d.getMonth()+1)*100+d.getDate();
+ let n=md>=1221||md<320?'inv':md<621?'pri':md<923?'ver':'out';if(lat<0)n={inv:'ver',pri:'out',ver:'inv',out:'pri'}[n];
+ return `${ct('est')[n]} · ${lat<0?ct('hemS'):ct('hemN')}`}
+
+// Datas reais de uma sugestão. Usa data_inicio (fixada pelo servidor ao aprovar) quando existe;
+// senão, calcula a próxima ocorrência do mês de início (ou a que está em andamento).
+// As etapas ocupam o período proporcionalmente aos "dias" de cada uma (ou em partes iguais).
+function recDates(r){const dur=Math.min(24,Math.max(1,Math.round(+r.duracao_meses||1))),hoje=d0(new Date());let ini;
+ const di=/^(\d{4})-(\d{2})-(\d{2})/.exec(r.data_inicio||'');
+ if(di)ini=new Date(+di[1],+di[2]-1,+di[3]);
+ else{const m=Math.round(+r.mes_inicio);if(!(m>=1&&m<=12))return null;const y=hoje.getFullYear();ini=new Date(y,m-1,1);if(new Date(y,m-1+dur,0)<hoje)ini=new Date(y+1,m-1,1)}
+ const fim=new Date(ini.getFullYear(),ini.getMonth()+dur,ini.getDate()-1),D=diffD(ini,fim)+1;
+ const et=(r.etapas||[]).map(e=>{const s=stepTxt(e).trim();return {s,w:+(e&&e.dias)>0?+e.dias:0,tipo:TIPO[e?.tipo]?e.tipo:inferTipo(s),como:String(e?.como||'').trim(),cada:Math.round(+(e&&e.a_cada_dias))>0?Math.round(+e.a_cada_dias):0}}).filter(x=>x.s);
+ const n=et.length,useW=n&&et.every(x=>x.w),tot=useW?et.reduce((a,x)=>a+x.w,0):n;let acc=0;
+ let steps=et.map((x,k)=>{const a=Math.floor(D*acc/tot);acc+=useW?x.w:1;const b=Math.max(a,Math.floor(D*acc/tot)-1);return {...x,k,dias:x.w,ini:addD(ini,a),fim:addD(ini,b)}});
+ if(!n)steps=[{s:r.titulo,k:0,tipo:inferTipo(r.titulo),como:'',cada:0,ini,fim}];
+ return {ini,fim,D,dur,steps,n}}
+function calEvents(){return S.recs.filter(r=>r.status=='aprovada').map((r,i)=>{const x=recDates(r);
+ return {r,id:String(r.id),t:r.titulo,cultura:String(r.cultura||'').trim(),c:corRecomendacao(r.id||r.titulo),...(x||{semData:true})}})}
+function evAt(e,d){if(e.semData||d<e.ini||d>e.fim)return null;return {dia:diffD(e.ini,d)+1,st:e.steps.find(s=>d>=s.ini&&d<=s.fim)}}
+// Tarefas de um dia: começo de etapa, repetição (a cada N dias) e último dia da etapa.
+function tasksOn(E,d){const out=[];E.forEach(e=>{if(e.semData||d<e.ini||d>e.fim)return;const st=e.steps.find(s=>d>=s.ini&&d<=s.fim);if(!st)return;
+ const off=diffD(st.ini,d),kind=off==0?'inicio':st.cada&&off%st.cada==0?'repetir':+d==+st.fim?'fim':'cont';out.push({e,st,kind,key:`${isoD(d)}|${st.k}`})});return out}
+const acts=(E,d)=>tasksOn(E,d).filter(x=>x.kind!='cont');
+function nextTask(E,d){for(let i=1;i<=400;i++){const x=addD(d,i),T=acts(E,x);if(T.length)return {d:x,t:T[0]}}return null}
+function evProg(e){const h=d0(new Date());
+ if(h<e.ini)return {fase:'proximas',pct:0,txt:ct('comeca')(diffD(h,e.ini))};
+ if(h>e.fim)return {fase:'concluidas',pct:100,txt:ct('concluida')};
+ const dia=diffD(e.ini,h)+1,falta=diffD(h,e.fim);
+ return {fase:'andamento',pct:Math.round(dia/e.D*100),txt:`${ct('dia1')} ${dia} ${ct('de')} ${e.D} · ${falta?ct('faltam')(falta):ct('terminaHoje')}`}}
+const legend=E=>E.length?`<div class="legend">${E.map(e=>`<span><i style="background:${e.c}"></i>${esc(e.t)}</span>`).join('')}</div>`:'';
+const taskList=T=>`<div class="tasks">${T.map(x=>{const done=!!x.e.r.feitos?.[x.key];return `<label class="tk${done?' done':''}" style="--c:${TIPO[x.st.tipo]||TIPO.outro}"><input type="checkbox" class="tkc" data-id="${esc(x.e.id)}" data-key="${x.key}"${done?' checked':''}><span class="tx"><span class="tkh">${cat(x.st.tipo)}<span class="kc k-${x.kind}">${ct('k_'+x.kind)}</span></span><b>${esc(x.st.s)}</b><small><i class="evd" style="background:${x.e.c}"></i>${esc(x.e.t)}${x.e.cultura?' · '+esc(x.e.cultura):''}${x.e.n>1?` · ${ct('etapa')} ${x.st.k+1}/${x.e.n}`:''}${x.st.cada?' · '+ct('cada')(x.st.cada):''}</small>${x.st.como?`<small class="como">${esc(x.st.como)}</small>`:''}</span></label>`}).join('')}</div>`;
+
+function dayBody(E,d){const A=acts(E,d),nd=A.filter(x=>x.e.r.feitos?.[x.key]).length;
+ let h=`<div class="dsec"><div class="dsh"><h3>${ct('tarefas')}</h3>${A.length?`<span class="tag">${ct('feitas')(nd,A.length)}</span>`:''}</div>`;
+ if(A.length)h+=`<div class="pb" style="--c:var(--pist)"><i style="width:${Math.round(nd/A.length*100)}%"></i></div>${taskList(A)}`;
+ else{const nx=nextTask(E,d);h+=`<p class="livre"><b>${ct('livre')}</b><br>${ct('livreTxt')}</p>${nx?`<button type="button" class="btn ter nxt" data-day="${+nx.d}">${ct('proxTarefa')}: <b>${fmtC(nx.d)}</b> · ${esc(nx.t.st.s)}</button>`:''}`}
+ h+='</div>';const act=E.map(e=>({e,a:evAt(e,d)})).filter(x=>x.a);
+ if(act.length)h+=`<div class="dsec"><h3>${ct('emAnd')}</h3>${act.map(({e,a})=>`<div class="dayev" style="--c:${e.c}"><b>${esc(e.t)}</b>${e.cultura?` <span class="tag">${esc(e.cultura)}</span>`:''}
+  ${a.st&&e.n?`<p>${cat(a.st.tipo)} ${e.n>1?`${ct('etapa')} ${a.st.k+1} ${ct('de')} ${e.n}: `:''}${esc(a.st.s)}</p><small>${fmtC(a.st.ini)} – ${fmtC(a.st.fim)}${a.st.cada?' · '+ct('cada')(a.st.cada):''}</small>`:''}
+  <small>${ct('dia1')} ${a.dia} ${ct('de')} ${e.D} · ${fmtC(e.ini)} → ${fmtD(e.fim)}</small><div class="pb"><i style="width:${Math.round(a.dia/e.D*100)}%"></i></div></div>`).join('')}</div>`;
+ return h}
+
+function renderCal(still){const E=calEvents(),ok=E.filter(e=>!e.semData),hoje=d0(new Date());
+ if(!calCur)calCur=new Date(hoje.getFullYear(),hoje.getMonth(),1);if(!calSel)calSel=hoje;
+ let h=topbar()+`<h2>${t('calT')}</h2><p class="calhoje">${ico('pin',16)} ${ct('hoje')}: ${fmtD(hoje,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
+ <div class="seg" role="tablist">${['dia','mes','ano','agenda'].map(v=>`<button type="button" role="tab" aria-selected="${calView==v}" data-view="${v}">${ct(v)}</button>`).join('')}</div>`;
+ if(!E.length)h+=`<div class="card calempty"><p>${ct('vazio')}</p><button type="button" class="btn pri" data-go="recs">${ct('irDicas')}</button></div>`;
+ h+=calView=='agenda'?calAgenda(E,hoje):calView=='ano'?calYear(ok,hoje):calView=='mes'?calMonth(ok,hoje):calDayView(ok,hoje);
+ $('cal').classList.toggle('still',!!still);$('cal').innerHTML=h;calAnim=false}
+
+function calDayView(E,hoje){const d=calSel,ws=addD(d,-((d.getDay()+6)%7)),es=estacao(d);
+ const week=[...Array(7)].map((_,i)=>{const x=addD(ws,i),on=E.filter(e=>x>=e.ini&&x<=e.fim);
+  return `<button type="button" class="wk${+x==+d?' sel':''}${+x==+hoje?' today':''}" data-day="${+x}" aria-pressed="${+x==+d}" aria-label="${fmtD(x,{weekday:'long',day:'numeric',month:'long'})}"><small>${x.toLocaleString(LOC[lang],{weekday:'short'}).replace('.','').slice(0,3)}</small><b>${x.getDate()}</b><span class="wdots">${on.slice(0,3).map(e=>`<i style="background:${e.c}"></i>`).join('')}</span>${acts(E,x).length?'<em class="dot"></em>':''}</button>`}).join('');
+ return `<div class="calnav"><button type="button" class="btn ter" data-dnav="-1" aria-label="${ct('prevD')}">‹</button><h3>${d.toLocaleString(LOC[lang],{month:'long',year:'numeric'})}</h3><button type="button" class="btn ter" data-dnav="1" aria-label="${ct('nextD')}">›</button><button type="button" class="btn sec" data-dnav="0">${ct('hoje')}</button></div>
+ <div class="daygrid"><div><div class="week${calAnim?' anim':''}">${week}</div>
+ <div class="dhero"><div class="dbig">${d.getDate()}</div><div class="dinfo"><b>${d.toLocaleString(LOC[lang],{weekday:'long'})}</b><span>${fmtD(d,{day:'numeric',month:'long',year:'numeric'})}</span><span class="chips2">${+d==+hoje?`<span class="tag hj">${ct('hoje')}</span>`:''}${es?`<span class="tag">${es}</span>`:''}</span></div></div>
+ </div><div>${dayBody(E,d)}</div></div>${legend(E)}`}
+
+function calMonth(E,hoje){const y=calCur.getFullYear(),m=calCur.getMonth(),off=(new Date(y,m,1).getDay()+6)%7,nd=new Date(y,m+1,0).getDate(),cells=Math.ceil((off+nd)/7)*7;
+ const WD=[...Array(7)].map((_,i)=>new Date(2024,0,1+i).toLocaleString(LOC[lang],{weekday:'short'}).replace('.','').slice(0,3));
+ let g='';for(let i=0;i<cells;i++){const d=new Date(y,m,1-off+i),out=d.getMonth()!=m,act=E.filter(e=>d>=e.ini&&d<=e.fim);
+  const bars=act.slice(0,3).map(e=>{const a=+d==+e.ini||d.getDay()==1,b=+d==+e.fim||d.getDay()==0;return `<i class="${a?'bar0 ':''}${b?'bar1':''}" style="background:${e.c}"></i>`}).join('')+(act.length>3?`<em>+${act.length-3}</em>`:'');
+  g+=`<button type="button" class="cd${out?' out':''}${+d==+hoje?' today':''}${+d==+calSel?' sel':''}" data-day="${+d}" aria-pressed="${+d==+calSel}" aria-label="${fmtD(d,{weekday:'long',day:'numeric',month:'long'})}${act.length?` – ${act.length} ${ct('ativ')}`:''}"><span class="n">${d.getDate()}</span>${acts(E,d).length?'<b class="dot"></b>':''}<span class="bs">${bars}</span></button>`}
+ return `<div class="calnav"><button type="button" class="btn ter" data-nav="-1" aria-label="${ct('prev')}">‹</button><h3>${calCur.toLocaleString(LOC[lang],{month:'long',year:'numeric'})}</h3><button type="button" class="btn ter" data-nav="1" aria-label="${ct('next')}">›</button><button type="button" class="btn sec" data-nav="0">${ct('hoje')}</button></div>
+ <div class="monthgrid"><div><div class="mgrid${calAnim?' anim':''}">${WD.map(w=>`<span class="wd">${w}</span>`).join('')}${g}</div>
+ <p class="muted calhint">${ct('legenda')} <span class="dotk"></span> ${ct('ponto')}</p>${legend(E)}</div>
+ <div class="dayp" aria-live="polite"><h3>${fmtD(calSel,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</h3>${dayBody(E,calSel)}<button type="button" class="btn sec" data-view="dia">${ct('abrirDia')}</button></div></div>`}
+
+function calAgenda(E,hoje){if(!E.length)return'';const G={andamento:[],proximas:[],concluidas:[]},sem=[];
+ E.forEach(e=>e.semData?sem.push(e):G[evProg(e).fase].push(e));G.proximas.sort((a,b)=>a.ini-b.ini);G.andamento.sort((a,b)=>a.fim-b.fim);
+ const card=e=>{const p=evProg(e);return `<div class="card agev" style="--c:${e.c}"><h3>${esc(e.t)}</h3>${e.cultura?`<span class="tag">${esc(e.cultura)}</span>`:''}<p class="rng">${fmtD(e.ini)} → ${fmtD(e.fim)} · ${e.dur} ${t('months')}</p>
+  <div class="pb"><i style="width:${p.pct}%"></i></div><p class="ptx"><b>${p.pct}%</b> · ${p.txt}</p>
+  ${e.n?`<ol class="tl">${e.steps.map(s=>`<li class="${hoje>s.fim?'ok':hoje>=s.ini?'now':''}"><span>${esc(s.s)}</span> ${cat(s.tipo)}<small>${fmtC(s.ini)} – ${fmtC(s.fim)}${s.cada?' · '+ct('cada')(s.cada):''}</small>${s.como?`<small class="como">${esc(s.como)}</small>`:''}</li>`).join('')}</ol>`:''}
+  <button type="button" class="btn sec" data-see="${+e.ini}">${ico('cal',18)} ${ct('verMes')}</button><button type="button" class="btn ter" data-ics="${esc(e.id)}">${ico('dl',18)} ${ct('ics')}</button></div>`};
+ const sec=k=>G[k].length?`<h3 class="agh">${ct(k)} <span class="tag">${G[k].length}</span></h3>${G[k].map(card).join('')}`:'';
+ return (E.some(e=>!e.semData)?`<div class="agtop"><button type="button" class="btn ter" data-ics="all">${ico('dl',18)} ${ct('icsAll')}</button></div>`:'')
+  +sec('andamento')+sec('proximas')+sec('concluidas')+(sem.length?`<h3 class="agh">${ct('semData')}</h3>${sem.map(e=>`<div class="card"><b>${esc(e.t)}</b></div>`).join('')}`:'')}
+
+function calYear(E,hoje){const WD=[...Array(7)].map((_,i)=>new Date(2024,0,1+i).toLocaleString(LOC[lang],{weekday:'short'})[0].toUpperCase());let h='<div class="months">';
+ for(let k=0;k<12;k++){const dt=new Date(hoje.getFullYear(),hoje.getMonth()+k,1),y=dt.getFullYear(),m=dt.getMonth(),off=(dt.getDay()+6)%7,nd=new Date(y,m+1,0).getDate();
+  h+=`<button type="button" class="mo" data-month="${+dt}"><h3>${dt.toLocaleString(LOC[lang],{month:'long'})}${y!=hoje.getFullYear()?' '+y:''}</h3><div class="g">${WD.map(d=>`<span class="h">${d}</span>`).join('')}${'<span class="e"></span>'.repeat(off)}`;
+  for(let d=1;d<=nd;d++){const dd=new Date(y,m,d),act=E.filter(e=>dd>=e.ini&&dd<=e.fim);
+   const bg=act.length==1?`background:${act[0].c}`:act.length>1?`background:linear-gradient(135deg,${act[0].c} 50%,${act[1].c} 50%)`:'';
+   h+=`<span class="${+dd==+hoje?'today':''}" style="${bg}">${d}</span>`}
+  h+='</div></button>'}
+ return h+'</div>'+legend(E)}
+
+function homeHoje(){const E=calEvents().filter(e=>!e.semData);if(!E.length)return'';const h=d0(new Date()),A=acts(E,h),C=tasksOn(E,h).filter(x=>x.kind=='cont');
+ return `<div class="card hojec"><h2>${ct('hojeCampo')}</h2>${A.length?taskList(A):`<p class="muted">${ct('nadaHoje')}</p>`}${C.length?`<p class="muted">${ct('emAnd')}: ${C.map(x=>esc(x.e.t)).join(' · ')}</p>`:''}<button type="button" class="btn sec" onclick="calSel=d0(new Date());calCur=new Date(calSel.getFullYear(),calSel.getMonth(),1);calView='dia';go('cal');renderCal()">${ico('cal',18)} ${ct('verCal')}</button></div>`}
+
+async function marcar(id,key,val){const r=S.recs.find(x=>String(x.id)==id);if(!r)return;r.feitos={...(r.feitos||{})};if(val)r.feitos[key]=true;else delete r.feitos[key];
+ if(cur=='cal')renderCal(true);const hc=$('hojeCampo');if(hc)hc.innerHTML=homeHoje();
+ try{await fetch('/api/rec/'+encodeURIComponent(id)+'/feito',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chave:key,feito:val})})}catch(e){}}
+document.addEventListener('change',e=>{const c=e.target;if(c.classList&&c.classList.contains('tkc'))marcar(c.dataset.id,c.dataset.key,c.checked)});
+
+function baixarICS(id){const E=calEvents().filter(e=>!e.semData&&(id=='all'||e.id==id));if(!E.length)return;
+ const f=isoD,ff=d=>f(d).replace(/-/g,''),x=s=>String(s??'').replace(/[\;,]/g,c=>'\\'+c).replace(/\r?\n/g,'\\n');
+ const now=new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z',L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//CultivAI//PT','CALSCALE:GREGORIAN'];
+ E.forEach(e=>e.steps.forEach(s=>{const sum=e.n?`${s.s} (${e.t}${e.cultura?' · '+e.cultura:''})`:e.t,desc=[s.como,e.r.motivo].filter(Boolean).join('\n\n');
+  L.push('BEGIN:VEVENT',`UID:${e.id}-${s.k}@cultivai`,`DTSTAMP:${now}`,`DTSTART;VALUE=DATE:${ff(s.ini)}`,`DTEND;VALUE=DATE:${ff(addD(s.cada?s.ini:s.fim,1))}`);
+  if(s.cada)L.push(`RRULE:FREQ=DAILY;INTERVAL=${s.cada};UNTIL=${ff(s.fim)}`);
+  L.push(`SUMMARY:${x(sum.trim())}`,`DESCRIPTION:${x(desc)}`,'END:VEVENT')}));
+ L.push('END:VCALENDAR');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([L.join('\r\n')],{type:'text/calendar'}));
+ a.download=id=='all'?'cultivai.ics':`cultivai-${String(E[0].t).normalize('NFD').replace(/[^\w]+/g,'-').toLowerCase()}.ics`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}
+function verNoCal(id){const e=calEvents().find(x=>x.id==String(id));if(e&&!e.semData){const h=d0(new Date());calSel=h>=e.ini&&h<=e.fim?h:e.ini;calCur=new Date(calSel.getFullYear(),calSel.getMonth(),1);calView='dia'}go('cal');renderCal()}
+$('cal').onclick=e=>{const b=e.target.closest('button');if(!b)return;const ds=b.dataset;
+ if(ds.view){calView=ds.view;try{localStorage.setItem('calView',calView)}catch(_){}scrollTo(0,0);return renderCal(true)}
+ if(ds.dnav!==undefined){const n=+ds.dnav;calSel=n?addD(calSel,n):d0(new Date());calCur=new Date(calSel.getFullYear(),calSel.getMonth(),1);calAnim=true;return renderCal(true)}
+ if(ds.nav!==undefined){const n=+ds.nav,h=new Date();calCur=n?new Date(calCur.getFullYear(),calCur.getMonth()+n,1):new Date(h.getFullYear(),h.getMonth(),1);if(!n)calSel=d0(h);calAnim=true;return renderCal(true)}
+ if(ds.day){calSel=new Date(+ds.day);if(calSel.getMonth()!=calCur.getMonth()){calCur=new Date(calSel.getFullYear(),calSel.getMonth(),1);calAnim=true}return renderCal(true)}
+ if(ds.month||ds.see){if(ds.see)calSel=new Date(+ds.see);const dt=new Date(+(ds.month||ds.see));calCur=new Date(dt.getFullYear(),dt.getMonth(),1);calView='mes';calAnim=true;return renderCal(true)}
+ if(ds.ics)return baixarICS(ds.ics);
+ if(ds.go)go(ds.go)};
+
+/* ---------- Sugestões (com datas e categorias) ---------- */
+function renderRecs(){const R=[...S.recs].sort((a,b)=>ord[a.status]-ord[b.status]);
+ $('recs').innerHTML=topbar()+`<h2>${t('recsT')}</h2>`+(R.length?R.map(r=>{const x=recDates(r);return `<div class="card ${r.status}"><h3>${esc(r.titulo)} <span class="tag">${t('st')[r.status]}</span></h3>
+ ${r.cultura?`<p class="recdate"><b>${ct('cultura')}:</b> ${esc(r.cultura)}</p>`:''}<p>${esc(r.motivo)}</p><p><b>${t('ben')}:</b> ${esc(r.beneficios)}</p><p><b>${t('per')}:</b> ${esc(r.periodo)}</p>
+ ${(r.etapas||[]).length?`<ol class="steps-l">${r.etapas.map(e=>{const tx=stepTxt(e),tp=TIPO[e?.tipo]?e.tipo:inferTipo(tx),info=[e?.dias?esc(e.dias)+' d':'',+e?.a_cada_dias>0?ct('cada')(Math.round(+e.a_cada_dias)):''].filter(Boolean).join(' · ');return `<li>${esc(tx)} ${cat(tp)}${info?` <small>(${info})</small>`:''}${e?.como?`<br><small>${esc(e.como)}</small>`:''}</li>`}).join('')}</ol>`:''}${r.custos?`<p><b>${t('cost')}:</b> ${esc(r.custos)}</p>`:''}
+ <div class="warn">${t('conf')}: ${esc(r.confianca)}. ${esc(r.limitacoes)}</div>
+ ${x&&(r.status=='aprovada'||r.status=='pendente')?`<p class="recdate"><b>${r.status=='aprovada'?ct('noCal'):ct('seAprovar')}:</b> ${fmtD(x.ini)} → ${fmtD(x.fim)}</p>`:''}
+ ${r.status=='aprovada'?`<button class="btn sec" onclick="verNoCal('${esc(r.id)}')">${ico('cal',18)} ${ct('verCal')}</button>`:''}
+ ${r.status=='pendente'?`<button class="btn pri" onclick="decidir('${r.id}','aprovada')">${t('approve')}</button><button class="btn sec" onclick="decidir('${r.id}','recusada')">${t('reject')}</button><button class="btn ter" onclick="decidir('${r.id}','arquivada')">${t('archive')}</button>`:''}</div>`}).join(''):`<p>${t('noRecs')}</p>`)}
+
+/* ---------- Ajustes: ícones extras, sem emoji, "Hoje no campo" ---------- */
+Object.assign(IC,{dl:'<path d="M11 3h2v9.6l3.3-3.3 1.4 1.4L12 16.4l-5.7-5.7 1.4-1.4 3.3 3.3V3zM4 18h16v2H4z"/>',
+ mic:'<path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zM5 10h2a5 5 0 0 0 10 0h2a7 7 0 0 1-6 6.9V21h-2v-4.1A7 7 0 0 1 5 10z"/>',
+ send:'<path d="M3 11h13.2l-5.6-5.6L12 4l8 8-8 8-1.4-1.4 5.6-5.6H3z"/>',
+ vol:'<path d="M3 9h4l5-4v14l-5-4H3zM15.5 8.5a5 5 0 0 1 0 7l-1.4-1.4a3 3 0 0 0 0-4.2zM18.3 5.7a9 9 0 0 1 0 12.6l-1.4-1.4a7 7 0 0 0 0-9.8z"/>',
+ stop:'<rect x="6" y="6" width="12" height="12" rx="2"/>'});
+// tira os emojis do começo dos textos (avisos e mensagens)
+for(const k in L)for(const j in L[k])if(typeof L[k][j]=='string')L[k][j]=L[k][j].replace(/^(?:\u26A0|\u2705)\uFE0F?\s*/,'');
+function mapa(){const a=+$('lat').value,o=+$('lon').value;if(!a&&!o)return;const f=$('map');f.hidden=false;$('mapph').hidden=true;
+ f.src=`https://www.openstreetmap.org/export/embed.html?bbox=${o-.2},${a-.15},${o+.2},${a+.15}&layer=mapnik&marker=${a},${o}`;
+ $('loc').className='note';$('loc').textContent=`${$('cidade').value||''} (${a.toFixed(3)}, ${o.toFixed(3)})`}
+function renderMsgs(){const nw=i=>seen>=0&&i>=seen?' new':'';$('msgs').innerHTML=S.messages.length?S.messages.map((m,i)=>m.role=='user'?`<div class="m u${nw(i)}">${esc(m.text)}</div>`:`<div class="m b${nw(i)}">${esc(m.text)}<br><button class="say" data-i="${i}" aria-label="${t('listen')}">${ico('vol',20)}</button></div>`).join(''):`<div class="m b new">${t('intro')}</div>`;seen=S.messages.length}
+function mic(){const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return alert(t('novoice'));
+ const r=new R(),b=$('mic');r.lang=LOC[lang];b.innerHTML=ico('stop',22);
+ r.onresult=e=>{$('q').value=e.results[0][0].transcript;enviar()};r.onend=r.onerror=()=>b.innerHTML=ico('mic',22);r.start()}
+{const f=applyLang;applyLang=function(){f();$('mic').innerHTML=ico('mic',22);$('send').innerHTML=ico('send',22);
+ $('mic').setAttribute('aria-label',{pt:'Falar',en:'Speak',es:'Hablar'}[lang]);$('send').setAttribute('aria-label',{pt:'Enviar',en:'Send',es:'Enviar'}[lang])}}
+{const f=renderHome;renderHome=function(){f();const c=document.querySelector('#home .hubgrid>div');if(c)c.insertAdjacentHTML('afterbegin',`<div id="hojeCampo">${homeHoje()}</div>`)}}
+{const f=atualizarDados;atualizarDados=async function(){await f();if(S.profile)renderHome()}}
+{const f=go;go=function(id){if(id=='cal')$('cal').classList.remove('still');return f(id)}}
 function renderFaq(){$('faq').innerHTML=topbar()+`<h2>${t('faqT')}</h2>`+t('faq').map(f=>`<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join('')}
 
 applyLang();refresh();
