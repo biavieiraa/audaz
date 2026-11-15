@@ -33,8 +33,7 @@ const initialState = {
 // ---------- IDENTIFICAÇÃO DO USUÁRIO ----------
 
 function getUserId(req) {
-  // O Node converte os nomes dos cabeçalhos para minúsculas.
-  const id = req.headers["x-cultivai-user"];
+  const id = req.headers["x-audaz-user"];
 
   if (
     typeof id !== "string" ||
