@@ -190,7 +190,7 @@ textarea {
 
 select {
   appearance: none;
-  background: var(--tile) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2314161A' stroke-width='2.5'%3E%3Cpath d='M5 9l7 7 7-7'/%3E%3C/svg%3E") no-repeat right 16px center;
+  background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2314161A' stroke-width='2.5'%3E%3Cpath d='M5 9l7 7 7-7'/%3E%3C/svg%3E") no-repeat right 16px center;
 }
 
 input:focus,
@@ -1157,6 +1157,28 @@ button.mo:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(20,22
   }
 }
 
+/* Alinhamento dos tipos de solo */
+.soil {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 100%;
+}
+
+.soil .ph {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
+}
+
+.soil b {
+  min-height: 42px;
+}
+
+.soil small {
+  flex: 1;
+}
+
 </style></head><body>
 <select id="lang" aria-label="Language" onchange="setLang(this.value)"><option value="en">English</option><option value="pt">Português</option><option value="es">Español</option></select>
 <div class="wrap">
@@ -1193,7 +1215,12 @@ button.mo:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(20,22
  <section id="home"></section>
  <section id="chat" class="pad"><div style="margin:-2px 0 6px"><button class="link" onclick="go('home')" data-i="back" style="color:var(--ink);text-decoration:none"></button></div>
   <div id="msgs" aria-live="polite"></div><div class="chips" id="chips"></div>
-  <div id="bar"><input id="q" data-ph="ask" onkeydown="if(event.key=='Enter')enviar()"><button class="btn sec" id="mic" type="button" onclick="mic()">🎤</button><button class="btn pri" id="send" type="button" onclick="enviar()">➤</button></div></section>
+  <div id="bar"><input id="q" data-ph="ask" onkeydown="if(event.key=='Enter')enviar()"><button class="btn sec" id="mic" type="button" onclick="mic()" aria-label="Gravar áudio">
+  <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <rect x="9" y="2" width="6" height="13" rx="3"/>
+    <path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8"/>
+  </svg>
+</button><button class="btn pri" id="send" type="button" onclick="enviar()">➤</button></div></section>
  <section id="recs" class="pad"></section><section id="cal" class="pad"></section><section id="faq" class="pad"></section>
 </div>
 </div>
@@ -1585,9 +1612,19 @@ async function enviar(){
   busy=false;
   $('send').disabled=false;
 }
-function mic(){const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return alert(t('novoice'));
- const r=new R(),b=$('mic');r.lang=LOC[lang];b.textContent='⏺';
- r.onresult=e=>{$('q').value=e.results[0][0].transcript;enviar()};r.onend=r.onerror=()=>b.textContent='🎤';r.start()}
+function mic(){
+ const R=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!R)return alert(t('novoice'));
+
+ const r=new R(),b=$('mic');
+ b.innerHTML='⏺';
+ r.onresult=e=>{$('q').value=e.results[0][0].transcript;enviar()};
+ r.onend=r.onerror=()=>{
+  b.innerHTML=`<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8"/></svg>`;
+ };
+ r.lang=LOC[lang];
+ r.start();
+}
 function falar(x){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(x);u.lang=LOC[lang];speechSynthesis.speak(u)}
 
 /* ---------- Sugestões ---------- */
@@ -1676,7 +1713,7 @@ function renderCal(){
  const fim=new Date(y0,m0+11,1);
 
  let h=topbar()+`<h2>${t('calT')} ${MN(y0,m0)} ${y0} – ${MN(fim.getFullYear(),fim.getMonth())} ${fim.getFullYear()}</h2>
- <p class="calhoje">📍 ${t('today')}: ${now.toLocaleDateString(lc,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
+ <p class="calhoje">🗓️ ${t('today')}: ${now.toLocaleDateString(lc,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
  <div class="months">`;
 
  for(let k=0;k<12;k++){
