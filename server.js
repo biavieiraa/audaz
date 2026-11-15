@@ -1,4 +1,3 @@
-
 import app from "./api/index.js";
 import express from "express";
 import path from "node:path";

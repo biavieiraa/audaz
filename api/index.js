@@ -1,4 +1,3 @@
-
 import express from "express";
 import { createClient } from "@supabase/supabase-js";
 
@@ -14,6 +13,9 @@ const supabaseKey = process.env.SUPABASE_SECRET_KEY;
 const groqApiKey = process.env.GROQ_API_KEY;
 const groqModel =
   process.env.GROQ_MODEL || "llama-3.3-70b-versatile";
+
+// Nome da tabela no Supabase (confira no Table Editor).
+const TABLE = "audaz_state";
 
 const supabase =
   supabaseUrl && supabaseKey
@@ -31,7 +33,8 @@ const initialState = {
 // ---------- IDENTIFICAÇÃO DO USUÁRIO ----------
 
 function getUserId(req) {
-  const id = req.headers["x-CultivAI-user"];
+  // O Node converte os nomes dos cabeçalhos para minúsculas.
+  const id = req.headers["x-cultivai-user"];
 
   if (
     typeof id !== "string" ||
@@ -51,7 +54,7 @@ async function load(userId) {
   }
 
   const { data, error } = await supabase
-    .from("CultivAI_state")
+    .from(TABLE)
     .select("state")
     .eq("user_id", userId)
     .maybeSingle();
@@ -66,7 +69,7 @@ async function load(userId) {
 
 async function save(userId, db) {
   const { error } = await supabase
-    .from("CultivAI_state")
+    .from(TABLE)
     .upsert(
       {
         user_id: userId,
@@ -298,7 +301,7 @@ const LANGS = {
 };
 
 const system = (lang) => `
-Você é o TerraCiclo, assistente agrícola para agricultores familiares.
+Você é o CultivAI, assistente agrícola para agricultores familiares.
 Ajude o agricultor a entender seu solo, suas culturas, o clima e o manejo.
 
 IDIOMA: responda SEMPRE em ${LANGS[lang]} (campo reply e todos os textos das recomendações), mesmo que o histórico esteja em outro idioma. As chaves do JSON ficam como estão abaixo.
@@ -306,7 +309,7 @@ IDIOMA: responda SEMPRE em ${LANGS[lang]} (campo reply e todos os textos das rec
 COMUNICAÇÃO:
 - Linguagem simples, acolhedora, frases curtas e práticas.
 - Responda perguntas livres, considere o histórico, não repita informações.
-- Fora do tema agrícola, responda com educação e volte ao objetivo do TerraCiclo.
+- Fora do tema agrícola, responda com educação e volte ao objetivo do CultivAI.
 
 USO DOS DADOS:
 - Use o cadastro e os dados da NASA POWER como contexto real. Use SOMENTE os valores fornecidos; nunca invente números.
