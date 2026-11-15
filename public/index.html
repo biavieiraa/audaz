@@ -92,6 +92,28 @@ details{background:#fff;border:1px solid var(--line);border-radius:12px;margin:8
 <nav id="nav" hidden></nav>
 
 <script>
+    const AUD_USER_ID =
+  localStorage.getItem("audaz_user_id") || crypto.randomUUID();
+
+localStorage.setItem("audaz_user_id", AUD_USER_ID);
+
+const originalFetch = window.fetch.bind(window);
+
+window.fetch = (input, init = {}) => {
+  const url = typeof input === "string" ? input : input.url;
+
+  if (url.startsWith("/api/")) {
+    const headers = new Headers(
+      init.headers || (input instanceof Request ? input.headers : undefined)
+    );
+
+    headers.set("x-audaz-user", AUD_USER_ID);
+
+    return originalFetch(input, { ...init, headers });
+  }
+
+  return originalFetch(input, init);
+};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const L={
